@@ -1,0 +1,282 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .logo {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.5vw 2vw;
+    img {
+      width: 10vw;
+    }
+  }
+  .lg-container {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 100vh;
+    padding: 1.5vw;
+    .left-lg-container {
+      width: 40%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url("../../assets/images/login-bg.svg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      color: #fff;
+      border-radius: 15px;
+      .lft-heading {
+        width: 60%;
+        font-size: 2vw;
+        font-weight: 600;
+        margin-bottom: 2vw;
+        text-align: center;
+      }
+      .lft-text {
+        width: 60%;
+        font-size: 0.9vw;
+        margin-bottom: 2vw;
+        font-weight: 300;
+        text-align: center;
+        letter-spacing: 2px;
+        line-height: 3;
+      }
+    }
+
+    .right-lg-container {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .form-container {
+        margin-top: 5vw;
+        height: 70%;
+        width: 60%;
+        padding: 1.5vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: $text-dark;
+        margin-right: 8vw;
+        transition: 1s ease-in-out;
+        
+        .progress-container{
+            transition: 1s ease-in-out;
+            .line {
+              width: 40%;
+              height: 3px;
+              background: gray;
+              position: relative;
+              z-index: -1;
+              left:3vw;
+              top: 2.4vw;
+            }
+            .line2 {
+                width: 40%;
+                height: 3px;
+                background: gray;
+                position: relative;
+                z-index: -1;
+                left:13vw;
+                top: 2.2vw;
+              }
+              .active-line{
+                  background-color: $primary-color;
+                  animation: fadeInLeft 1s ease-in-out;
+              }
+            .progressbar{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5vw 2vw;
+                li{
+                    padding: 0.5vw;
+                    height: 3vw;
+                    width: 3vw;
+                    font-size: 1.2vw;
+                    font-weight: 600;
+                    background-color: white;
+                    color: gray;                    
+                    border-radius: 50%;
+                    border: 2px solid gray;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+            .active-bubble{
+                background-color: $primary-color !important;
+                color: white !important;
+                border: none !important;
+                transition: 1s ease-in-out;
+            }
+        }
+        
+        .fieldset{
+            position: relative;
+            border: none;
+            display: none;
+            transition: 1s ease-in-out;
+            .back-btn{
+                margin-bottom:2vw;
+                cursor: pointer;
+            }
+            
+        }
+        .active-frm{
+            display: block;
+            animation: fadeInRight 1s ease-in-out;
+        }
+        .lg-frm-heading {
+          font-size: 2.75vw;
+          font-weight: 700;
+          margin-bottom: 1vw;
+          text-align: center;
+        }
+        .form-group {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin-bottom: 1.5vw;
+          label {
+            font-size: 0.9vw;
+            font-weight: 500;
+            margin-bottom: 0.5vw;
+          }
+          .forgot-pass {
+            font-size: 0.9vw;
+            font-weight: 500;
+            text-align: right;
+            color: $text-dark;
+          }
+          .sign-up-link {
+            text-align: center;
+            font-size: 1vw;
+            a{
+                text-decoration: underline;
+                color: $text-dark;
+                font-weight: 600;
+            }
+          }
+          .or {
+              margin: 1vw 0;
+            overflow: hidden;
+            text-align: center;
+
+            &:before,
+            &:after {
+              background-color: $text-dark;
+              content: "";
+              display: inline-block;
+              height: 1px;
+              position: relative;
+              vertical-align: middle;
+              width: 50%;
+            }
+
+            &:before {
+              right: 0.5em;
+              margin-left: -50%;
+            }
+
+            &:after {
+              left: 0.5em;
+              margin-right: -50%;
+            }
+          }
+          .form-control {
+            width: 100%;
+            height: 3.5vw;
+            border-radius: 10px;
+            border: 2px solid $primary-color;
+            padding: 0.5vw 1vw;
+            font-size: 1vw;
+            font-weight: 300;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+            &:focus {
+              border: 3px solid $primary-color;
+            }
+          }
+          .btn-primary {
+            width: 100%;
+            height: 3.5vw;
+            border-radius: 10px;
+            border: none;
+            padding: 0.5vw;
+            font-size: 1vw;
+            font-weight: 600;
+            outline: none;
+            background-color: $primary-color;
+            color: #fff;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            &:focus {
+              background-color: rgba(2, 47, 150, 0.8);
+            }
+            &:hover {
+              background-color: rgba(2, 47, 150, 0.8);
+            }
+          }
+          .btn-secondary {
+            width: 100%;
+            height: 3.5vw;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            border: none;
+            padding: 1vw;
+            font-size: 1vw;
+            font-weight: 700;
+            outline: none;
+            background-color: $secondary-color;
+            color: $text-dark;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            &:focus {
+              background-color: #c7d8fc;
+            }
+            &:hover {
+              background-color: #c7d8fc;
+            }
+            span {
+              width: 85%;
+              text-align: center;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@keyframes fadeInRight {
+    0% {
+       opacity: 0;
+       transform: translateX(40px);
+    }
+    100% {
+       opacity: 1;
+       transform: translateX(0);
+    }
+ } 
+ @keyframes fadeInLeft {
+    0% {
+       opacity: 0;
+       width: 0;
+    }
+    100% {
+       opacity: 1;
+       width: 40%;
+    }
+ } 

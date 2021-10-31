@@ -1,0 +1,425 @@
+/*Fonts imports*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+/*SCSS imports*/
+.main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+}
+
+.main .logo {
+  position: absolute;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 1.5vw 2vw;
+}
+
+.main .logo img {
+  width: 10vw;
+}
+
+.main .lg-container {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  padding: 1.5vw;
+}
+
+.main .lg-container .left-lg-container {
+  width: 40%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: url("../../assets/images/login-bg.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  border-radius: 15px;
+}
+
+.main .lg-container .left-lg-container .lft-heading {
+  width: 60%;
+  font-size: 2vw;
+  font-weight: 600;
+  margin-bottom: 2vw;
+  text-align: center;
+}
+
+.main .lg-container .left-lg-container .lft-text {
+  width: 60%;
+  font-size: 0.9vw;
+  margin-bottom: 2vw;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 2px;
+  line-height: 3;
+}
+
+.main .lg-container .right-lg-container {
+  width: 50%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main .lg-container .right-lg-container .form-container {
+  margin-top: 5vw;
+  height: 70%;
+  width: 60%;
+  padding: 1.5vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #011e56;
+  margin-right: 8vw;
+  -webkit-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+}
+
+.main .lg-container .right-lg-container .form-container .progress-container {
+  -webkit-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+}
+
+.main .lg-container .right-lg-container .form-container .progress-container .line {
+  width: 40%;
+  height: 3px;
+  background: gray;
+  position: relative;
+  z-index: -1;
+  left: 3vw;
+  top: 2.4vw;
+}
+
+.main .lg-container .right-lg-container .form-container .progress-container .line2 {
+  width: 40%;
+  height: 3px;
+  background: gray;
+  position: relative;
+  z-index: -1;
+  left: 13vw;
+  top: 2.2vw;
+}
+
+.main .lg-container .right-lg-container .form-container .progress-container .active-line {
+  background-color: #022f96;
+  -webkit-animation: fadeInLeft 1s ease-in-out;
+          animation: fadeInLeft 1s ease-in-out;
+}
+
+.main .lg-container .right-lg-container .form-container .progress-container .progressbar {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0.5vw 2vw;
+}
+
+.main .lg-container .right-lg-container .form-container .progress-container .progressbar li {
+  padding: 0.5vw;
+  height: 3vw;
+  width: 3vw;
+  font-size: 1.2vw;
+  font-weight: 600;
+  background-color: white;
+  color: gray;
+  border-radius: 50%;
+  border: 2px solid gray;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main .lg-container .right-lg-container .form-container .progress-container .active-bubble {
+  background-color: #022f96 !important;
+  color: white !important;
+  border: none !important;
+  -webkit-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+}
+
+.main .lg-container .right-lg-container .form-container .fieldset {
+  position: relative;
+  border: none;
+  display: none;
+  -webkit-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+}
+
+.main .lg-container .right-lg-container .form-container .fieldset .back-btn {
+  margin-bottom: 2vw;
+  cursor: pointer;
+}
+
+.main .lg-container .right-lg-container .form-container .active-frm {
+  display: block;
+  -webkit-animation: fadeInRight 1s ease-in-out;
+          animation: fadeInRight 1s ease-in-out;
+}
+
+.main .lg-container .right-lg-container .form-container .lg-frm-heading {
+  font-size: 2.75vw;
+  font-weight: 700;
+  margin-bottom: 1vw;
+  text-align: center;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 1.5vw;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group label {
+  font-size: 0.9vw;
+  font-weight: 500;
+  margin-bottom: 0.5vw;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .forgot-pass {
+  font-size: 0.9vw;
+  font-weight: 500;
+  text-align: right;
+  color: #011e56;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .sign-up-link {
+  text-align: center;
+  font-size: 1vw;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .sign-up-link a {
+  text-decoration: underline;
+  color: #011e56;
+  font-weight: 600;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .or {
+  margin: 1vw 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .or:before, .main .lg-container .right-lg-container .form-container .form-group .or:after {
+  background-color: #011e56;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .or:before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .or:after {
+  left: 0.5em;
+  margin-right: -50%;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .form-control {
+  width: 100%;
+  height: 3.5vw;
+  border-radius: 10px;
+  border: 2px solid #022f96;
+  padding: 0.5vw 1vw;
+  font-size: 1vw;
+  font-weight: 300;
+  outline: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .form-control:focus {
+  border: 3px solid #022f96;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .btn-primary {
+  width: 100%;
+  height: 3.5vw;
+  border-radius: 10px;
+  border: none;
+  padding: 0.5vw;
+  font-size: 1vw;
+  font-weight: 600;
+  outline: none;
+  background-color: #022f96;
+  color: #fff;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .btn-primary:focus {
+  background-color: rgba(2, 47, 150, 0.8);
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .btn-primary:hover {
+  background-color: rgba(2, 47, 150, 0.8);
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .btn-secondary {
+  width: 100%;
+  height: 3.5vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 10px;
+  border: none;
+  padding: 1vw;
+  font-size: 1vw;
+  font-weight: 700;
+  outline: none;
+  background-color: #E0EAFF;
+  color: #011e56;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .btn-secondary:focus {
+  background-color: #c7d8fc;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .btn-secondary:hover {
+  background-color: #c7d8fc;
+}
+
+.main .lg-container .right-lg-container .form-container .form-group .btn-secondary span {
+  width: 85%;
+  text-align: center;
+  cursor: pointer;
+}
+
+@-webkit-keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(40px);
+            transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(40px);
+            transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  100% {
+    opacity: 1;
+    width: 40%;
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  100% {
+    opacity: 1;
+    width: 40%;
+  }
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+/*# sourceMappingURL=style.css.map */
