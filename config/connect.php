@@ -3,8 +3,8 @@ $dbHost = 'localhost';
 $dbName = 'pms_db';
 $dbUsername = 'root';
 $dbPassword = '';
-$dbc= mysqli_connect($dbHost, $dbUsername, $dbPassword, $dbName); 
-if(!$dbc){
+$connect= mysqli_connect($dbHost, $dbUsername, $dbPassword, $dbName); 
+if(!$connect){
     die("Connection failed: " . mysqli_connect_error());
 }
 ?>

@@ -1,3 +1,11 @@
+<?php
+session_start();
+include('../config/connect.php');
+if (isset($_SESSION["pmsSession"]) == session_id()) {
+    header("Location: ../dashboard.php");
+    die();
+} else {
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +14,7 @@
     <title>Login</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./stylesheets/css/style.css" />
+    <link rel="stylesheet" href="../stylesheets/css/style.css" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -16,9 +24,21 @@
     />
   </head>
   <body>
+  <?php
+  if (isset($_SESSION['loginMessage'])) {
+    echo "<div class='d-flex justify-content-center' style='width:100vw;'><div style='z-index:2;' class='alert bg-danger text-light alert-dismissible position-fixed mt-3 fade show col-4' role='alert'>
+                                <center><strong>" . $_SESSION['loginMessage'] . "</strong></center>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div></div>";
+    unset($_SESSION['loginMessage']);
+  }
+
+  ?>
     <div class="main">
       <div class="logo">
-        <img src="./assets/images/logo.svg" alt="Ease-iT-logo" />
+        <img src="../assets/images/logo.svg" alt="Ease-iT-logo" />
       </div>
       <div class="lg-container">
         <div class="left-lg-container">
@@ -33,7 +53,7 @@
 
         <div class="right-lg-container">
           <div class="form-container">
-            <form id="msform" action="auth.php" method="post">
+            <form id="msform" action="../auth/authentication.php" method="post">
               <h1 class="lg-frm-heading">Get started</h1>
               <!-- progressbar -->
               <div class="progress-container">
@@ -75,7 +95,7 @@
 
                 <div class="form-group">
                   <p class="sign-up-link">
-                    Already have an account ? <a href="./index.php">Login</a>
+                    Already have an account ? <a href="../index.php">Login</a>
                   </p>
                 </div>
 
@@ -85,7 +105,7 @@
                 <div class="form-group">
                   <div class="btn-secondary">
                     <img
-                      src="./assets/images/google-logo.svg"
+                      src="../assets/images/google-logo.svg"
                       alt="Google-logo"
                     />
                     <span>Sign in with Google</span>
@@ -121,7 +141,7 @@
                 </div>
 
                 <div class="form-group">
-                  <button id="next" class="next btn-primary mt-4">Next</button>
+                  <button id="next2" class="next btn-primary mt-4">Next</button>
                 </div>
               </fieldset>
 
@@ -135,8 +155,8 @@
                   <label for="name">Name <sup>*</sup></label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="uname"
+                    id="uname"
                     class="form-control"
                     placeholder="John Wick"
                     required
@@ -168,7 +188,7 @@
                 </div>
 
                 <div class="form-group">
-                  <button type="submit" class="btn-primary mt-4">Submit</button>
+                  <button type="submit" name="registerSubmit" class="btn-primary mt-4">Submit</button>
                 </div>
               </fieldset>
             </form>
@@ -188,6 +208,9 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="./js/signupAnim.js"></script>
+    <script src="../js/signupAnim.js"></script>
   </body>
 </html>
+<?php
+}
+?>

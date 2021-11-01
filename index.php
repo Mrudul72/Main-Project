@@ -1,3 +1,11 @@
+<?php
+session_start();
+include('./config/connect.php');
+if (isset($_SESSION["pmsSession"]) == session_id()) {
+    header("Location: ./dashboard.php");
+    die();
+} else {
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,6 +15,13 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./stylesheets/css/style.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
     <link
       rel="icon"
       href="./assets/images/logo2.png"
@@ -14,6 +29,19 @@
     />
   </head>
   <body>
+       <!-- Alert for Register -->
+       <?php
+  if (isset($_SESSION['loginMessage'])) {
+    echo "<div class='d-flex justify-content-center' style='width:100vw;'><div style='z-index:2;' class='alert bg-danger text-light alert-dismissible position-fixed mt-3 fade show col-4' role='alert'>
+                                <center><strong>" . $_SESSION['loginMessage'] . "</strong></center>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div></div>";
+    unset($_SESSION['loginMessage']);
+  }
+
+  ?>
     <div class="main">
       <div class="logo">
         <img src="./assets/images/logo.svg" alt="Ease-iT-logo" />
@@ -30,7 +58,7 @@
 
         <div class="right-lg-container">
           <div class="form-container">
-            <form action="auth.php" method="post">
+            <form action="./auth/authentication.php" method="post">
               <h1 class="lg-frm-heading">Welcome back</h1>
               <div class="form-group">
                 <label for="email">Email</label>
@@ -58,10 +86,10 @@
                 <a class="forgot-pass" href="">Forgot Password ?</a>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn-primary">Sign in</button>
+                <button type="submit" class="btn-primary" name="LoginSubmit">Sign in</button>
               </div>
               <div class="form-group">
-                <p class="sign-up-link">Don't have an account ? <a href="./signup.php">Sign up</a></p>
+                <p class="sign-up-link">Don't have an account ? <a href="./auth/signup.php">Sign up</a></p>
               </div>
               <div class="form-group">
                 <p class="or">or</p>
@@ -78,6 +106,18 @@
       </div>
     </div>
 
-    <script src="" async defer></script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
+<?php
+}
+?>
