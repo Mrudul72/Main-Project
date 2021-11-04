@@ -1,10 +1,13 @@
 .sidebar-container {
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 18vw;
-  height: 100vh;
+  height: 96vh;
   padding: 2vw;
+  border-radius: 12px;
+  background-color: #fff;
   .nav-container {
     height: 55%;
     display: flex;
@@ -69,7 +72,7 @@
       height: 3vw;
       border-radius: 15px;
     }
-    .pro-details-container{
+    .pro-details-container {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;

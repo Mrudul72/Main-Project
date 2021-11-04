@@ -1,7 +1,8 @@
 $primary-color: #022f96;
 $text-dark: #011e56;
-$text-light: #A4AFB4;
-$secondary-color: #E0EAFF;
+$text-light: #a4afb4;
+$secondary-color: #e0eaff;
+$body-color:#f5f5f5;
 
 /*Fonts imports*/
 
@@ -12,8 +13,11 @@ $secondary-color: #E0EAFF;
 
 @import "./login";
 @import "./sidebar";
+@import "./dashboard";
+@import "./header";
+@import "./ring-chart";
 
-* {
+*{
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
   text-decoration: none;
@@ -24,4 +28,23 @@ $secondary-color: #E0EAFF;
 
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $secondary-color;
+    border-radius: 100px;
+    margin: 0.5vw 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $text-dark;
+    border-radius: 100px;
+  }
 }

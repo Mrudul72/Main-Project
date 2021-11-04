@@ -16,8 +16,9 @@
     />
     <link rel="icon" href="./assets/images/logo2.png" type="image/icon type" />
   </head>
-  <body>
+  <body class="dashboard-body">
     <div class="dashboard-container">
+      <!--sidebar starts-->
       <div class="sidebar-container">
         <nav class="nav-container">
           <div class="logo-container">
@@ -29,27 +30,35 @@
           </div>
           <ul class="nav">
             <li class="nav-items active-nav">
-              <span class="ico"><img src="./assets/images/dashboard-ico-light.svg" alt="" /></span
+              <span class="ico"
+                ><img
+                  src="./assets/icons/dashboard-ico-light.svg"
+                  alt="" /></span
               ><span>Dashboard</span>
             </li>
             <li class="nav-items">
-              <span class="ico"><img src="./assets/images/task-ico.svg" alt="" /></span
+              <span class="ico"
+                ><img src="./assets/icons/task-ico.svg" alt="" /></span
               ><span>Tasks</span>
             </li>
             <li class="nav-items">
-              <span class="ico"><img src="./assets/images/schedule-ico.svg" alt="" /></span
+              <span class="ico"
+                ><img src="./assets/icons/schedule-ico.svg" alt="" /></span
               ><span>Schedule</span>
             </li>
             <li class="nav-items">
-              <span class="ico"><img src="./assets/images/project-ico.svg" alt="" /></span
+              <span class="ico"
+                ><img src="./assets/icons/project-ico.svg" alt="" /></span
               ><span>Projects</span>
             </li>
             <li class="nav-items">
-              <span class="ico"><img src="./assets/images/team-ico.svg" alt="" /></span
+              <span class="ico"
+                ><img src="./assets/icons/team-ico.svg" alt="" /></span
               ><span>Teams</span>
             </li>
             <li class="nav-items">
-              <span class="ico"><img src="./assets/images/chat-ico.svg" alt="" /></span
+              <span class="ico"
+                ><img src="./assets/icons/chat-ico.svg" alt="" /></span
               ><span>Chats</span>
             </li>
           </ul>
@@ -62,13 +71,185 @@
           </div>
           <img
             class="log-out-btn"
-            src="./assets/images/power-off-ico.svg"
+            src="./assets/icons/power-off-ico.svg"
             alt=""
           />
         </div>
       </div>
+      <!--sidebar ends-->
+
+      <!--header starts-->
+
+      <header class="header">
+        <h1 class="header-txt">Hi, John Wick</h1>
+        <div class="header-util">
+          <div class="search-box">
+            <input type="text" placeholder="Search" />
+            <div class="header-box">
+              <img
+                class="header-ico"
+                src="./assets/icons/search-ico.svg"
+                alt="search"
+              />
+            </div>
+          </div>
+          <div class="header-box">
+            <img
+              class="header-ico"
+              src="./assets/icons/bell-ico.svg"
+              alt="notification"
+            />
+          </div>
+          <div class="header-box">
+            <img
+              class="header-ico"
+              src="./assets/icons/settings-ico.svg"
+              alt="settings"
+            />
+          </div>
+        </div>
+      </header>
+
+      <!--header ends-->
+
+      <!--Dashboard contents-->
+      <div class="dashboard-contents">
+        <div class="row">
+          <!--col 1 start-->
+          <div class="col-8">
+            <div class="d-flex">
+              <div class="col">
+                <div class="completed-task">
+                  <div class="d-flex flex-column">
+                    <h1 class="content-heading">Completed Tasks</h1>
+                    <h2 class="stats">372</h2>
+                  </div>
+                  <img
+                    class="chart-img"
+                    src="./assets/images/Chart.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="col-6">
+                <div class="ring-chart-container">
+                  <h1 class="content-heading">Working Rate</h1>
+                  <div class="single-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart blue">
+                      <path
+                        class="circle-bg"
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <path
+                        class="circle"
+                        stroke-dasharray="82, 100"
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <text x="18" y="20.35" class="percentage">82%</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="ring-chart-container">
+                  <h1 class="content-heading">Performance</h1>
+                  <div class="single-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart blue">
+                      <path
+                        class="circle-bg"
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <path
+                        class="circle"
+                        stroke-dasharray="62, 100"
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <text x="18" y="20.35" class="percentage">62%</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="col">
+                <div class="today-task-container">
+                  <div class="d-flex justify-content-between align-items-center my-2">
+                    <h1 class="content-heading">Today's Tasks</h1>
+                    <button class="add-task-btn">Add Task +</button>
+                  </div>
+                  <div class="today-tasks">
+                    <div>
+                      <input class="styled-checkbox" id="styled-checkbox" type="checkbox" value="value2" checked>
+                      <label for="styled-checkbox"></label>
+                    </div>
+                    <div class="task-details">
+                      <p class="task-title">
+                        E-mail after registration so that I can confirm my address
+                      </p>
+                      <p class="task-sub-title">Development</p>
+                    </div>
+                  </div>
+                  <div class="today-tasks">
+                    <div>
+                      <input class="styled-checkbox" id="styled-checkbox2" type="checkbox" value="value2" checked>
+                      <label for="styled-checkbox2"></label>
+                    </div>
+                    <div class="task-details">
+                      <p class="task-title">
+                        Find top 5 customers and get reviews from them
+                      </p>
+                      <p class="task-sub-title">Marketing</p>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--col 1 end-->
+
+          <!--col 2 start-->
+          <div class="col-4">
+            <div class="d-flex flex-column">
+              <div class="dashboard-card">
+                <h1 class="content-heading">Activity</h1>
+                <h3 class="sub-title">Today</h3>
+                <ul class="activity-container">
+                  <li class="items"><img src="./assets/icons/tick-dark-ico.svg" alt=""> <div class="card-text"><p>Darika Samak mark as done Listing on Product Hunt</p> <div class="time-stamp">8:40pm</div></div></li>
+                  <li class="items"><img src="./assets/icons/tick-dark-ico.svg" alt=""> <div class="card-text"><p>Darika Samak mark as done Listing on Product Hunt</p> <div class="time-stamp">8:40pm</div></div></li>
+                  <li class="items"><img src="./assets/icons/tick-dark-ico.svg" alt=""> <div class="card-text"><p>Darika Samak mark as done Listing on Product Hunt</p> <div class="time-stamp">8:40pm</div></div></li>
+                </ul>
+              </div>
+              <div class="dashboard-card">
+                <h1 class="content-heading">Upcoming Events</h1>
+                <h3 class="sub-title">Today</h3>
+                <ul class="activity-container">
+                  <li class="items"><img src="./assets/icons/tick-dark-ico.svg" alt=""> <div class="card-text"><p>Darika Samak mark as done Listing on Product Hunt</p> <div class="time-stamp">8:40pm</div></div></li>
+                  <li class="items"><img src="./assets/icons/tick-dark-ico.svg" alt=""> <div class="card-text"><p>Darika Samak mark as done Listing on Product Hunt</p> <div class="time-stamp">8:40pm</div></div></li>
+                </ul>
+                <h3 class="sub-title">Tomorrow</h3>
+                <ul class="activity-container">
+                  <li class="items"><img src="./assets/icons/tick-dark-ico.svg" alt=""> <div class="card-text"><p>Darika Samak mark as done Listing on Product Hunt</p> <div class="time-stamp">8:40pm</div></div></li>
+                  <li class="items"><img src="./assets/icons/tick-dark-ico.svg" alt=""> <div class="card-text"><p>Darika Samak mark as done Listing on Product Hunt</p> <div class="time-stamp">8:40pm</div></div></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!--col 2 end-->
+        </div>
+      </div>
     </div>
 
-    <script src="" async defer></script>
+    <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
   </body>
 </html>
