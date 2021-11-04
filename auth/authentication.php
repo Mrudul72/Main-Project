@@ -32,7 +32,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                         $password=md5($password);
                         $date=date("Y-m-d");
                         //Insert into database
-                        $insertDb="INSERT INTO `tbl_user`(`username`, `mob`, `email`,`dob`, `password`, `user_created_at`, `type_id`, `referral`) VALUES ('$uname','$mob','$email','$dob','$password','$date','$role', '$referral')";
+                        $insertDb="INSERT INTO `tbl_user`(`username`, `mob`, `email`,`dob`, `password`, `user_created_at`, `type_id`, `team_id`) VALUES ('$uname','$mob','$email','$dob','$password','$date','$role', '$referral')";
                         $insertDbResult=mysqli_query($connect,$insertDb);
                         if($insertDbResult)
                         {

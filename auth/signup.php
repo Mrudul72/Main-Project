@@ -116,7 +116,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
               <fieldset class="fieldset">
                 <img
                   class="back-btn"
-                  src="./assets/images/back.svg"
+                  src="../assets/images/back.svg"
                   alt="back-btn"
                 />
                 <div class="form-group">
@@ -148,7 +148,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
               <fieldset class="fieldset">
                 <img
                   class="back-btn"
-                  src="./assets/images/back.svg"
+                  src="../assets/images/back.svg"
                   alt="back-btn"
                 />
                 <div class="form-group">

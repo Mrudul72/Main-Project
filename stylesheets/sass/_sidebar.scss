@@ -1,0 +1,96 @@
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 18vw;
+  height: 100vh;
+  padding: 2vw;
+  .nav-container {
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+    .logo-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .logo {
+        width: 10vw;
+      }
+    }
+    .nav {
+      display: flex;
+      flex-direction: column;
+      margin: 2vw 0;
+      .nav-items {
+        height: 3.5vw;
+        display: flex;
+        align-items: center;
+        color: $text-light;
+        font-size: 1vw;
+        border-radius: 12px;
+        margin: 0.3vw 0;
+        font-weight: 500;
+        cursor: pointer;
+        .ico {
+          width: 4vw;
+          height: 3vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img {
+            width: 1.5vw;
+            height: 1.5vw;
+          }
+        }
+        &:hover {
+          background-color: $secondary-color;
+        }
+      }
+      .active-nav {
+        background-color: $primary-color;
+        color: #fff;
+        &:hover {
+          background-color: $primary-color;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .s-profile-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: $secondary-color;
+    height: 4vw;
+    padding: 0.5vw 0.5vw;
+    border-radius: 12px;
+    .pro-pic-ico {
+      width: 3vw;
+      height: 3vw;
+      border-radius: 15px;
+    }
+    .pro-details-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      height: 2vw;
+      padding: 1vw;
+      .pro-name {
+        font-size: 1vw;
+        color: $text-dark;
+        font-weight: 700;
+        margin: 0;
+      }
+      .pro-role {
+        font-size: 0.8vw;
+        color: $text-dark;
+        margin: 0;
+      }
+    }
+  }
+  .log-out-btn {
+    width: 1.5vw;
+    height: 1.5vw;
+    cursor: pointer;
+  }
+}

@@ -1,5 +1,6 @@
 $primary-color: #022f96;
 $text-dark: #011e56;
+$text-light: #A4AFB4;
 $secondary-color: #E0EAFF;
 
 /*Fonts imports*/
@@ -10,6 +11,7 @@ $secondary-color: #E0EAFF;
 /*SCSS imports*/
 
 @import "./login";
+@import "./sidebar";
 
 * {
   font-family: "Poppins", sans-serif;
@@ -23,4 +25,3 @@ $secondary-color: #E0EAFF;
 html {
   scroll-behavior: smooth;
 }
-
