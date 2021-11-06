@@ -1,0 +1,42 @@
+.project-container {
+  display: flex;
+  flex-wrap: wrap;
+  .projects {
+    width: 30%;
+    height: 15vw;
+    background-image: url("../../assets/images/bg2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 1vw;
+    border-radius: 12px;
+    font-size: 1.5vw;
+    font-weight: 700;
+    padding: 2vw 1.5vw;
+    cursor: pointer;
+    color: #fff;
+    &:hover {
+      filter: brightness(0.7);
+    }
+    &:active {
+      filter: brightness(1);
+    }
+    &:nth-child(odd) {
+      background-image: url("../../assets/images/bg1.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    &:last-child {
+      background-color: rgba(2, 47, 150, 0.8);
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      // font-size: 15vw;
+      background-image: url("../../assets/icons/Plus.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 40%;
+    }
+  }
+}

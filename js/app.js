@@ -21,3 +21,32 @@ for(let i=0; i<navItems.length; i++){
     });
 }
 
+
+//tabs selections
+const tablinks= document.querySelectorAll('.tablinks');
+const divider= document.querySelectorAll('.divider');
+const active_tab = document.querySelector('.active-tab');
+
+for(let i=0; i<tablinks.length; i++){
+    tablinks[i].addEventListener('click', function(){
+        for(let j=0; j<tablinks.length; j++){
+            //remove active class from all tablinks
+            tablinks[j].classList.remove('active-tab');
+        }
+        //add active class to clicked tablinks
+        this.classList.add('active-tab');
+        if(this.id=='tab1'){
+            divider[0].classList.add('active-divider');
+            divider[1].classList.remove('active-divider');
+        }
+        else if(this.id=='tab2'){
+            divider[0].classList.add('active-divider');
+            divider[1].classList.add('active-divider');
+        }
+        else if(this.id=='tab3'){
+            divider[0].classList.remove('active-divider');
+            divider[1].classList.add('active-divider');
+        }
+        
+    });
+}
