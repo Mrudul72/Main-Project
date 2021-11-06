@@ -24,6 +24,7 @@
       display: flex;
       flex-direction: column;
       margin: 2vw 0;
+
       .nav-items {
         height: 3.5vw;
         display: flex;
@@ -34,13 +35,14 @@
         margin: 0.3vw 0;
         font-weight: 500;
         cursor: pointer;
+        transition: 0.1s ease-in-out;
         .ico {
           width: 4vw;
           height: 3vw;
           display: flex;
           justify-content: center;
           align-items: center;
-          img {
+          .svgClass {
             width: 1.5vw;
             height: 1.5vw;
           }
