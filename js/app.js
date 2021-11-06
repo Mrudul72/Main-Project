@@ -2,6 +2,11 @@
 const nav= document.querySelectorAll('.nav');
 const nav_icons= document.querySelector('.svgClass');
 const navItems= document.querySelectorAll('.nav-items');
+const active_nav = document.querySelector('.active-nav');
+
+window.addEventListener('load',() => {
+    active_nav.querySelector('.svgClass').contentDocument.getElementById( 'svgInternalID' ).style.fill = '#fff';
+});
 for(let i=0; i<navItems.length; i++){
     navItems[i].addEventListener('click', function(){
         for(let j=0; j<navItems.length; j++){
