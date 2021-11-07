@@ -24,6 +24,9 @@
       display: flex;
       flex-direction: column;
       margin: 2vw 0;
+      a{
+        text-decoration: none;
+      }
 
       .nav-items {
         height: 3.5vw;

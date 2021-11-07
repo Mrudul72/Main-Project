@@ -24,12 +24,6 @@
     .header-ico{
         width: 1.5vw;
         height: 1.5vw;
-        &:hover {
-          filter: brightness(0.8);
-        }
-        &:active {
-          filter: brightness(0) invert(1);
-        }
     }
     .search-box{
         width: 20vw;
@@ -63,8 +57,17 @@
         background-color: #fff;
         border-radius: 12px;
         cursor: pointer;
+        &:hover{
+          background-color: $secondary-color;
+          .header-ico{
+            filter: brightness(0.5);
+          }
+        }
         &:active {
           background-color: $primary-color;
+          .header-ico{
+            filter: brightness(0) invert(1);
+          }
         }
     }
   }

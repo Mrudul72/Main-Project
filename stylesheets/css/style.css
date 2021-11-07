@@ -464,6 +464,10 @@
   margin: 2vw 0;
 }
 
+.sidebar-container .nav-container .nav a {
+  text-decoration: none;
+}
+
 .sidebar-container .nav-container .nav .nav-items {
   height: 3.5vw;
   display: -webkit-box;
@@ -864,16 +868,6 @@
   height: 1.5vw;
 }
 
-.header .header-util .header-ico:hover {
-  -webkit-filter: brightness(0.8);
-          filter: brightness(0.8);
-}
-
-.header .header-util .header-ico:active {
-  -webkit-filter: brightness(0) invert(1);
-          filter: brightness(0) invert(1);
-}
-
 .header .header-util .search-box {
   width: 20vw;
   height: 3vw;
@@ -923,8 +917,22 @@
   cursor: pointer;
 }
 
+.header .header-util .header-box:hover {
+  background-color: #e0eaff;
+}
+
+.header .header-util .header-box:hover .header-ico {
+  -webkit-filter: brightness(0.5);
+          filter: brightness(0.5);
+}
+
 .header .header-util .header-box:active {
   background-color: #022f96;
+}
+
+.header .header-util .header-box:active .header-ico {
+  -webkit-filter: brightness(0) invert(1);
+          filter: brightness(0) invert(1);
 }
 
 .single-chart {
@@ -1019,6 +1027,8 @@
   border: none;
   border-radius: 12px;
   color: #011e56;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .tab .tablinks:hover {
@@ -1174,6 +1184,41 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40%;
+}
+
+.modal-content {
+  color: #011e56;
+}
+
+.modal-content .close {
+  color: #011e56;
+}
+
+.modal-content .close:hover {
+  color: #022f96;
+}
+
+.modal-content .modal-form-container .modal-btn-submit {
+  background-color: #022f96;
+  border-color: #022f96;
+  color: #fff;
+  border: none;
+}
+
+.modal-content .modal-form-container .modal-btn-submit:hover {
+  background-color: rgba(2, 47, 150, 0.8);
+  border-color: rgba(2, 47, 150, 0.8);
+}
+
+.modal-content .modal-form-container .modal-btn {
+  border-color: #011e56;
+  color: #011e56;
+  background-color: transparent;
+}
+
+.modal-content .modal-form-container .modal-btn:hover {
+  background-color: #c7d8fc;
+  border-color: #c7d8fc;
 }
 
 * {
