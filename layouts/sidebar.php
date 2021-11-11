@@ -17,7 +17,7 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                 </li>
             </a>
             <a href="./project.php">
-                <li class="nav-items <?= ($activePage == 'project') || ($activePage == 'activity') || ($activePage == 'task') || ($activePage == 'files') ? 'active-nav':''; ?>">
+                <li class="nav-items <?= ($activePage == 'project') || ($activePage == 'activity') || ($activePage == 'tasks') || ($activePage == 'files') ? 'active-nav':''; ?>">
                     <span class="ico">
                         <object class="svgClass" type="image/svg+xml" data="./assets/icons/project-ico.svg"></object>
                     </span>
@@ -51,7 +51,7 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
             <p class="pro-name">John Wick</p>
             <p class="pro-role">Web Developer</p>
         </div>
-        <img class="log-out-btn" src="./assets/icons/power-off-ico.svg" alt="" />
+        <a href="./auth/logoutController.php"><img class="log-out-btn" src="./assets/icons/power-off-ico.svg" alt="" /></a>
     </div>
 </div>
 <!--sidebar ends-->

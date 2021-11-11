@@ -51,6 +51,11 @@ window.addEventListener('load',() => {
 //     });
 // }
 
+    
+
+
+
+
 //duplicate div in modal box
     
 const addBtn = document.getElementById('addBtn');
@@ -67,3 +72,7 @@ const addBtn = document.getElementById('addBtn');
             original.parentNode.removeChild(clone);
         });
     });
+
+
+
+

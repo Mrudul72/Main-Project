@@ -1,3 +1,10 @@
+<?php
+include('./config/connect.php');
+if (isset($_SESSION["pmsSession"]) != session_id()) {
+    header("Location: ./index.php");
+    die();
+} else {
+?>
 <!DOCTYPE html>
 <html>
 
@@ -80,15 +87,14 @@
                       d-flex
                       justify-content-between
                       align-items-center
-                      my-2
-                    ">
+                      my-2">
                                     <h1 class="content-heading">Today's Tasks</h1>
                                     <button class="add-task-btn">Add Task +</button>
                                 </div>
                                 <div class="today-tasks">
                                     <div>
                                         <input class="styled-checkbox" id="styled-checkbox" type="checkbox"
-                                            value="value2" checked />
+                                            value="value2" />
                                         <label for="styled-checkbox"></label>
                                     </div>
                                     <div class="task-details">
@@ -102,7 +108,7 @@
                                 <div class="today-tasks">
                                     <div>
                                         <input class="styled-checkbox" id="styled-checkbox2" type="checkbox"
-                                            value="value2" checked />
+                                            value="value2" />
                                         <label for="styled-checkbox2"></label>
                                     </div>
                                     <div class="task-details">
@@ -192,8 +198,17 @@
         </div>
     </div>
 
-    <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+    </script>
     <script src="./js/app.js"></script>
+
 </body>
 
 </html>
+<?php
+}
+?>

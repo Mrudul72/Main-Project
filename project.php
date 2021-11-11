@@ -1,10 +1,5 @@
 <?php
-session_start();
 include('./config/connect.php');
-// if (isset($_SESSION["pmsSession"]) != session_id()) {
-//     header("Location: ./index.php");
-//     die();
-// } else {
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +39,7 @@ while($row=mysqli_fetch_array($result))
 	$proId=$row['project_id'];
     $proName=$row['project_name'];
 
-                echo"<div class='projects'>$proName</div>";
+                echo"<a href='./tasks.php' class='projects'>$proName</a>";
             }
             ?>
                 <div class='projects' data-toggle='modal' data-target='#addProjectModal'></div>

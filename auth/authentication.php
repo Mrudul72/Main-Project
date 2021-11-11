@@ -83,7 +83,8 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
             {
                 $userData=mysqli_fetch_assoc($checkLoginResult);
                 $_SESSION['pmsSession'] = session_id();
-                $_SESSION['userName'] = $userData['name'];
+                $_SESSION['userName'] = $userData['username'];
+                $_SESSION['userId'] = $userData['user_id'];
                 header("Location: ../dashboard.php");
                 die();
             }
