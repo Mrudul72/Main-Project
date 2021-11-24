@@ -1281,7 +1281,8 @@
 
 .task-page-container {
   padding: 1vw 0;
-  overflow: auto;
+  overflow-x: auto;
+  height: 73.5vh;
 }
 
 .task-page-container::-webkit-scrollbar {
@@ -1325,7 +1326,7 @@
 .task-items-container .task-container-header {
   width: 79%;
   position: absolute;
-  top: 0;
+  top: 1px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1336,7 +1337,7 @@
       -ms-flex-align: center;
           align-items: center;
   background-color: #fff;
-  padding: 1.5vw 0 1vw;
+  padding: 1.3vw 0 1vw 0;
 }
 
 .task-items-container .task-items {

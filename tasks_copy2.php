@@ -39,17 +39,18 @@ include('./config/connect.php');
                 <div class="col-12 task-page-container">
                     <div class="d-flex mx-n3">
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="1">
                                 <div class="task-container-header">
                                     <h1 class="content-heading">Backlog</h1>
                                     <button data-toggle='modal' data-target='#addTasksModal' class="add-task-item-btn">Add Task +</button>
                                 </div>
-                                <div class="pt-5">
+                                <div id="tasks-placeholder" class="pt-4">
                                 <?php
                                     $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                     $task_id = $row['task_id'];
+                                    // echo "<script>alert('$task_id');</script>";
                                     $task_title = $row['task_title'];
                                     $task_description = $row['task_description'];
                                     $task_team = $row['task_team'];
@@ -60,7 +61,7 @@ include('./config/connect.php');
                                     $val = mysqli_fetch_assoc($result2);
                                     $team_name = $val['team_title'];
                                     echo '
-                                    <div class="task-items" draggable="true">
+                                    <div id="'.$task_id.'" class="task-items" draggable="true">
                                         <div class="task-item-details">
                                             <p class="task-item-title">
                                                 ' . $task_title . '
@@ -75,14 +76,14 @@ include('./config/connect.php');
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="2">
                                 <div class="task-container-header">
                                     <h1 class="content-heading">Development</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
                                 </div>
-                                <div class="pt-5">
+                                <div class="pt-4">
                                 <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=2";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                     $task_id = $row['task_id'];
@@ -96,7 +97,7 @@ include('./config/connect.php');
                                     $val = mysqli_fetch_assoc($result2);
                                     $team_name = $val['team_title'];
                                     echo '
-                                    <div class="task-items" draggable="true">
+                                    <div id="'.$task_id.'" class="task-items" draggable="true">
                                         <div class="task-item-details">
                                             <p class="task-item-title">
                                                 ' . $task_title . '
@@ -124,14 +125,14 @@ include('./config/connect.php');
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="3">
                                 <div class="task-container-header">
                                     <h1 class="content-heading">Testing</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
                                 </div>
-                                <div class="pt-5">
+                                <div class="pt-4">
                                 <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=3";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                     $task_id = $row['task_id'];
@@ -145,7 +146,7 @@ include('./config/connect.php');
                                     $val = mysqli_fetch_assoc($result2);
                                     $team_name = $val['team_title'];
                                     echo '
-                                    <div class="task-items" draggable="true">
+                                    <div id="'.$task_id.'" class="task-items" draggable="true">
                                         <div class="task-item-details">
                                             <p class="task-item-title">
                                                 ' . $task_title . '
@@ -160,18 +161,19 @@ include('./config/connect.php');
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="4">
                                 <div class="task-container-header">
                                     <h1 class="content-heading">Done</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
                                 </div>
                                 
-                                <div class="pt-5">
+                                <div class="pt-4">
                                 <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=4";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                     $task_id = $row['task_id'];
+                                    
                                     $task_title = $row['task_title'];
                                     $task_description = $row['task_description'];
                                     $task_team = $row['task_team'];
@@ -182,7 +184,7 @@ include('./config/connect.php');
                                     $val = mysqli_fetch_assoc($result2);
                                     $team_name = $val['team_title'];
                                     echo '
-                                    <div class="task-items" draggable="true">
+                                    <div id="'.$task_id.'" class="task-items" draggable="true">
                                         <div class="task-item-details">
                                             <p class="task-item-title">
                                                 ' . $task_title . '
@@ -283,6 +285,11 @@ include('./config/connect.php');
     <script>
         //add new project
         $(document).ready(function() {
+            //load tasks
+        
+
+        //add new task
+
             $('#createProBtn').on('click', function() {
                 var proName = $('#pro-name').val();
                 var proDescription = $('#pro-description').val();
@@ -341,7 +348,7 @@ include('./config/connect.php');
             setTimeout(() => {
                 this.style.display = "none";
             }, 0);
-            console.log("dragStart");
+            // console.log("dragStart");
         }
 
         function dragEnd() {
@@ -349,7 +356,7 @@ include('./config/connect.php');
             setTimeout(() => {
                 this.style.display = "block";
             }, 0);
-            console.log("dragEnd");
+            // console.log("dragEnd");
         }
 
         all_status.forEach((status) => {
@@ -366,18 +373,36 @@ include('./config/connect.php');
 
         function dragEnter() {
             this.style.border = "1px dashed #ccc";
-            console.log("dragEnter");
+            // console.log("dragEnter");
         }
 
         function dragLeave() {
             this.style.border = "none";
-            console.log("dragLeave");
+            // console.log("dragLeave");
         }
 
         function dragDrop() {
             this.style.border = "none";
+            
             this.appendChild(draggableTodo);
             console.log("dropped");
+            //update task
+            let taskId = draggableTodo.id;
+            let taskStatus = this.id;
+            console.log(taskStatus)
+            $.ajax({
+                url: './server/updateTask.php',
+                type: 'POST',
+                data: {
+                    taskId: taskId,
+                    taskStatus: taskStatus
+                },
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+
+            
         }
     </script>
 </body>
