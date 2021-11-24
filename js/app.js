@@ -56,22 +56,30 @@ window.addEventListener('load',() => {
 
 
 
-//duplicate div in modal box
+   //duplicate div in modal box
     
-const addBtn = document.getElementById('addBtn');
-    let i = 0;
-    let original = document.getElementById('duplicater');
-    addBtn.addEventListener('click', function() {
-        let clone = original.cloneNode(true); // "deep" clone
-        clone.id = "duplicater" + ++i;
-        // or clone.id = ""; if the divs don't need an ID
-        original.parentNode.appendChild(clone);
-        clone.querySelector('#addBtn').style.display = 'none';
-        clone.querySelector('#delBtn').style.display = 'block';
-        clone.querySelector('#delBtn').addEventListener('click', function() {
-            original.parentNode.removeChild(clone);
-        });
-    });
+   const addBtn = document.getElementById('addBtn');
+   let i = 1;
+   let j = 1;
+   let original = document.getElementById('duplicater');
+   addBtn.addEventListener('click', function() {
+       let clone = original.cloneNode(true); // "deep" clone
+       clone.id = "duplicater" + ++i;
+       clone.querySelector('#pro-team1').id = "pro-team" + ++j;
+       // or clone.id = ""; if the divs don't need an ID
+       original.parentNode.appendChild(clone);
+       clone.querySelector('#addBtn').style.display = 'none';
+       clone.querySelector('#delBtn').style.display = 'block';
+       clone.querySelector('#delBtn').addEventListener('click', function() {
+            i--;
+            j--;
+           original.parentNode.removeChild(clone);
+       });
+       document.querySelector('#assign-count').value = j;
+   });
+
+
+  
 
 
 

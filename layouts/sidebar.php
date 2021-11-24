@@ -24,11 +24,13 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
                     <span>Projects</span>
                 </li>
             </a>
-            <li class="nav-items">
+            <a href="./schedule.php">
+            <li class="nav-items <?= ($activePage == 'schedule') ? 'active-nav':''; ?>">
                 <span class="ico">
                     <object class="svgClass" type="image/svg+xml" data="./assets/icons/schedule-ico.svg"></object>
                 </span><span>Schedule</span>
             </li>
+            </a>
             <!-- <li class="nav-items">
               <span class="ico"
                 ><img src="./assets/icons/files-ico.svg" alt="" /></span

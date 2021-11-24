@@ -61,7 +61,7 @@
                           data-toggle="dropdown"
                           aria-haspopup="true"
                           aria-expanded="false"
-                          data-offset="10,20"
+                          data-offset="5,10"
                         >
                           Action
                         </button>
@@ -71,7 +71,7 @@
                         >
                           <a class="dropdown-item" href="#">Action</a>
                           <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#" >Something else here</a>
+                          <a class="dropdown-item" href="#" >Something 1</a>
                         </div>
                         <img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">
                       </td>
@@ -89,7 +89,35 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                            data-offset="10,20"
+                            data-offset="5,10"
+                          >
+                            Action
+                          </button>
+                          <div
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenuOffset"
+                          >
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#" >Something 2</a>
+                          </div>
+                          <img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Redesign Brief 2019.pdf</td>
+                        <td>159 KB</td>
+                        <td>Mattie Blooman</td>
+                        <td><div class="tag">Marketing</div> </td>
+                        <td>08 Jan 2019</td>
+                        <td>
+                          <button
+                            class="dropdown-toggle action-btn"
+                            id="dropdownMenuOffset"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            data-offset="5,10"
                           >
                             Action
                           </button>
@@ -117,7 +145,7 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                            data-offset="10,20"
+                            data-offset="5,10"
                           >
                             Action
                           </button>
@@ -145,7 +173,7 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                            data-offset="10,20"
+                            data-offset="5,10"
                           >
                             Action
                           </button>
@@ -173,35 +201,7 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                            data-offset="10,20"
-                          >
-                            Action
-                          </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuOffset"
-                          >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#" >Something else here</a>
-                          </div>
-                          <img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Redesign Brief 2019.pdf</td>
-                        <td>159 KB</td>
-                        <td>Mattie Blooman</td>
-                        <td><div class="tag">Marketing</div> </td>
-                        <td>08 Jan 2019</td>
-                        <td>
-                          <button
-                            class="dropdown-toggle action-btn"
-                            id="dropdownMenuOffset"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            data-offset="10,20"
+                            data-offset="5,10"
                           >
                             Action
                           </button>
