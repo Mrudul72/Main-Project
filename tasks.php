@@ -36,7 +36,7 @@
                 <div class="col-12 task-page-container">
                 <div class="d-flex mx-n3">
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="backlog" data-value="1">
                                 <div class="d-flex justify-content-between align-items-center my-2">
                                     <h1 class="content-heading">Backlog</h1>
                                     <button data-toggle='modal' data-target='#addTasksModal' class="add-task-item-btn">Add Task +</button>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="development" data-value="2">
                                 <div class="d-flex justify-content-between align-items-center my-2">
                                     <h1 class="content-heading">Development</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="testing" data-value="3">
                                 <div class="d-flex justify-content-between align-items-center my-2">
                                     <h1 class="content-heading">Testing</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
+                            <div class="task-items-container" id="done" data-value="4">
                                 <div class="d-flex justify-content-between align-items-center my-2">
                                     <h1 class="content-heading">Done</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
@@ -243,6 +243,52 @@
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
     </script>
     <script src="./js/app.js"></script>
+
+    <script>
+    //add new project
+    $(document).ready(function() {
+        $('#createProBtn').on('click', function() {
+            var proName = $('#pro-name').val();
+            var proDescription = $('#pro-description').val();
+            var proStartDate = $('#pro-start-date').val();
+            var proEndDate = $('#pro-end-date').val();
+            var proPriority = $('#pro-priority').val();
+            var proTeam = $('#pro-team').val();
+            var proTeamCount = $('#assign-count').val();
+            var proTeamArray = [];
+            for (var i = 1; i <= proTeamCount; i++) {
+                proTeamArray.push($('#pro-team' + i).val());
+            }
+            if (proName != '' && proDescription != '' && proStartDate != '' && proEndDate != '' &&
+                proPriority != '' && proTeam != '') {
+                $("#createProBtn").attr("disabled", "disabled");
+                $.ajax({
+                    url: './server/createProject.php',
+                    type: 'POST',
+                    data: {
+                        proName: proName,
+                        proDescription: proDescription,
+                        proStartDate: proStartDate,
+                        proEndDate: proEndDate,
+                        proPriority: proPriority,
+                        // proTeam: proTeam,
+                        // proTeamArray: proTeamArray,
+                        proStatus: 1
+                    },
+                    success: function(data) {
+                        $("#createProBtn").removeAttr("disabled");
+                        $('#createProForm').find('input:text').val('');
+                        $('#success').show();
+                        $('#message').html('Project created successfully !');
+                        $('#addProjectModal').modal('hide');
+                    }
+                });
+            } else {
+                alert('Please fill all the field !');
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>

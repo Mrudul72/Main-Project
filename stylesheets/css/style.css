@@ -1285,7 +1285,7 @@
 }
 
 .task-page-container::-webkit-scrollbar {
-  height: 12px;
+  height: 10px;
 }
 
 .task-page-container::-webkit-scrollbar-track {
@@ -1303,6 +1303,40 @@
   background-color: #fff;
   border-radius: 12px;
   padding: 1.8vw 1.8vw;
+  max-height: 67.5vh;
+  overflow-y: auto;
+}
+
+.task-items-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.task-items-container::-webkit-scrollbar-track {
+  background-color: #e0eaff;
+  border-radius: 10px;
+  margin: 6.5vw 0 0 0;
+}
+
+.task-items-container::-webkit-scrollbar-thumb {
+  background-color: #011e56;
+  border-radius: 10px;
+}
+
+.task-items-container .task-container-header {
+  width: 79%;
+  position: absolute;
+  top: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #fff;
+  padding: 1.5vw 0 1vw;
 }
 
 .task-items-container .task-items {
