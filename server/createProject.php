@@ -3,7 +3,7 @@ include('../config/connect.php');
 $count;
 extract($_POST);
 $project_created_date=date("d-m-Y");
-$project_manager=1;
+$project_manager= $_SESSION['userId'];
 //insert into database
 $sql = "INSERT INTO tbl_project (project_name, project_description, project_start_date, project_end_date, project_status, project_priority, project_manager_id, project_created_date) VALUES ('$proName', '$proDescription', '$proStartDate', '$proEndDate', '$proStatus', '$proPriority', '$project_manager', '$project_created_date')";
 $result = mysqli_query($connect, $sql); 

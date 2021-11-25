@@ -49,7 +49,7 @@ while($row=mysqli_fetch_array($result))
 	$proId=$row['project_id'];
     $proName=$row['project_name'];
 
-                echo"<a href='./tasks.php' class='projects'>$proName</a>";
+                echo"<a href='./tasks.php' class='projects pro' id='$proId'>$proName</a>";
             }
             ?>
                 <div class='projects' data-toggle='modal' data-target='#addProjectModal'></div>
@@ -105,10 +105,16 @@ while($row=mysqli_fetch_array($result))
                                     <div id="duplicater" class="input-group mb-3">
                                         <select class="custom-select" name="pro-team" id="pro-team1"
                                             aria-label="Example select with button addon">
-                                            <option disabled selected>Choose...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option disabled selected>Select teams</option>
+                                            <?php
+                                $sql = "SELECT * FROM tbl_teams";
+                                $result = mysqli_query($connect, $sql);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $team_id = $row['team_id'];
+                                    $team_title = $row['team_title'];
+                                    echo '<option value="' . $team_id . '">' . $team_title . '</option>';
+                                }
+                                ?>
                                         </select>
                                         <div class="input-group-append">
                                             <button id="addBtn" class="btn btn-outline-secondary modal-btn"
@@ -135,6 +141,30 @@ while($row=mysqli_fetch_array($result))
                 </div>
             </div>
             <!-- Modal ends-->
+
+            <!--Confirmation Modal start-->
+
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+                aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this project?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="projectDeleteBtn" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Confirmation Modal ends-->
         </div>
     </div>
 
@@ -179,15 +209,24 @@ while($row=mysqli_fetch_array($result))
                     success: function(data) {
                         $("#createProBtn").removeAttr("disabled");
                         $('#createProForm').find('input:text').val('');
+                        location.reload();
                         $('#success').show();
                         $('#message').html('Project created successfully !');
                         $('#addProjectModal').modal('hide');
+                        setTimeout(function() {
+                            $('#success').hide();
+
+                        }, 3000);
+
                     }
                 });
             } else {
                 alert('Please fill all the field !');
             }
         });
+
+
+
     });
     </script>
 

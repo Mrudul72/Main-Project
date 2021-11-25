@@ -1,10 +1,11 @@
 <?php
 $status = $_POST['status'];
 include('../config/connect.php');
-$sql = "SELECT * FROM tbl_tasks WHERE task_status= $status ";
+$sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
 $result = mysqli_query($connect, $sql);
 while ($row = mysqli_fetch_assoc($result)) {
     $task_id = $row['task_id'];
+    // echo "<script>alert('$task_id');</script>";
     $task_title = $row['task_title'];
     $task_description = $row['task_description'];
     $task_team = $row['task_team'];
@@ -14,15 +15,13 @@ while ($row = mysqli_fetch_assoc($result)) {
     $result2 = mysqli_query($connect, $sql2);
     $val = mysqli_fetch_assoc($result2);
     $team_name = $val['team_title'];
-    echo '
-        <div id="'.$task_id.'" class="task-items" draggable="true" >
-            <div class="task-item-details">
-                <p class="task-item-title">
-                    ' . $task_title . '
-                </p>
-                <p class="task-item-sub-title">' . $team_name . '</p>
-            </div>
-        </div>
-        ';
-}
-?>
+    echo '<div id="' . $task_id . '" class="task-items" draggable="true">
+                        <div class="task-item-details">
+                            <p class="task-item-title">
+                                  ' . $task_title . '
+                                    </p>
+                             <p class="task-item-sub-title">' . $team_name . '</p>
+                        </div>
+                </div>';
+    }
+    ?>
