@@ -1,5 +1,10 @@
 <?php
 include('./config/connect.php');
+session_start();
+if (isset($_SESSION["pmsSession"]) != session_id()) {
+    header("Location: ./index.php");
+    die();
+} else {
 ?>
 
 <!DOCTYPE html>
@@ -233,3 +238,6 @@ while($row=mysqli_fetch_array($result))
 </body>
 
 </html>
+<?php
+}
+?>

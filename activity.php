@@ -1,3 +1,11 @@
+<?php
+include('./config/connect.php');
+session_start();
+if (isset($_SESSION["pmsSession"]) != session_id()) {
+    header("Location: ./index.php");
+    die();
+} else {
+?>
 <!DOCTYPE html>
 <html>
 
@@ -130,3 +138,6 @@
 </body>
 
 </html>
+<?php
+}
+?>

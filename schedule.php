@@ -1,6 +1,10 @@
 <?php
-error_reporting(0);
-ini_set('display_errors', 0);
+include('./config/connect.php');
+session_start();
+if (isset($_SESSION["pmsSession"]) != session_id()) {
+    header("Location: ./index.php");
+    die();
+} else {
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +64,7 @@ ini_set('display_errors', 0);
           events: [
             {
               title: "All Day Event",
-              start: "2020-09-01",
+              start: "2021-11-26",
             },
             {
               title: "Long Event",
@@ -79,7 +83,7 @@ ini_set('display_errors', 0);
             },
             {
               title: "Conference",
-              start: "2020-09-11",
+              start: "2021-11-20",
               end: "2020-09-13",
             },
             {
@@ -93,7 +97,7 @@ ini_set('display_errors', 0);
             },
             {
               title: "Meeting",
-              start: "2020-09-12T14:30:00",
+              start: "2021-11-25T14:30:00",
             },
             {
               title: "Happy Hour",
@@ -199,3 +203,6 @@ ini_set('display_errors', 0);
     <script src="./js/app.js"></script>
   </body>
 </html>
+<?php
+}
+?>

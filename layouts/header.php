@@ -1,6 +1,5 @@
 <?php 
 include('./config/connect.php');
-session_start();
 $activePage = basename($_SERVER['PHP_SELF'], ".php");
 $userName = $_SESSION['userName'];
 ?>
@@ -13,23 +12,27 @@ $userName = $_SESSION['userName'];
                 <img class="header-ico" src="./assets/icons/search-ico.svg" alt="search" />
             </div>
         </div>
-        <div class="header-box" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <img class="header-ico" src="./assets/icons/bell-ico.svg" alt="notification" />
-            <div class="dropdown-menu" id="dropdownMenuButton" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+        <div>
+            <div class="header-box" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" data-offset="5,10">
+                <img class="header-ico" src="./assets/icons/bell-ico.svg" alt="notification" />
+            </div>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                <a class="dropdown-item" href="#">Action 1</a>
+                <a class="dropdown-item" href="#">Another action 1</a>
+                <a class="dropdown-item" href="#">Something </a>
             </div>
         </div>
 
-        <div class="header-box" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <img class="header-ico" src="./assets/icons/settings-ico.svg" alt="settings" />
-            <div class="dropdown-menu " id="dropdownMenuButton2" aria-labelledby="dropdownMenuButton2">
+        <div>
+            <div class="header-box" id="dropdownMenuOffset2" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" data-offset="5,10">
+                <img class="header-ico" src="./assets/icons/settings-ico.svg" alt="settings" />
+            </div>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset2">
                 <a class="dropdown-item" href="#">Action</a>
                 <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something</a>
+                <a class="dropdown-item" href="#">Something 2</a>
             </div>
         </div>
 

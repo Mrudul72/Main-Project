@@ -23,6 +23,7 @@ $secondary-hover-color: #c7d8fc;
 @import "./project";
 @import "./files";
 @import "./tasks";
+@import "./customContextMenu";
 
 
 
@@ -57,4 +58,8 @@ body {
     background-color: $text-dark;
     border-radius: 100px;
   }
+}
+
+textarea,input[type = text],input[type = password],input[type = email],input[type = number],select{
+  color: $primary-color !important;
 }

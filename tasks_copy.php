@@ -16,7 +16,7 @@ include('./config/connect.php');
     <link rel="icon" href="./assets/images/logo2.png" type="image/icon type" />
 </head>
 
-<body class="dashboard-body">
+<body class="dashboard-body" style="overflow-y: hidden;">
     <div class="dashboard-container">
         <!--sidebar goes here-->
         <?php include_once("./layouts/sidebar.php"); ?>
@@ -39,28 +39,29 @@ include('./config/connect.php');
                 <div class="col-12 task-page-container">
                     <div class="d-flex mx-n3">
                         <div class="col-4">
-                            <div class="task-items-container">
-                                <div class="d-flex justify-content-between align-items-center my-2">
+                            <div class="task-items-container" id="1">
+                                <div class="task-container-header">
                                     <h1 class="content-heading">Backlog</h1>
-                                    <button id="addTaskBtn" data-toggle='modal' data-target='#addTasksModal' class="add-task-item-btn">Add Task +</button>
+                                    <button data-toggle='modal' data-target='#addTasksModal' class="add-task-item-btn">Add Task +</button>
                                 </div>
-                                <div id="backlog">
-                                <?php
+                                <div id="tasks-placeholder" class="pt-4">
+                                    <?php
                                     $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
-                                    $task_id = $row['task_id'];
-                                    $task_title = $row['task_title'];
-                                    $task_description = $row['task_description'];
-                                    $task_team = $row['task_team'];
-                                    $task_added_by = $row['task_added_by'];
-                                    $task_status = $row['task_status'];
-                                    $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
-                                    $result2 = mysqli_query($connect, $sql2);
-                                    $val = mysqli_fetch_assoc($result2);
-                                    $team_name = $val['team_title'];
-                                    echo '
-                                    <div class="task-items" draggable="true">
+                                        $task_id = $row['task_id'];
+                                        // echo "<script>alert('$task_id');</script>";
+                                        $task_title = $row['task_title'];
+                                        $task_description = $row['task_description'];
+                                        $task_team = $row['task_team'];
+                                        $task_added_by = $row['task_added_by'];
+                                        $task_status = $row['task_status'];
+                                        $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                        $result2 = mysqli_query($connect, $sql2);
+                                        $val = mysqli_fetch_assoc($result2);
+                                        $team_name = $val['team_title'];
+                                        echo '
+                                    <div id="' . $task_id . '" class="task-items" draggable="true">
                                         <div class="task-item-details">
                                             <p class="task-item-title">
                                                 ' . $task_title . '
@@ -72,41 +73,42 @@ include('./config/connect.php');
                                     }
                                     ?>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
-                                <div class="d-flex justify-content-between align-items-center my-2">
+                            <div class="task-items-container" id="2">
+                                <div class="task-container-header">
                                     <h1 class="content-heading">Development</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
                                 </div>
-                                <?php
+                                <div class="pt-4">
+                                    <?php
                                     $sql = "SELECT * FROM tbl_tasks WHERE task_status=2";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
-                                    $task_id = $row['task_id'];
-                                    $task_title = $row['task_title'];
-                                    $task_description = $row['task_description'];
-                                    $task_team = $row['task_team'];
-                                    $task_added_by = $row['task_added_by'];
-                                    $task_status = $row['task_status'];
-                                    $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
-                                    $result2 = mysqli_query($connect, $sql2);
-                                    $val = mysqli_fetch_assoc($result2);
-                                    $team_name = $val['team_title'];
-                                    echo '
-                                    <div class="task-items" draggable="true">
+                                        $task_id = $row['task_id'];
+                                        $task_title = $row['task_title'];
+                                        $task_description = $row['task_description'];
+                                        $task_team = $row['task_team'];
+                                        $task_added_by = $row['task_added_by'];
+                                        $task_status = $row['task_status'];
+                                        $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                        $result2 = mysqli_query($connect, $sql2);
+                                        $val = mysqli_fetch_assoc($result2);
+                                        $team_name = $val['team_title'];
+                                        echo '
+                                    <div id="' . $task_id . '" class="task-items" draggable="true">
                                         <div class="task-item-details">
                                             <p class="task-item-title">
                                                 ' . $task_title . '
                                             </p>
-                                            <p class="task-item-sub-title">'.$team_name.'</p>
+                                            <p class="task-item-sub-title">' . $team_name . '</p>
                                         </div>
                                     </div>
                                     ';
                                     }
                                     ?>
+                                </div>
                                 <div class="task-items" draggable="true">
                                     <div class="task-item-details">
                                         <p class="task-item-title">
@@ -120,63 +122,80 @@ include('./config/connect.php');
                                     </div>
 
                                 </div>
-                                <div class="task-items" draggable="true">
-                                    <div class="task-item-details">
-                                        <p class="task-item-title">
-                                            Find top 5 customers and get reviews from them
-                                        </p>
-                                        <p class="task-item-sub-title">Marketing</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
-                                <div class="d-flex justify-content-between align-items-center my-2">
+                            <div class="task-items-container" id="3">
+                                <div class="task-container-header">
                                     <h1 class="content-heading">Testing</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
                                 </div>
-                                <div class="task-items">
-                                    <div class="task-item-details">
-                                        <p class="task-item-title">
-                                            E-mail after registration so that I can confirm my
-                                            address
-                                        </p>
-                                        <p class="task-item-sub-title">Development</p>
+                                <div class="pt-4">
+                                    <input type='hidden' value='' id='txt_id'>
+                                    <?php
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=3";
+                                    $result = mysqli_query($connect, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $task_id = $row['task_id'];
+                                        $task_title = $row['task_title'];
+                                        $task_description = $row['task_description'];
+                                        $task_team = $row['task_team'];
+                                        $task_added_by = $row['task_added_by'];
+                                        $task_status = $row['task_status'];
+                                        $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                        $result2 = mysqli_query($connect, $sql2);
+                                        $val = mysqli_fetch_assoc($result2);
+                                        $team_name = $val['team_title'];
+                                        echo '
+                                    <div id="' . $task_id . '" class="task-items" draggable="true">
+                                        <div class="task-item-details">
+                                            <p class="task-item-title">
+                                                ' . $task_title . '
+                                            </p>
+                                            <p class="task-item-sub-title">' . $team_name . '</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="task-items">
-                                    <div class="task-item-details">
-                                        <p class="task-item-title">
-                                            Find top 5 customers and get reviews from them
-                                        </p>
-                                        <p class="task-item-sub-title">Marketing</p>
-                                    </div>
+                                    ';
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="task-items-container">
-                                <div class="d-flex justify-content-between align-items-center my-2">
+                            <div class="task-items-container" id="4">
+                                <div class="task-container-header">
                                     <h1 class="content-heading">Done</h1>
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
                                 </div>
-                                <div class="task-items">
-                                    <div class="task-item-details">
-                                        <p class="task-item-title">
-                                            E-mail after registration so that I can confirm my
-                                            address
-                                        </p>
-                                        <p class="task-item-sub-title">Development</p>
+
+                                <div class="pt-4">
+                                    <?php
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=4";
+                                    $result = mysqli_query($connect, $sql);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $task_id = $row['task_id'];
+
+                                        $task_title = $row['task_title'];
+                                        $task_description = $row['task_description'];
+                                        $task_team = $row['task_team'];
+                                        $task_added_by = $row['task_added_by'];
+                                        $task_status = $row['task_status'];
+                                        $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                        $result2 = mysqli_query($connect, $sql2);
+                                        $val = mysqli_fetch_assoc($result2);
+                                        $team_name = $val['team_title'];
+                                        echo '
+                                    <div id="' . $task_id . '" class="task-items" draggable="true">
+                                        <div class="task-item-details">
+                                            <p class="task-item-title">
+                                                ' . $task_title . '
+                                            </p>
+                                            <p class="task-item-sub-title">' . $team_name . '</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="task-items">
-                                    <div class="task-item-details">
-                                        <p class="task-item-title">
-                                            Find top 5 customers and get reviews from them
-                                        </p>
-                                        <p class="task-item-sub-title">Marketing</p>
-                                    </div>
+                                    ';
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -186,14 +205,14 @@ include('./config/connect.php');
             </div>
         </div>
     </div>
-    <!-- Modal starts-->
+    <!-- add task Modal starts-->
     <div class="modal fade" id="addTasksModal" tabindex="-1" aria-labelledby="addTasksModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="createProForm" class="modal-form-container" method="post">
+                <form id="addTaskForm" class="modal-form-container" method="post">
                     <input type="hidden" name="assign-count" value="0" id="assign-count">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addProjectModalLabel">Create project</h5>
+                        <h5 class="modal-title" id="addtaskjectModalLabel">Add Tasks</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -201,60 +220,89 @@ include('./config/connect.php');
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label for="pro-name">Project name</label>
-                            <input type="text" name="pro-name" id="pro-name" class="form-control" placeholder="Project name" required autocomplete="off" />
+                            <label for="task-title">Task title</label>
+                            <textarea name="task-title" id="task-detail-title" class="form-control" placeholder="task title" autocomplete="off"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="pro-description" class="col-form-label">Project description:</label>
-                            <textarea id="pro-description" name="pro-description" placeholder="A breif description about project" class="form-control"></textarea>
+                            <label for="task-description" class="col-form-label">Task description:</label>
+                            <textarea id="task-description" name="task-description" placeholder="A breif description about task" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="pro-start-date">Start date</label>
-                            <input type="date" name="pro-start-date" id="pro-start-date" class="form-control" placeholder="Project name" required autocomplete="off" />
-                        </div>
-                        <div class="form-group">
-                            <label for="pro-end-date">End date</label>
-                            <input type="date" name="pro-end-date" id="pro-end-date" class="form-control" placeholder="Project name" required autocomplete="off" />
-                        </div>
-                        <div class="form-group">
-                            <label for="pro-priority">Project priority</label>
-                            <select class="custom-select" name="pro-priority" id="pro-priority" aria-label="Example select with button addon">
-                                <option disabled selected>Choose priority</option>
-                                <option value="1">Top level</option>
-                                <option value="2">Medium level</option>
-                                <option value="3">Low level</option>
+                            <label for="task-team">Assign team</label>
+                            <select name="task-team" id="task-team" class="form-control">
+                                <option disabled selected>Select Team</option>
+                                <?php
+                                $sql = "SELECT * FROM tbl_teams";
+                                $result = mysqli_query($connect, $sql);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $team_id = $row['team_id'];
+                                    $team_title = $row['team_title'];
+                                    echo '<option value="' . $team_id . '">' . $team_title . '</option>';
+                                }
+                                ?>
                             </select>
-                        </div>
-                        <div id="team-select" class="form-group">
-                            <label for="pro-teams">Assign teams</label>
-                            <div id="duplicater" class="input-group mb-3">
-                                <select class="custom-select" name="pro-team" id="pro-team1" aria-label="Example select with button addon">
-                                    <option disabled selected>Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <button id="addBtn" class="btn btn-outline-secondary modal-btn" type="button">Add
-                                        More</button>
-                                </div>
-                                <div class="input-group-append">
-                                    <button style="display:none;" id="delBtn" class="btn btn-outline-secondary modal-btn" type="button">Delete
-                                    </button>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
-                        <button id="createProBtn" type="button" class="btn btn-primary modal-btn-submit">Create</button>
+                        <button id="addTaskBtn" type="submit" class="btn btn-primary modal-btn-submit">Add</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- Modal starts-->
+    <!--add task  Modal ends-->
+
+    <!-- task details Modal starts-->
+    <div class="modal fade" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="taskDetailsForm" class="modal-form-container" method="post">
+                    <input type="hidden" name="assign-count" value="0" id="assign-count">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskDetailsModalLabel">Task Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- content display from taskDetails -->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+                        <button id="updateTaskBtn" type="submit" class="btn btn-primary modal-btn-submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--task details  Modal ends-->
+
+    <!--Confirmation Modal start-->
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this task?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="taskDeleteBtn" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Confirmation Modal ends-->
 
 
     <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
@@ -264,72 +312,99 @@ include('./config/connect.php');
     </script>
     <script src="./js/app.js"></script>
 
+
     <script>
         $(document).ready(function() {
-            //load task
-            <?php
+            var task_id;
 
-            include('../config/connect.php');
-            $sql = "SELECT * FROM tbl_tasks";
-            $result = mysqli_query($connect, $sql);
-            $row = mysqli_fetch_assoc($result);
-            ?>
-            switch (status) {
-                case 1:
-                    $("#backlog").load("./server/loadFiles.php", {
-                        filesCount: filesCount
-                    });
-            }
-
-            // $(".view-more-btn").click(function() {
-
-            //   $("#backlog").load("./server/loadFiles.php",{
-            //     filesCount: filesCount
-            //   });
-            // });
+            $('#confirmationModal').modal({
+                show: false
+            });
 
             //add new task
+
             $('#addTaskBtn').on('click', function() {
-                var proName = $('#pro-name').val();
-                var proDescription = $('#pro-description').val();
-                var proStartDate = $('#pro-start-date').val();
-                var proEndDate = $('#pro-end-date').val();
-                var proPriority = $('#pro-priority').val();
-                var proTeam = $('#pro-team').val();
-                var proTeamCount = $('#assign-count').val();
-                var proTeamArray = [];
-                for (var i = 1; i <= proTeamCount; i++) {
-                    proTeamArray.push($('#pro-team' + i).val());
-                }
-                if (proName != '' && proDescription != '' && proStartDate != '' && proEndDate != '' &&
-                    proPriority != '' && proTeam != '') {
-                    $("#createProBtn").attr("disabled", "disabled");
+                var task_title = $('#task-title').val();
+                var task_description = $('#task-description').val();
+                var task_team = $('#task-team').val();
+                task_added_by = <?php echo $_SESSION['userId']; ?>;
+                var task_status = 1;
+
+                if (task_title != '' && task_description != '' && task_team != '') {
+                    console.log(task_title);
+                    $("#addTaskBtn").attr("disabled", "disabled");
                     $.ajax({
-                        url: './server/createProject.php',
-                        type: 'POST',
+                        url: "./server/addTasks.php",
+                        method: "POST",
                         data: {
-                            proName: proName,
-                            proDescription: proDescription,
-                            proStartDate: proStartDate,
-                            proEndDate: proEndDate,
-                            proPriority: proPriority,
-                            // proTeam: proTeam,
-                            // proTeamArray: proTeamArray,
-                            proStatus: 1
+                            task_title: task_title,
+                            task_description: task_description,
+                            task_team: task_team,
+                            task_added_by: task_added_by,
+                            task_status: task_status
                         },
                         success: function(data) {
-                            $("#createProBtn").removeAttr("disabled");
-                            $('#createProForm').find('input:text').val('');
-                            $('#success').show();
-                            $('#message').html('Project created successfully !');
-                            $('#addProjectModal').modal('hide');
+                            $("#addTaskBtn").removeAttr("disabled");
+                            $('#addTasksModal').modal('hide');
+                            $('#addTasksModal').on('hidden.bs.modal', function() {
+                                location.reload();
+                            });
                         }
                     });
                 } else {
                     alert('Please fill all the field !');
                 }
             });
+
+
+            //task details modal
+            $('.task-items').on('click', function() {
+                task_id = $(this).attr('id');
+                
+
+                $.ajax({
+                    url: "./server/taskDetails.php",
+                    method: "POST",
+                    data: {
+                        task_id: task_id
+                    },
+                    success: function(data) {
+                        $('#taskDetailsModal').modal('show');
+                        $('#taskDetailsModal').on('shown.bs.modal', function() {
+                            $('#taskDetailsModal .modal-body').html(data);
+                        });
+                    }
+                });
+            });
+
+
+
+            //delete task
+            // $('#deleteTaskBtn').on('click', function() {
+            //     alert(task_id);
+            //     // $('#confirmationModal').modal('show');
+            //     // task_id = $(this).attr('id');
+            //     // var task_status = 0;
+            //     // $("#taskDeleteBtn").on('click', function() {
+            //     //     $.ajax({
+            //     //         url: "./server/deleteTask.php",
+            //     //         method: "POST",
+            //     //         data: {
+            //     //             task_id: task_id,
+            //     //             task_status: task_status
+            //     //         },
+            //     //         success: function(data) {
+            //     //             location.reload();
+            //     //         }
+            //     //     });
+            //     // });
+
+            // });
+            //delete task ends
+
+
         });
+
 
         //dragrable
         const todos = document.querySelectorAll(".task-items");
@@ -346,7 +421,7 @@ include('./config/connect.php');
             setTimeout(() => {
                 this.style.display = "none";
             }, 0);
-            console.log("dragStart");
+            // console.log("dragStart");
         }
 
         function dragEnd() {
@@ -354,7 +429,7 @@ include('./config/connect.php');
             setTimeout(() => {
                 this.style.display = "block";
             }, 0);
-            console.log("dragEnd");
+            // console.log("dragEnd");
         }
 
         all_status.forEach((status) => {
@@ -371,18 +446,34 @@ include('./config/connect.php');
 
         function dragEnter() {
             this.style.border = "1px dashed #ccc";
-            console.log("dragEnter");
+            // console.log("dragEnter");
         }
 
         function dragLeave() {
             this.style.border = "none";
-            console.log("dragLeave");
+            // console.log("dragLeave");
         }
 
         function dragDrop() {
             this.style.border = "none";
+
             this.appendChild(draggableTodo);
             console.log("dropped");
+            //update task
+            let taskId = draggableTodo.id;
+            let taskStatus = this.id;
+            console.log(taskStatus)
+            $.ajax({
+                url: './server/updateTask.php',
+                type: 'POST',
+                data: {
+                    taskId: taskId,
+                    taskStatus: taskStatus
+                },
+                success: function(data) {
+                    console.log(data);
+                }
+            });
         }
     </script>
 </body>

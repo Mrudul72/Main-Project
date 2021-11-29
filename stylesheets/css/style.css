@@ -1351,6 +1351,11 @@
   background-color: #e0eaff;
   margin: 2vw 0;
   border-radius: 12px;
+  cursor: pointer;
+}
+
+.task-items-container .task-items:hover {
+  background-color: #c7d8fc;
 }
 
 .task-items-container .task-items .task-item-details {
@@ -1406,6 +1411,50 @@
   border: none;
 }
 
+.secondary-modal-btn {
+  width: 100%;
+  padding: 0.5vw 0;
+  border: none;
+  border-radius: 6px;
+  color: #011e56;
+  background-color: #e0eaff;
+}
+
+.secondary-modal-btn:hover {
+  background-color: #c7d8fc;
+}
+
+/* Each of the items in the list */
+.context-menu {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid #CCC;
+  white-space: nowrap;
+  font-family: sans-serif;
+  background: #FFF;
+  color: #333;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.context-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  list-style-type: none;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.context-menu li:hover {
+  background-color: #DEF;
+}
+
 * {
   font-family: "Poppins", sans-serif;
   -webkit-box-sizing: border-box;
@@ -1440,5 +1489,9 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: #011e56;
   border-radius: 100px;
+}
+
+textarea, input[type=text], input[type=password], input[type=email], input[type=number], select {
+  color: #022f96 !important;
 }
 /*# sourceMappingURL=style.css.map */

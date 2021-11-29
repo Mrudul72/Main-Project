@@ -1,5 +1,6 @@
 <?php
 include('./config/connect.php');
+session_start();
 if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
@@ -95,22 +96,22 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
                                     $result = mysqli_query($connect, $sql);
                                     $i = 0;
-                                    if(mysqli_num_rows($result) > 0){
-                                        
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        $i++;
-                                        $task_id = $row['task_id'];
-                                        // echo "<script>alert('$task_id');</script>";
-                                        $task_title = $row['task_title'];
-                                        $task_description = $row['task_description'];
-                                        $task_team = $row['task_team'];
-                                        $task_added_by = $row['task_added_by'];
-                                        $task_status = $row['task_status'];
-                                        $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
-                                        $result2 = mysqli_query($connect, $sql2);
-                                        $val = mysqli_fetch_assoc($result2);
-                                        $team_name = $val['team_title'];
-                                        echo '<div class="today-tasks">
+                                    if (mysqli_num_rows($result) > 0) {
+
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $i++;
+                                            $task_id = $row['task_id'];
+                                            // echo "<script>alert('$task_id');</script>";
+                                            $task_title = $row['task_title'];
+                                            $task_description = $row['task_description'];
+                                            $task_team = $row['task_team'];
+                                            $task_added_by = $row['task_added_by'];
+                                            $task_status = $row['task_status'];
+                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                            $result2 = mysqli_query($connect, $sql2);
+                                            $val = mysqli_fetch_assoc($result2);
+                                            $team_name = $val['team_title'];
+                                            echo '<div class="today-tasks">
                                         <div id="checkParent">
                                             <input class="styled-checkbox" id="' . $task_id . '" type="checkbox"
                                                 value="value2" />
@@ -123,19 +124,18 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             <p class="task-sub-title">' . $team_name . '</p>
                                         </div>
                                     </div>';
-                                    }
-                                }
-                                else{
-                                    echo '<div class="today-tasks">
+                                        }
+                                    } else {
+                                        echo '<div class="today-tasks">
                                         
                                         <div id="checkSibling" class="task-details">
                                             <p class="task-title">
                                             No tasks in backlog
                                             </p>
                                             
-                                        </div>
+                                        </div>.
                                     </div>';
-                                }
+                                    }
                                     ?>
                                 </div>
                             </div>
@@ -218,7 +218,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         </div>
 
 
-        <!-- Modal starts-->
+        <!-- add task Modal starts-->
         <div class="modal fade" id="addTasksModal" tabindex="-1" aria-labelledby="addTasksModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -265,7 +265,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 </div>
             </div>
         </div>
-        <!-- Modal ends-->
+        <!--add task  Modal ends-->
 
         <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -286,32 +286,69 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             //     })
             // }
 
+            $(document).ready(function() {
+                //add new task
 
-            $(".styled-checkbox").change(function() {
-                var $this = $(this);
-                let taskStatus = 4;
-                let checkParent = $this.parent();
-                let checkSibling = checkParent.next();
-                let title = checkSibling.find('.task-title');
-                if ($this.is(":checked")) {
-                    let taskId = $this.attr("id");
-                    $.ajax({
-                        url: './server/updateTask.php',
-                        type: 'POST',
-                        data: {
-                            taskId: taskId,
-                            taskStatus: taskStatus
-                        },
-                        success: function(data) {
-                            title.addClass('strike');
-                            setTimeout(function() {
-                                location.reload();
-                            }, 2000);
-                        }
-                    });
-                } else {
-                    alert($this.attr("id") + " is unchecked");
-                }
+                $('#addTaskBtn').on('click', function() {
+                    var task_title = $('#task-title').val();
+                    var task_description = $('#task-description').val();
+                    var task_team = $('#task-team').val();
+                    task_added_by = <?php echo $_SESSION['userId']; ?>;
+                    var task_status = 1;
+
+                    if (task_title != '' && task_description != '' && task_team != '') {
+                        console.log(task_title);
+                        $("#addTaskBtn").attr("disabled", "disabled");
+                        $.ajax({
+                            url: "./server/addTasks.php",
+                            method: "POST",
+                            data: {
+                                task_title: task_title,
+                                task_description: task_description,
+                                task_team: task_team,
+                                task_added_by: task_added_by,
+                                task_status: task_status
+                            },
+                            success: function(data) {
+                                $("#addTaskBtn").removeAttr("disabled");
+                                $('#addTasksModal').modal('hide');
+                                $('#addTasksModal').on('hidden.bs.modal', function() {
+                                    location.reload();
+                                });
+                            }
+                        });
+                    } else {
+                        alert('Please fill all the field !');
+                    }
+                });
+
+                //checklist task
+                $(".styled-checkbox").change(function() {
+                    var $this = $(this);
+                    let taskStatus = 4;
+                    let checkParent = $this.parent();
+                    let checkSibling = checkParent.next();
+                    let title = checkSibling.find('.task-title');
+                    if ($this.is(":checked")) {
+                        let taskId = $this.attr("id");
+                        $.ajax({
+                            url: './server/updateTask.php',
+                            type: 'POST',
+                            data: {
+                                taskId: taskId,
+                                taskStatus: taskStatus
+                            },
+                            success: function(data) {
+                                title.addClass('strike');
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 2000);
+                            }
+                        });
+                    } else {
+                        alert($this.attr("id") + " is unchecked");
+                    }
+                });
             });
         </script>
     </body>

@@ -1,5 +1,10 @@
 <?php
 include('./config/connect.php');
+session_start();
+if (isset($_SESSION["pmsSession"]) != session_id()) {
+    header("Location: ./index.php");
+    die();
+} else {
 ?>
 <!DOCTYPE html>
 <html>
@@ -204,7 +209,7 @@ include('./config/connect.php');
             </div>
         </div>
     </div>
-    <!-- Modal starts-->
+    <!-- add task Modal starts-->
     <div class="modal fade" id="addTasksModal" tabindex="-1" aria-labelledby="addTasksModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -251,7 +256,7 @@ include('./config/connect.php');
             </div>
         </div>
     </div>
-    <!-- Modal ends-->
+    <!--add task  Modal ends-->
 
     <!--Confirmation Modal start-->
 
@@ -284,45 +289,45 @@ include('./config/connect.php');
     </script>
     <script src="./js/app.js"></script>
 
+
     <script>
         $(document).ready(function() {
-            $('#confirmationModal').modal({ show: false})
+            $('#confirmationModal').modal({ show: false});
 
             //add new task
 
-            $('#addTaskBtn').on('click', function() {
-                var task_title = $('#task-title').val();
-                var task_description = $('#task-description').val();
-                var task_team = $('#task-team').val();
-                task_added_by = <?php echo $_SESSION['userId']; ?>;
-                var task_status = 1;
+        $('#addTaskBtn').on('click', function() {
+            var task_title = $('#task-title').val();
+            var task_description = $('#task-description').val();
+            var task_team = $('#task-team').val();
+            task_added_by = <?php echo $_SESSION['userId']; ?>;
+            var task_status = 1;
 
-                if (task_title != '' && task_description != '' && task_team != '') {
-                    console.log(task_title);
-                    $("#addTaskBtn").attr("disabled", "disabled");
-                    $.ajax({
-                        url: "./server/addTasks.php",
-                        method: "POST",
-                        data: {
-                            task_title: task_title,
-                            task_description: task_description,
-                            task_team: task_team,
-                            task_added_by: task_added_by,
-                            task_status: task_status
-                        },
-                        success: function(data) {
-                            $("#addTaskBtn").removeAttr("disabled");
-                            $('#addTasksModal').modal('hide');
-                            $('#addTasksModal').on('hidden.bs.modal', function() {
-                                location.reload();
-                            });
-                        }
-                    });
-                } 
-                else {
-                    alert('Please fill all the field !');
-                }
-            });
+            if (task_title != '' && task_description != '' && task_team != '') {
+                console.log(task_title);
+                $("#addTaskBtn").attr("disabled", "disabled");
+                $.ajax({
+                    url: "./server/addTasks.php",
+                    method: "POST",
+                    data: {
+                        task_title: task_title,
+                        task_description: task_description,
+                        task_team: task_team,
+                        task_added_by: task_added_by,
+                        task_status: task_status
+                    },
+                    success: function(data) {
+                        $("#addTaskBtn").removeAttr("disabled");
+                        $('#addTasksModal').modal('hide');
+                        $('#addTasksModal').on('hidden.bs.modal', function() {
+                            location.reload();
+                        });
+                    }
+                });
+            } else {
+                alert('Please fill all the field !');
+            }
+        });
 
             //delete task
             $('.task-items').on('dblclick', function() {
@@ -423,3 +428,6 @@ include('./config/connect.php');
 </body>
 
 </html>
+<?php
+}
+?>

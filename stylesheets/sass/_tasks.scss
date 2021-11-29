@@ -49,6 +49,10 @@
         background-color: $secondary-color;
         margin: 2vw 0;
         border-radius: 12px;
+        cursor: pointer;
+        &:hover{
+          background-color: $secondary-hover-color;
+        }
         .task-item-details{
             width: 85%;
             display: flex;
@@ -93,6 +97,17 @@
     }
 }
 
+.secondary-modal-btn{
+  width: 100%;
+  padding: 0.5vw 0;
+  border: none;
+  border-radius: 6px;
+  color: $text-dark;
+  background-color: $secondary-color;
+  &:hover{
+    background-color: $secondary-hover-color;
+  }
+}
 @media only screen and (min-width: 1200px) {
 
 }
