@@ -541,7 +541,6 @@
       -ms-flex-align: center;
           align-items: center;
   background-color: #e0eaff;
-  height: 4vw;
   padding: 0.5vw 0.5vw;
   border-radius: 12px;
 }
@@ -563,8 +562,7 @@
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-  height: 2vw;
-  padding: 1vw;
+  padding: 0vw 0.7vw;
 }
 
 .sidebar-container .s-profile-container .pro-details-container .pro-name {

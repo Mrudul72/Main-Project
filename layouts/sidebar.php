@@ -1,5 +1,11 @@
 <?php 
+include('./config/connect.php');
 $activePage = basename($_SERVER['PHP_SELF'], ".php");
+$userName = $_SESSION['userName'];
+$userType = $_SESSION['currentUserTypeId'];
+$selectRole= "SELECT `role_name` FROM tbl_user_role WHERE `role_id` = '$userType '";
+$result3 = mysqli_query($connect, $selectRole);
+$roleName = mysqli_fetch_assoc($result3);
 ?>
 
 <!--sidebar starts-->
@@ -50,8 +56,8 @@ $activePage = basename($_SERVER['PHP_SELF'], ".php");
     <div class="s-profile-container">
         <img class="pro-pic-ico" src="./assets/images/pro-pic.jpg" alt="" />
         <div class="pro-details-container">
-            <p class="pro-name">John Wick</p>
-            <p class="pro-role">Web Developer</p>
+            <p class="pro-name"><?php echo ucwords($userName); ?></p>
+            <p class="pro-role"><?php echo ucwords($roleName['role_name']);?></p>
         </div>
         <a href="./auth/logoutController.php"><img class="log-out-btn" src="./assets/icons/power-off-ico.svg" alt="" /></a>
     </div>

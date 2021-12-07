@@ -70,7 +70,6 @@
     justify-content: space-evenly;
     align-items: center;
     background-color: $secondary-color;
-    height: 4vw;
     padding: 0.5vw 0.5vw;
     border-radius: 12px;
     .pro-pic-ico {
@@ -82,8 +81,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      height: 2vw;
-      padding: 1vw;
+      padding: 0vw 0.7vw;
       .pro-name {
         font-size: 1vw;
         color: $text-dark;

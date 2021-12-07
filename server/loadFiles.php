@@ -19,7 +19,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $teamName = mysqli_fetch_assoc($result3);
     echo '
            <tr>
-                <td><a href="files.php?file_id=' . $file_id . '">' . $file_name . '</a></td>
+                <td>' . $file_name . '</td>
                 <td>' . $file_size . '</td>
                 <td>' . $uname['username'] . '</td>
                 <td>' . $teamName['team_title'] . '</td>
@@ -39,11 +39,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                           class="dropdown-menu"
                           aria-labelledby="dropdownMenuOffset"
                         >
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#" >Something 1</a>
+                          <a class="dropdown-item" href="./server/deleteFile.php?fid=' . $file_id . '">Delete</a>
                         </div>
-                        <img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">
+                        <!--<img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">-->
                       </td>
                       </tr>
                       ';
