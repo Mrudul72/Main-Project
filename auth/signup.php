@@ -122,11 +122,17 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                 <div class="form-group">
                   <label for="role">Select your role <sup>*</sup></label>
                   <select name="role" id="role" class="form-control">
-                    <option value="" disabled selected>Select your role</option>
-                    <option value="1">Manager</option>
-                    <option value="2">Front-end Developer</option>
-                    <option value="3">Back-end Developer</option>
-                    <option value="4">Designer</option>
+                  <option value="" disabled selected>Select your role</option>
+                  <?php
+                                $sql = "SELECT * FROM tbl_user_role WHERE role_id != 1";
+                                $result = mysqli_query($connect, $sql);
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $role_id = $row['role_id'];
+                                    $role_name = $row['role_name'];
+                                    echo '<option value="' . $role_id . '">' . $role_name . '</option>';
+                                }
+                                ?>
+                   
                   </select>
                 </div>
                 <div class="form-group">

@@ -1186,7 +1186,7 @@
   background-size: cover;
 }
 
-.project-container .projects:last-child {
+.project-container #createPro {
   background-color: rgba(2, 47, 150, 0.8);
   background-image: url("../../assets/icons/Plus.svg");
   background-repeat: no-repeat;
@@ -1227,6 +1227,14 @@
 .modal-content .modal-form-container .modal-btn:hover {
   background-color: #c7d8fc;
   border-color: #c7d8fc;
+}
+
+.hideDiv {
+  display: none;
+}
+
+.showDiv {
+  display: block;
 }
 
 .files-card {

@@ -36,7 +36,7 @@ echo '
             </div>
             <div class="form-group">
                 <label for="task-actions">Actions</label>
-                <button id="deleteTaskBtn" type="button" class="secondary-modal-btn">Delete</button>
+                <button id="deleteTask" name="deleteTask" value="' . $taskId . '" type="button" class="secondary-modal-btn">Delete</button>
             </div>
         </div>
 
@@ -46,32 +46,36 @@ echo '
     ';
 ?>
 
+
 <script>
     //delete task
-    $('#deleteTaskBtn').on('click', function() {
-       alert('hi');
+    $.ajax({
+            url: './tasks_copy.php',
+            type: 'GET',
+            success: function(data) {   
+            }
+        });
+    $('#deleteTask').on('click', function() {
         
-    //     // var task_id = <?php //echo $_SESSION['taskId'] ?>
-    //     
-    //             // $('#confirmationModal').modal('show');
-    //             // task_id = $(this).attr('id');
-    //             // var task_status = 0;
-    //             // $("#taskDeleteBtn").on('click', function() {
-    //             //     $.ajax({
-    //             //         url: "./server/deleteTask.php",
-    //             //         method: "POST",
-    //             //         data: {
-    //             //             task_id: task_id,
-    //             //             task_status: task_status
-    //             //         },
-    //             //         success: function(data) {
-    //             //             location.reload();
-    //             //         }
-    //             //     });
-    //             // });
-
+        var task_id = $('#deleteTask').val();
+        alert(task_id);
+        $('#confirmationModal').modal('show');
+        
+        var task_status = 0;
+        $("#taskDeleteBtn").on('click', function() {
+            $.ajax({
+                url: "./server/deleteTask.php",
+                method: "POST",
+                data: {
+                    task_id: task_id,
+                    task_status: task_status
+                },
+                success: function(data) {
+                    window.location.reload();
+                }
             });
-            //delete task ends
+        });
+
+    });
+    //delete task ends
 </script>
-
-

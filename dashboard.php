@@ -5,6 +5,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
 } else {
+    $team_id=$_SESSION["currentUserTeamId"];
 ?>
     <!DOCTYPE html>
     <html>
@@ -90,10 +91,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                       align-items-center
                       my-2">
                                         <h1 class="content-heading">Backlog Tasks</h1>
-                                        <button data-toggle='modal' data-target='#addTasksModal' class="add-task-btn">Add Task +</button>
+                                        <!-- <button data-toggle='modal' data-target='#addTasksModal' class="add-task-btn">Add Task +</button> -->
                                     </div>
                                     <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
+                                    $sql = "SELECT distinct tbl_tasks.task_id,tbl_tasks.task_title,tbl_tasks.task_team FROM tbl_tasks JOIN tbl_user ON tbl_tasks.task_team=tbl_user.team_id WHERE tbl_tasks.task_status=1  AND tbl_tasks.task_team=$team_id";
                                     $result = mysqli_query($connect, $sql);
                                     $i = 0;
                                     if (mysqli_num_rows($result) > 0) {
@@ -103,10 +104,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $task_id = $row['task_id'];
                                             // echo "<script>alert('$task_id');</script>";
                                             $task_title = $row['task_title'];
-                                            $task_description = $row['task_description'];
+                                            // $task_description = $row['task_description'];
                                             $task_team = $row['task_team'];
-                                            $task_added_by = $row['task_added_by'];
-                                            $task_status = $row['task_status'];
+                                            // $task_added_by = $row['task_added_by'];
+                                            // $task_status = $row['task_status'];
                                             $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
                                             $result2 = mysqli_query($connect, $sql2);
                                             $val = mysqli_fetch_assoc($result2);
@@ -217,55 +218,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             </div>
         </div>
 
-
-        <!-- add task Modal starts-->
-        <div class="modal fade" id="addTasksModal" tabindex="-1" aria-labelledby="addTasksModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="addTaskForm" class="modal-form-container" method="post">
-                        <input type="hidden" name="assign-count" value="0" id="assign-count">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addtaskjectModalLabel">Add Tasks</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                            <div class="form-group">
-                                <label for="task-title">Task title</label>
-                                <input type="text" name="task-title" id="task-title" class="form-control" placeholder="task title" required autocomplete="off" />
-                            </div>
-                            <div class="form-group">
-                                <label for="task-description" class="col-form-label">Task description:</label>
-                                <textarea id="task-description" name="task-description" placeholder="A breif description about task" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="task-team">Assign team</label>
-                                <select name="task-team" id="task-team" class="form-control">
-                                    <option disabled selected>Select Team</option>
-                                    <?php
-                                    $sql = "SELECT * FROM tbl_teams";
-                                    $result = mysqli_query($connect, $sql);
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        $team_id = $row['team_id'];
-                                        $team_title = $row['team_title'];
-                                        echo '<option value="' . $team_id . '">' . $team_title . '</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
-                            <button id="addTaskBtn" type="submit" class="btn btn-primary modal-btn-submit">Add</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--add task  Modal ends-->
 
         <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

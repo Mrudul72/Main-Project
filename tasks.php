@@ -5,6 +5,8 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
 } else {
+    $_SESSION['projectID'] = $_GET['id'];
+    $tId = $_SESSION['projectID'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,7 +53,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 </div>
                                 <div id="tasks-placeholder" class="pt-4">
                                     <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 ";
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=1 AND project_id=$tId";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $task_id = $row['task_id'];
@@ -88,7 +90,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 </div>
                                 <div class="pt-4">
                                     <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=2";
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=2 AND project_id=$tId";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $task_id = $row['task_id'];
@@ -136,8 +138,9 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     <!-- <button class="add-task-item-btn">Add Task +</button> -->
                                 </div>
                                 <div class="pt-4">
+                                    <input type='hidden' value='' id='txt_id'>
                                     <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=3";
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=3 AND project_id=$tId";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $task_id = $row['task_id'];
@@ -174,7 +177,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                                 <div class="pt-4">
                                     <?php
-                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=4";
+                                    $sql = "SELECT * FROM tbl_tasks WHERE task_status=4 AND project_id=$tId";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $task_id = $row['task_id'];
@@ -213,8 +216,9 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     <div class="modal fade" id="addTasksModal" tabindex="-1" aria-labelledby="addTasksModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="addTaskForm" class="modal-form-container" method="post">
-                    <input type="hidden" name="assign-count" value="0" id="assign-count">
+                <form id="addTaskForm" class="modal-form-container" method="post" action="./server/addTasks.php">
+                <input type="hidden" name="getUserID" value='<?php echo $_SESSION['userId'];?>' id="getUserID">
+                    <input type="hidden" name="getProID" value="<?php echo $tId?>" id="getProID">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addtaskjectModalLabel">Add Tasks</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -225,7 +229,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                         <div class="form-group">
                             <label for="task-title">Task title</label>
-                            <input type="text" name="task-title" id="task-title" class="form-control" placeholder="task title" required autocomplete="off" />
+                            <textarea name="task-title" id="task-detail-title" class="form-control" placeholder="task title" autocomplete="off"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="task-description" class="col-form-label">Task description:</label>
@@ -258,28 +262,56 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     </div>
     <!--add task  Modal ends-->
 
+    <!-- task details Modal starts-->
+    <div class="modal fade" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="taskDetailsForm" class="modal-form-container" method="post">
+                    <input type="hidden" name="assign-count" value="0" id="assign-count">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskDetailsModalLabel">Task Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- content display from taskDetails -->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+                        <button id="updateTaskBtn" type="submit" class="btn btn-primary modal-btn-submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--task details  Modal ends-->
+
     <!--Confirmation Modal start-->
 
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this task?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="taskDeleteBtn" class="btn btn-danger">Delete</button>
-      </div>
+    <div class="modal fade" id="confirmationModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this task?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="taskDeleteBtn" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<!--Confirmation Modal ends-->
+    <!--Confirmation Modal ends-->
+
 
 
     <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
@@ -292,64 +324,71 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
     <script>
         $(document).ready(function() {
-            $('#confirmationModal').modal({ show: false});
+            var task_id;
+
+            $('#confirmationModal').modal({
+                show: false
+            });
 
             //add new task
 
-        $('#addTaskBtn').on('click', function() {
-            var task_title = $('#task-title').val();
-            var task_description = $('#task-description').val();
-            var task_team = $('#task-team').val();
-            task_added_by = <?php echo $_SESSION['userId']; ?>;
-            var task_status = 1;
+            // $('#addTaskBtn').on('click', function() {
+            //     var task_title = $('#task-title').val();
+            //     var task_description = $('#task-description').val();
+            //     var task_team = $('#task-team').val();
+            //     var task_added_by = $('#getUserID').val();
+            //     var proID = $('#getProID').val();
+            //     var task_status = 1;
 
-            if (task_title != '' && task_description != '' && task_team != '') {
-                console.log(task_title);
-                $("#addTaskBtn").attr("disabled", "disabled");
+            //     if (task_title != '' && task_description != '' && task_team != '') {
+            //         console.log(task_title);
+            //         $("#addTaskBtn").attr("disabled", "disabled");
+            //         $.ajax({
+            //             url: "./server/addTasks.php",
+            //             method: "POST",
+            //             data: {
+            //                 task_title: task_title,
+            //                 task_description: task_description,
+            //                 task_team: task_team,
+            //                 task_status: task_status,
+            //                 proID : proID,
+            //                 task_added_by : task_added_by
+            //             },
+            //             success: function(data) {
+            //                 $("#addTaskBtn").removeAttr("disabled");
+            //                 $('#addTasksModal').modal('hide');
+            //                 $('#addTasksModal').on('hidden.bs.modal', function() {
+            //                     location.reload();
+            //                 });
+            //             }
+            //         });
+            //     } else {
+            //         alert('Please fill all the field !');
+            //     }
+            // });
+
+
+            //task details modal
+            $('.task-items').on('click', function() {
+                task_id = $(this).attr('id');
+
+
                 $.ajax({
-                    url: "./server/addTasks.php",
+                    url: "./server/taskDetails.php",
                     method: "POST",
                     data: {
-                        task_title: task_title,
-                        task_description: task_description,
-                        task_team: task_team,
-                        task_added_by: task_added_by,
-                        task_status: task_status
+                        task_id: task_id
                     },
                     success: function(data) {
-                        $("#addTaskBtn").removeAttr("disabled");
-                        $('#addTasksModal').modal('hide');
-                        $('#addTasksModal').on('hidden.bs.modal', function() {
-                            location.reload();
+                        $('#taskDetailsModal').modal('show');
+                        $('#taskDetailsModal').on('shown.bs.modal', function() {
+                            $('#taskDetailsModal .modal-body').html(data);
                         });
                     }
                 });
-            } else {
-                alert('Please fill all the field !');
-            }
-        });
-
-            //delete task
-            $('.task-items').on('dblclick', function() {
-                $('#confirmationModal').modal('show');
-                var task_id = $(this).attr('id');
-                var task_status = 0;
-                $("#taskDeleteBtn").on('click', function(){
-                    $.ajax({
-                    url: "./server/deleteTask.php",
-                    method: "POST",
-                    data: {
-                        task_id: task_id,
-                        task_status: task_status
-                    },
-                    success: function(data) {
-                            location.reload();
-                    }
-                });
-                });
-                
             });
-            //delete task ends
+
+
         });
 
 
@@ -421,8 +460,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     console.log(data);
                 }
             });
-
-
         }
     </script>
 </body>

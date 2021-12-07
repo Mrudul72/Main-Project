@@ -27,13 +27,13 @@
       background-position: center;
       background-size: cover;
     }
-    &:last-child {
-      background-color: rgba(2, 47, 150, 0.8);
-      background-image: url("../../assets/icons/Plus.svg");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 40%;
-    }
+  }
+  #createPro{
+    background-color: rgba(2, 47, 150, 0.8);
+    background-image: url("../../assets/icons/Plus.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40%;
   }
 }
 .modal-content {
@@ -65,4 +65,11 @@
       }
     }
   }
+}
+
+.hideDiv {
+  display: none;
+}
+.showDiv {
+  display: block;
 }

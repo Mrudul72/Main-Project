@@ -85,6 +85,8 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                 $_SESSION['pmsSession'] = session_id();
                 $_SESSION['userName'] = $userData['username'];
                 $_SESSION['userId'] = $userData['user_id'];
+                $_SESSION['currentUserTeamId'] = $userData['team_id'];
+                $_SESSION['currentUserTypeId'] = $userData['type_id'];
                 header("Location: ../dashboard.php");
                 die();
             }

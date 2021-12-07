@@ -5,6 +5,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
 } else {
+  $tId = $_SESSION['projectID'];
 ?>
 <!DOCTYPE html>
 <html>
