@@ -255,11 +255,17 @@
               cursor: pointer;
             }
           }
+          .errMsg{
+            display: none;
+            color: rgb(253, 78, 78)!important;
+            padding-left: 0.5vw;
+          }
         }
       }
     }
   }
 }
+
 @keyframes fadeInRight {
     0% {
        opacity: 0;
@@ -280,3 +286,7 @@
        width: 40%;
     }
  } 
+
+ .showMsg{
+    display: block !important;
+ }

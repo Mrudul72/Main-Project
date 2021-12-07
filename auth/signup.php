@@ -77,6 +77,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                     placeholder="john@example.com"
                     autocomplete="off"
                   />
+                  <small id="errMsgEmail" class="errMsg"></small>
                 </div>
                 <div class="form-group">
                   <label for="password">Password <sup>*</sup></label>
@@ -87,10 +88,22 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                     class="form-control"
                     placeholder="**********"
                   />
+                  <small id="errMsgPassword" class="errMsg"></small>
+                </div>
+                <div class="form-group">
+                  <label for="password">Confirm Password <sup>*</sup></label>
+                  <input
+                    type="password"
+                    name="cpassword"
+                    id="cpassword"
+                    class="form-control"
+                    placeholder="**********"
+                  />
+                  <small id="errMsgCpassword" class="errMsg"></small>
                 </div>
 
                 <div class="form-group">
-                  <button id="next" class="next btn-primary mt-4">Next</button>
+                  <button id="next1" class="next btn-primary mt-4">Next</button>
                 </div>
 
                 <div class="form-group">
@@ -99,7 +112,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                   </p>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <p class="or mt-n2">or</p>
                 </div>
                 <div class="form-group">
@@ -110,7 +123,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                     />
                     <span>Sign in with Google</span>
                   </div>
-                </div>
+                </div> -->
               </fieldset>
 
               <fieldset class="fieldset">
@@ -203,11 +216,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
       </div>
     </div>
 
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
@@ -215,6 +224,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
     ></script>
 
     <script src="../js/signupAnim.js"></script>
+    <script src="../js/validate.js"></script>
 
     <script>
       

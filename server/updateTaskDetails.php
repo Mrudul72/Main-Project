@@ -2,10 +2,12 @@
 include('../config/connect.php');
 session_start();
 $taskId = $_SESSION['curTaskId'];
+echo $taskId;
 $desc = $_POST['task-detail-description'];
 $title = $_POST['task-detail-title'];
-
-
+$uid = $_SESSION['userId'];
+$teamId = $_SESSION['currentUserTeamId'];
+$proID = $_SESSION['projectID'];
 // $sql = "UPDATE `tbl_tasks` SET `task_status`='$taskStatus', WHERE `task_id`='$taskId'";
 $sql = "UPDATE `tbl_tasks` SET `task_title`='$title',`task_description`='$desc' WHERE `task_id`='$taskId'";
 $result = mysqli_query($connect, $sql);
@@ -21,7 +23,7 @@ else{
     $file = '../assets/uploads/'.$fileToUpload;
     $filesize =  formatSizeUnits(filesize($file));
     echo $filesize;
-    $sql2 = "INSERT INTO `tbl_files`(`file_name`, `file_size`) VALUES ('$fileToUpload', '$filesize')";
+    $sql2 = "INSERT INTO `tbl_files`(`file_name`, `file_size`, `uploaded_by_id`, `team_id`, `project_id`) VALUES ('$fileToUpload', '$filesize', '$uid', '$teamId','$proID')";
     $result2 = mysqli_query($connect, $sql2);
     header('location:../tasks.php');
 }

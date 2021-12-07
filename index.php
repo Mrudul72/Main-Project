@@ -58,11 +58,13 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                             <label for="email">Email</label>
                             <input type="email" name="email" id="email" class="form-control"
                                 placeholder="john@example.com" required autocomplete="off" />
+                                <small id="errMsgEmail" class="errMsg"></small>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" name="password" id="password" class="form-control"
                                 placeholder="**********" />
+                                <small id="errMsgPassword" class="errMsg"></small>
                         </div>
                         <div class="form-group">
                             <a class="forgot-pass" href="">Forgot Password ?</a>
@@ -73,7 +75,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                         <div class="form-group">
                             <p class="sign-up-link">Don't have an account ? <a href="./auth/signup.php">Sign up</a></p>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <p class="or">or</p>
                         </div>
                         <div class="form-group">
@@ -81,19 +83,18 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                                 <img src="./assets/images/google-logo.svg" alt="Google-logo" />
                                 <span>Sign in with Google</span>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
     </script>
+    <script src="./js/validate.js"></script>
 </body>
 
 </html>

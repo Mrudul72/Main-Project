@@ -361,6 +361,12 @@
   cursor: pointer;
 }
 
+.main .lg-container .right-lg-container .form-container .form-group .errMsg {
+  display: none;
+  color: #fd4e4e !important;
+  padding-left: 0.5vw;
+}
+
 @-webkit-keyframes fadeInRight {
   0% {
     opacity: 0;
@@ -407,6 +413,10 @@
     opacity: 1;
     width: 40%;
   }
+}
+
+.showMsg {
+  display: block !important;
 }
 
 .sidebar-container {
