@@ -1,6 +1,8 @@
 <?php
 $taskId = $_POST['task_id'];
-$_SESSION['taskId'] = $taskId;
+session_start();
+$_SESSION['curTaskId'] = $taskId;
+// echo "<script>alert('$taskId');</script>";
 include('../config/connect.php');
 $sql = "SELECT * FROM tbl_tasks WHERE task_id= $taskId";
 $result = mysqli_query($connect, $sql);
@@ -32,7 +34,12 @@ echo '
         <div class="col-4 ml-auto">
             <div class="form-group">
                 <label for="task-title">Add to card</label>
-                <button type="button" class="secondary-modal-btn">Attachment</button>
+                <div class="dropdown">
+  <button type="button" class="secondary-modal-btn dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">Attachment</button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <input type="file" class="dropdown-item" name="attachment" id="inputGroupFile04" size="200KB" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+  </div>
+</div>
             </div>
             <div class="form-group">
                 <label for="task-actions">Actions</label>
@@ -50,17 +57,16 @@ echo '
 <script>
     //delete task
     $.ajax({
-            url: './tasks_copy.php',
-            type: 'GET',
-            success: function(data) {   
-            }
-        });
+        url: './tasks_copy.php',
+        type: 'GET',
+        success: function(data) {}
+    });
     $('#deleteTask').on('click', function() {
-        
+
         var task_id = $('#deleteTask').val();
         alert(task_id);
         $('#confirmationModal').modal('show');
-        
+
         var task_status = 0;
         $("#taskDeleteBtn").on('click', function() {
             $.ajax({

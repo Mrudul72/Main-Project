@@ -63,7 +63,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 $proId = $row['project_id'];
                                 $proName = $row['project_name'];
 
-                                echo "<a href='./tasks.php?id=$proId' class='projects pro' id='$proId'>$proName</a>";
+                                echo "<a href='./tasks.php' class='projects pro' id='$proId'>$proName</a>";
                             }
                         } else {
                             echo '
@@ -248,6 +248,19 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     }
                 });
 
+                // $('.pro').click(function() {
+                //     var proId = $(this).attr('id');
+                //     $.ajax({
+                //             url: './tasks.php',
+                //             type: 'POST',
+                //             data: {
+                //                 proId: proId,
+                //             },
+                //             success: function(data) {
+                                
+                //             }
+                //         });
+                // });
 
 
             });

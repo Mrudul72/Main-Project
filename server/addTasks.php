@@ -11,7 +11,7 @@ $project_id= $_POST['getProID'];
 $sql = "INSERT INTO tbl_tasks (task_title, task_description, task_team, task_added_by, task_status, project_id) VALUES ('$task_title', '$task_description', '$task_team', '$task_added_by', '$task_status', '$project_id')";
 $result = mysqli_query($connect, $sql); 
 $id = mysqli_insert_id($connect);
-header("Location: ../tasks.php?id=$project_id");
+header("Location: ../tasks.php");
 if(!$result){
     echo "Error creating task";
 }

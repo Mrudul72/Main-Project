@@ -215,6 +215,10 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
     ></script>
 
     <script src="../js/signupAnim.js"></script>
+
+    <script>
+      
+    </script>
   </body>
 </html>
 <?php

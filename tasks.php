@@ -5,8 +5,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
 } else {
-    $_SESSION['projectID'] = $_GET['id'];
+    if(!empty($_GET['id'])){
+        $_SESSION['projectID'] = $_GET['id'];
+    }
     $tId = $_SESSION['projectID'];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -266,7 +269,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     <div class="modal fade" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form id="taskDetailsForm" class="modal-form-container" method="post">
+                <form id="taskDetailsForm" class="modal-form-container" action="./server/updateTaskDetails.php" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="assign-count" value="0" id="assign-count">
                     <div class="modal-header">
                         <h5 class="modal-title" id="taskDetailsModalLabel">Task Details</h5>
@@ -275,7 +278,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         </button>
                     </div>
                     <div class="modal-body">
-
                         <!-- content display from taskDetails -->
 
                     </div>
