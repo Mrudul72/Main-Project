@@ -147,6 +147,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                                 ?>
                    
                   </select>
+                  <small id="errMsgRole" class="errMsg"></small>
                 </div>
                 <div class="form-group">
                   <label for="referral">Referral code(if any)</label>
@@ -171,28 +172,30 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                   alt="back-btn"
                 />
                 <div class="form-group">
-                  <label for="name">Name <sup>*</sup></label>
+                  <label for="uname">Name <sup>*</sup></label>
                   <input
                     type="text"
                     name="uname"
                     id="uname"
                     class="form-control"
                     placeholder="John Wick"
-                    required
+                    
                     autocomplete="off"
                   />
+                  <small id="errMsgUname" class="errMsg"></small>
                 </div>
                 <div class="form-group">
-                  <label for="name">Mobile <sup>*</sup></label>
+                  <label for="mob">Mobile <sup>*</sup></label>
                   <input
                     type="number"
                     name="mob"
                     id="mob"
                     class="form-control"
                     placeholder="8590456210"
-                    required
                     autocomplete="off"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10"
                   />
+                  <small id="errMsgMob" class="errMsg"></small>
                 </div>
                 <div class="form-group">
                   <label for="name">Date of birth <sup>*</sup></label>
@@ -204,6 +207,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                     required
                     autocomplete="off"
                   />
+                  <small id="errMsgDob" class="errMsg"></small>
                 </div>
 
                 <div class="form-group">

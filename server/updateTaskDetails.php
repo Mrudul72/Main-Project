@@ -2,7 +2,7 @@
 include('../config/connect.php');
 session_start();
 $taskId = $_SESSION['curTaskId'];
-echo $taskId;
+// echo $taskId;
 $desc = $_POST['task-detail-description'];
 $title = $_POST['task-detail-title'];
 $uid = $_SESSION['userId'];
@@ -61,5 +61,7 @@ function formatSizeUnits($bytes)
 
     return $bytes;
 }
+
+header("Location: ../tasks.php");
 
 ?>

@@ -18,9 +18,8 @@ $userName = $_SESSION['userName'];
                 <img class="header-ico" src="./assets/icons/bell-ico.svg" alt="notification" />
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                <a class="dropdown-item" href="#">Action 1</a>
-                <a class="dropdown-item" href="#">Another action 1</a>
-                <a class="dropdown-item" href="#">Something </a>
+                <a class="dropdown-item" href="#">Notification</a>
+                
             </div>
         </div>
 
@@ -30,9 +29,8 @@ $userName = $_SESSION['userName'];
                 <img class="header-ico" src="./assets/icons/settings-ico.svg" alt="settings" />
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset2">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something 2</a>
+                <a class="dropdown-item" href="#">Manage Profile</a>
+                
             </div>
         </div>
 

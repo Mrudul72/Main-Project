@@ -1,11 +1,20 @@
 const errMsgEmail = document.querySelector("#errMsgEmail");
 const errMsgPassword = document.querySelector("#errMsgPassword");
 const errMsgCpassword = document.querySelector("#errMsgCpassword");
+const errMsgRole = document.querySelector("#errMsgRole");
+const errMsgUname = document.querySelector("#errMsgUname");
+const errMsgMob = document.querySelector("#errMsgMob");
+const errMsgDob = document.querySelector("#errMsgDob");
 
 const nextBtn1 = document.querySelector("#next1");
 const txtEmail = document.querySelector("#email");
 const txtPassword = document.querySelector("#password");
 const txtConfirmPassword = document.querySelector("#cpassword");
+const role = document.querySelector('#role');
+const username = document.querySelector('#uname');
+const mobile = document.querySelector('#mob');
+const dateOfBirth = document.querySelector('#dob');
+const signUpForm = document.querySelector('#msform');
 
 
 txtEmail.addEventListener("blur", () => {
@@ -47,18 +56,76 @@ txtConfirmPassword.addEventListener("blur", () => {
   }
 });
 
-document.addEventListener("load", () => {
-  if (count == 3) {
-    nextBtn1.disabled = false;
+username.addEventListener("blur", () => {
+  if (username.value.length < 1) {
+    errMsgUname.classList.add("showMsg");
+    errMsgUname.innerHTML = "Username is required";
+  } else if (whiteSpaceValidate(username.value)) {
+    errMsgUname.classList.add("showMsg");
+    errMsgUname.innerHTML = "Username is required";
   } else {
-    errMsgEmail.classList.add("showMsg");
-    errMsgEmail.innerHTML = "Email is required";
-    errMsgPassword.classList.add("showMsg");
-    errMsgPassword.innerHTML = "Password is required";
-    errMsgCpassword.classList.add("showMsg");
-    errMsgCpassword.innerHTML = "Confirm Password is required";
+    errMsgUname.classList.remove("showMsg");
   }
 });
+
+role.addEventListener("blur", () => {
+  if (role.value.length < 1) {
+    errMsgRole.classList.add("showMsg");
+    errMsgRole.innerHTML = "Role is required";
+  } else {
+    errMsgRole.classList.remove("showMsg");
+  }
+});
+
+mobile.addEventListener("blur", () => {
+  if (mobile.value.length < 1) {
+    errMsgMob.classList.add("showMsg");
+    errMsgMob.innerHTML = "Mobile Number is required";
+  } else if (!mobileValidate(mobile.value)) {
+    errMsgMob.classList.add("showMsg");
+    errMsgMob.innerHTML = "Mobile Number is not valid";
+  } else {
+    errMsgMob.classList.remove("showMsg");
+  }
+});
+
+
+dateOfBirth.addEventListener("blur", () => {
+  if (dateOfBirth.value.length < 1) {
+    errMsgDob.classList.add("showMsg");
+    errMsgDob.innerHTML = "Date of Birth is required";
+  } 
+  else {
+    errMsgDob.classList.remove("showMsg");
+  }
+});
+
+signUpForm.addEventListener("submit", (e) => {
+  if (
+    errMsgEmail.classList.contains("showMsg") ||
+    errMsgPassword.classList.contains("showMsg") ||
+    errMsgCpassword.classList.contains("showMsg") ||
+    errMsgRole.classList.contains("showMsg") ||
+    errMsgUname.classList.contains("showMsg") ||
+    errMsgMob.classList.contains("showMsg") ||
+    errMsgDob.classList.contains("showMsg")
+  ) {
+    e.preventDefault();
+  }
+});
+
+// document.addEventListener("load", () => {
+//   if (count == 3) {
+//     nextBtn1.disabled = false;
+//   } else {
+//     errMsgEmail.classList.add("showMsg");
+//     errMsgEmail.innerHTML = "Email is required";
+//     errMsgPassword.classList.add("showMsg");
+//     errMsgPassword.innerHTML = "Password is required";
+//     errMsgCpassword.classList.add("showMsg");
+//     errMsgCpassword.innerHTML = "Confirm Password is required";
+//   }
+// });
 const passwordValidate = (password) => {
   let regex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -73,3 +140,28 @@ const emailValidate = (email) => {
 const whiteSpaceValidate = (str) => {
   return str.trim() === "";
 };
+
+const mobileValidate = (mobile) => {
+  const re = /^[6-9]\d{9}$/;
+  return re.test(mobile);
+};
+
+// const dateValidate = (date) => {
+//   const re = /^([0-9]{2})-([0-9]{2})-([0-9]{4})$/;
+//   return re.test(date);
+// };
+
+// const validate = () => {
+//   if (
+//     errMsgEmail.classList.contains("showMsg") ||
+//     errMsgPassword.classList.contains("showMsg") ||
+//     errMsgCpassword.classList.contains("showMsg") ||
+//     errMsgRole.classList.contains("showMsg") ||
+//     errMsgUname.classList.contains("showMsg") ||
+//     errMsgMob.classList.contains("showMsg")
+//   ) {
+//     return false;
+//   } else {
+//     return true;
+//   }
+// };

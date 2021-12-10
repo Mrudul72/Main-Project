@@ -119,7 +119,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         }
                                         ?>
                                     </div>
-                                    <div class="task-items" draggable="true">
+                                    <!-- <div class="task-items" draggable="true">
                                         <div class="task-item-details">
                                             <p class="task-item-title">
                                                 Find top 5 customers and get reviews from them
@@ -131,7 +131,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-4">

@@ -64,7 +64,7 @@ echo '
     $('#deleteTask').on('click', function() {
 
         var task_id = $('#deleteTask').val();
-        alert(task_id);
+        // alert(task_id);
         $('#confirmationModal').modal('show');
 
         var task_status = 0;
