@@ -1440,35 +1440,18 @@
   background-color: #c7d8fc;
 }
 
-/* Each of the items in the list */
-.context-menu {
+#createTeam {
+  background-color: rgba(2, 47, 150, 0.8);
+  background-image: url("../../assets/icons/Plus.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+}
+
+.statMsg {
   display: none;
-  z-index: 1000;
-  position: absolute;
-  overflow: hidden;
-  border: 1px solid #CCC;
-  white-space: nowrap;
-  font-family: sans-serif;
-  background: #FFF;
-  color: #333;
-  border-radius: 5px;
-  padding: 0;
-}
-
-.context-menu li {
-  padding: 8px 12px;
-  cursor: pointer;
-  list-style-type: none;
-  -webkit-transition: all .3s ease;
-  transition: all .3s ease;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-
-.context-menu li:hover {
-  background-color: #DEF;
+  color: #4efd4e !important;
+  padding-left: 0.5vw;
 }
 
 * {
