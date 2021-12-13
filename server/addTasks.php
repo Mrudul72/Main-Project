@@ -8,7 +8,7 @@ $task_added_by = $_POST['getUserID'];
 $task_status = 1;
 $project_id= $_POST['getProID'];
 //insert into database
-$sql = "INSERT INTO tbl_tasks (task_title, task_description, task_team, task_added_by, task_status, project_id) VALUES ('$task_title', '$task_description', '$task_team', '$task_added_by', '$task_status', '$project_id')";
+$sql = "INSERT INTO tbl_tasks (task_title, task_description, team_id, task_added_by, task_status, project_id) VALUES ('$task_title', '$task_description', '$task_team', '$task_added_by', '$task_status', '$project_id')";
 $result = mysqli_query($connect, $sql); 
 $id = mysqli_insert_id($connect);
 header("Location: ../tasks.php");

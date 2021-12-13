@@ -1,10 +1,18 @@
-<?php 
+<?php
 include('./config/connect.php');
 $activePage = basename($_SERVER['PHP_SELF'], ".php");
 $userName = $_SESSION['userName'];
 ?>
 <header class="header">
-    <h1 class="header-txt"><?= ($activePage == 'dashboard') ? 'Hi,' .ucwords($userName) : ucwords($activePage); ?></h1>
+    <h1 class="header-txt"><?php if ($activePage == 'dashboard') {
+                                echo 'Hi,' . ucwords($userName);
+                            } 
+                            else if(($activePage == 'manageteam')){
+                                echo 'Manage Team';
+                            }
+                            else {
+                                echo ucwords($activePage);
+                            }  ?></h1>
     <div class="header-util">
         <div class="search-box">
             <input type="text" placeholder="Search" />
@@ -13,24 +21,22 @@ $userName = $_SESSION['userName'];
             </div>
         </div>
         <div>
-            <div class="header-box" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" data-offset="5,10">
+            <div class="header-box" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="5,10">
                 <img class="header-ico" src="./assets/icons/bell-ico.svg" alt="notification" />
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                 <a class="dropdown-item" href="#">Notification</a>
-                
+
             </div>
         </div>
 
         <div>
-            <div class="header-box" id="dropdownMenuOffset2" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" data-offset="5,10">
+            <div class="header-box" id="dropdownMenuOffset2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="5,10">
                 <img class="header-ico" src="./assets/icons/settings-ico.svg" alt="settings" />
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset2">
                 <a class="dropdown-item" href="#">Manage Profile</a>
-                
+
             </div>
         </div>
 

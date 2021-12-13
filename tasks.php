@@ -63,10 +63,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             // echo "<script>alert('$task_id');</script>";
                                             $task_title = $row['task_title'];
                                             $task_description = $row['task_description'];
-                                            $task_team = $row['task_team'];
+                                            $team_id = $row['team_id'];
                                             $task_added_by = $row['task_added_by'];
                                             $task_status = $row['task_status'];
-                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
                                             $result2 = mysqli_query($connect, $sql2);
                                             $val = mysqli_fetch_assoc($result2);
                                             $team_name = $val['team_title'];
@@ -99,10 +99,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $task_id = $row['task_id'];
                                             $task_title = $row['task_title'];
                                             $task_description = $row['task_description'];
-                                            $task_team = $row['task_team'];
+                                            $team_id = $row['team_id'];
                                             $task_added_by = $row['task_added_by'];
                                             $task_status = $row['task_status'];
-                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
                                             $result2 = mysqli_query($connect, $sql2);
                                             $val = mysqli_fetch_assoc($result2);
                                             $team_name = $val['team_title'];
@@ -149,10 +149,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $task_id = $row['task_id'];
                                             $task_title = $row['task_title'];
                                             $task_description = $row['task_description'];
-                                            $task_team = $row['task_team'];
+                                            $team_id = $row['team_id'];
                                             $task_added_by = $row['task_added_by'];
                                             $task_status = $row['task_status'];
-                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
                                             $result2 = mysqli_query($connect, $sql2);
                                             $val = mysqli_fetch_assoc($result2);
                                             $team_name = $val['team_title'];
@@ -187,10 +187,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                                             $task_title = $row['task_title'];
                                             $task_description = $row['task_description'];
-                                            $task_team = $row['task_team'];
+                                            $team_id = $row['team_id'];
                                             $task_added_by = $row['task_added_by'];
                                             $task_status = $row['task_status'];
-                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
                                             $result2 = mysqli_query($connect, $sql2);
                                             $val = mysqli_fetch_assoc($result2);
                                             $team_name = $val['team_title'];
@@ -249,12 +249,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <select name="task-team" id="task-team" class="form-control">
                                     <option disabled selected value="-1">Select Team</option>
                                     <?php
-                                    $sql = "SELECT * FROM tbl_teams";
+                                    $userId = $_SESSION['userId'];
+                                    $sql = "SELECT * FROM tbl_teams WHERE manager_id = $userId";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
-                                        $team_id = $row['team_id'];
+                                        $team = $row['team_id'];
                                         $team_title = $row['team_title'];
-                                        echo '<option value="' . $team_id . '">' . $team_title . '</option>';
+                                        echo '<option value="' . $team . '">' . $team_title . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -343,12 +344,12 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 // $('#addTaskBtn').on('click', function() {
                 //     var task_title = $('#task-title').val();
                 //     var task_description = $('#task-description').val();
-                //     var task_team = $('#task-team').val();
+                //     var team_id = $('#task-team').val();
                 //     var task_added_by = $('#getUserID').val();
                 //     var proID = $('#getProID').val();
                 //     var task_status = 1;
 
-                //     if (task_title != '' && task_description != '' && task_team != '') {
+                //     if (task_title != '' && task_description != '' && team_id != '') {
                 //         console.log(task_title);
                 //         $("#addTaskBtn").attr("disabled", "disabled");
                 //         $.ajax({
@@ -357,7 +358,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 //             data: {
                 //                 task_title: task_title,
                 //                 task_description: task_description,
-                //                 task_team: task_team,
+                //                 team_id: team_id,
                 //                 task_status: task_status,
                 //                 proID : proID,
                 //                 task_added_by : task_added_by
@@ -379,9 +380,9 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 //     var btn = document.querySelector("#addTaskBtn");
                 //     var task_title = $('#task-title').val();
                 //     var task_description = $('#task-description').val();
-                //     var task_team = $('#task-team').val();
+                //     var team_id = $('#task-team').val();
                     
-                //         if (task_team != '-1') {
+                //         if (team_id != '-1') {
                 //             btn.disabled = false;
                 //             $('#alertMsg').hide();
                 //         } else {

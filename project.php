@@ -52,7 +52,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             }
                             echo "<div class='projects' id = 'createPro' data-toggle='modal'></div>";
                         } else {
-                            echo "<h3>No Projects</h3>";
+                            echo "<div class='projects' id = 'createPro' data-toggle='modal'></div>";
                         }
                     } else {
                         //not manager
@@ -86,7 +86,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <form id="createProForm" class="modal-form-container" method="post">
-                                <input type="hidden" name="assign-count" value="0" id="assign-count">
+                                <input type="hidden" name="assign-count" value="1" id="assign-count">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="addProjectModalLabel">Create project</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -214,7 +214,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         proTeamArray.push($('#pro-team' + i).val());
                     }
                     if (proName != '' && proDescription != '' && proStartDate != '' && proEndDate != '' &&
-                        proPriority != '' && proTeam != '') {
+                        proPriority != '' && proTeam != '', proTeamArray[0] != null) {
                         $("#createProBtn").attr("disabled", "disabled");
                         $.ajax({
                             url: './server/createProject.php',
@@ -234,9 +234,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 $('#createProForm').find('input:text').val('');
                                 $('#success').show();
                                 $('#message').html('Project created successfully !');
-                                $('#addProjectModal').modal('hide');
+                                
                                 setTimeout(function() {
                                     $('#success').hide();
+                                    $('#addProjectModal').modal('hide');
                                     window.location.reload();
 
                                 }, 3000);

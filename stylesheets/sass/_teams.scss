@@ -10,3 +10,13 @@
     color: rgb(78, 253, 78)!important;
     padding-left: 0.5vw;
   }
+  .saveBtn{
+    background-color: $primary-color !important;
+    border-color: $primary-color !important;
+    color: #fff;
+    border: none;
+    &:hover {
+      background-color: $primary-hover-color !important;
+      border-color:  $primary-hover-color !important;
+    }
+  }

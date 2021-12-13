@@ -1454,6 +1454,18 @@
   padding-left: 0.5vw;
 }
 
+.saveBtn {
+  background-color: #022f96 !important;
+  border-color: #022f96 !important;
+  color: #fff;
+  border: none;
+}
+
+.saveBtn:hover {
+  background-color: rgba(2, 47, 150, 0.8) !important;
+  border-color: rgba(2, 47, 150, 0.8) !important;
+}
+
 * {
   font-family: "Poppins", sans-serif;
   -webkit-box-sizing: border-box;

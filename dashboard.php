@@ -94,9 +94,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         <!-- <button data-toggle='modal' data-target='#addTasksModal' class="add-task-btn">Add Task +</button> -->
                                     </div>
                                     <?php
-                                    $sql = "SELECT distinct tbl_tasks.task_id,tbl_tasks.task_title,tbl_tasks.task_team FROM tbl_tasks JOIN tbl_user ON tbl_tasks.task_team=tbl_user.team_id WHERE tbl_tasks.task_status=1  AND tbl_tasks.task_team=$team_id";
+                                    $sql = "SELECT distinct tbl_tasks.task_id,tbl_tasks.task_title,tbl_tasks.team_id FROM tbl_tasks JOIN tbl_user ON tbl_tasks.team_id=tbl_user.team_id WHERE tbl_tasks.task_status=1  AND tbl_tasks.team_id=$team_id";
                                     $result = mysqli_query($connect, $sql);
-                                    $i = 0;
+                                    if($result){
+                                        $i = 0;
                                     if (mysqli_num_rows($result) > 0) {
 
                                         while ($row = mysqli_fetch_assoc($result)) {
@@ -105,10 +106,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             // echo "<script>alert('$task_id');</script>";
                                             $task_title = $row['task_title'];
                                             // $task_description = $row['task_description'];
-                                            $task_team = $row['task_team'];
+                                            $team_id = $row['team_id'];
                                             // $task_added_by = $row['task_added_by'];
                                             // $task_status = $row['task_status'];
-                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $task_team";
+                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
                                             $result2 = mysqli_query($connect, $sql2);
                                             $val = mysqli_fetch_assoc($result2);
                                             $team_name = $val['team_title'];
@@ -137,6 +138,19 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         </div>.
                                     </div>';
                                     }
+                                    }
+                                    else {
+                                        echo '<div class="today-tasks">
+                                        
+                                        <div id="checkSibling" class="task-details">
+                                            <p class="task-title">
+                                            No tasks in backlog
+                                            </p>
+                                            
+                                        </div>.
+                                    </div>';
+                                    }
+                                    
                                     ?>
                                 </div>
                             </div>
@@ -241,38 +255,38 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             $(document).ready(function() {
                 //add new task
 
-                $('#addTaskBtn').on('click', function() {
-                    var task_title = $('#task-title').val();
-                    var task_description = $('#task-description').val();
-                    var task_team = $('#task-team').val();
-                    task_added_by = <?php echo $_SESSION['userId']; ?>;
-                    var task_status = 1;
+                // $('#addTaskBtn').on('click', function() {
+                //     var task_title = $('#task-title').val();
+                //     var task_description = $('#task-description').val();
+                //     var task_team = $('#team_id').val();
+                //     task_added_by = <?php echo $_SESSION['userId']; ?>;
+                //     var task_status = 1;
 
-                    if (task_title != '' && task_description != '' && task_team != '') {
-                        console.log(task_title);
-                        $("#addTaskBtn").attr("disabled", "disabled");
-                        $.ajax({
-                            url: "./server/addTasks.php",
-                            method: "POST",
-                            data: {
-                                task_title: task_title,
-                                task_description: task_description,
-                                task_team: task_team,
-                                task_added_by: task_added_by,
-                                task_status: task_status
-                            },
-                            success: function(data) {
-                                $("#addTaskBtn").removeAttr("disabled");
-                                $('#addTasksModal').modal('hide');
-                                $('#addTasksModal').on('hidden.bs.modal', function() {
-                                    location.reload();
-                                });
-                            }
-                        });
-                    } else {
-                        alert('Please fill all the field !');
-                    }
-                });
+                //     if (task_title != '' && task_description != '' && task_team != '') {
+                //         console.log(task_title);
+                //         $("#addTaskBtn").attr("disabled", "disabled");
+                //         $.ajax({
+                //             url: "./server/addTasks.php",
+                //             method: "POST",
+                //             data: {
+                //                 task_title: task_title,
+                //                 task_description: task_description,
+                //                 task_team: task_team,
+                //                 task_added_by: task_added_by,
+                //                 task_status: task_status
+                //             },
+                //             success: function(data) {
+                //                 $("#addTaskBtn").removeAttr("disabled");
+                //                 $('#addTasksModal').modal('hide');
+                //                 $('#addTasksModal').on('hidden.bs.modal', function() {
+                //                     location.reload();
+                //                 });
+                //             }
+                //         });
+                //     } else {
+                //         alert('Please fill all the field !');
+                //     }
+                // });
 
                 //checklist task
                 $(".styled-checkbox").change(function() {
