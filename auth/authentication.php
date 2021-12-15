@@ -87,8 +87,14 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                 $_SESSION['userId'] = $userData['user_id'];
                 $_SESSION['currentUserTeamId'] = $userData['team_id'];
                 $_SESSION['currentUserTypeId'] = $userData['type_id'];
-                header("Location: ../dashboard.php");
+                if($userData['type_id'] == 1){
+                    header("Location: ../adminDashboard.php");
                 die();
+                }
+                else{
+                    header("Location: ../dashboard.php");
+                die();
+                }
             }
             else
             {

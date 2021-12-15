@@ -71,25 +71,7 @@ addBtn1.addEventListener("click", function () {
   document.querySelector("#member-count").value = n;
 });
 
-const addBtn2 = document.getElementById("addBtn2");
-let k = 1;
-let l = 1;
-let original2 = document.getElementById("duplicater2");
-addBtn2.addEventListener("click", function () {
-  let clone2 = original2.cloneNode(true); // "deep" clone
-  clone2.id = "duplicater2" + ++k;
-  clone2.querySelector("#invite-member1").id = "invite-member" + ++l;
-  // or clone.id = ""; if the divs don't need an ID
-  original2.parentNode.appendChild(clone2);
-  clone2.querySelector("#addBtn2").style.display = "none";
-  clone2.querySelector("#delBtn2").style.display = "block";
-  clone2.querySelector("#delBtn2").addEventListener("click", function () {
-    k--;
-    l--;
-    original2.parentNode.removeChild(clone2);
-  });
-  document.querySelector("#invite-count").value = l;
-});
+
 
 //duplicate div in modal box
 

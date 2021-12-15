@@ -80,13 +80,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     ?>
 
                 </div>
-                <!-- Modal starts-->
+                <!-- add team Modal starts-->
                 <div class="modal fade" id="addTeamModal" tabindex="-1" aria-labelledby="addTeamModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <form id="createTeamForm" class="modal-form-container" method="post">
                                 <input type="hidden" name="member-count" value="1" id="member-count">
-                                <input type="hidden" name="invite-count" value="1" id="invite-count">
+                                <!-- <input type="hidden" name="invite-count" value="1" id="invite-count"> -->
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="addTeamModalLabel">Create team</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -131,7 +131,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="invite-email">Invite new member</label>
                                         <div id="duplicater2" class="input-group mb-3">
                                             <input class="form-control" type="text" name="invite-member" placeholder="Email id" id="invite-member1">
@@ -145,7 +145,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             </div>
                                         </div>
                                         <small class="statMsg"></small>
-                                    </div>
+                                    </div> -->
 
                                 </div>
                                 <div class="modal-footer">
@@ -157,6 +157,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     </div>
                 </div>
                 <!-- Modal ends-->
+                
 
                 <!--Confirmation Modal start-->
 
@@ -190,7 +191,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         </script>
 
         <script>
-            //add new project
+            //add new team
             $(document).ready(function() {
                 $('#createTeam').click(function() {
                     $('#addTeamModal').modal('show');
@@ -200,10 +201,8 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     let teamMember = $('#team-member').val();
                     let inviteMember = $('#invite-member').val();
                     let teamMemberArr = [];
-                    let inviteMemberArr = [];
                     let teamMemberCount = document.querySelector("#member-count").value;
                     console.log(teamMemberCount);
-                    let inviteMemberCount = document.querySelector('#invite-count').value;
 
                     if (teamMemberCount > 0) {
                         for (let i = 1; i <= teamMemberCount; i++) {
@@ -211,12 +210,8 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         }
                     }
                     console.log(teamMemberArr);
-                    if (inviteMemberCount > 0) {
-                        for (let j = 1; j <= inviteMemberCount; j++) {
-                            inviteMemberArr.push($('#invite-member' + j).val());
-                        }
-                    }
-                    if(teamName == '' || teamMemberArr[0] == null || inviteMember == ''){
+                   
+                    if(teamName == '', teamMemberArr[0] == null ){
                         alert('Please fill all the fields');
                     }
                     else{
@@ -226,7 +221,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         data: {
                             teamName: teamName,
                             teamMemberArr: teamMemberArr,
-                            inviteMemberArr: inviteMemberArr
+                            
                         },
                         success: function(response) {
                             if (response == 'success') {

@@ -9,7 +9,7 @@ $result = mysqli_query($connect, $sql);
 $row = mysqli_fetch_assoc($result);
 $taskTitle = $row['task_title'];
 $taskDescription = $row['task_description'];
-$taskTeam = $row['task_team'];
+$taskTeam = $row['team_id'];
 $createdBy = $row['task_added_by'];
 $taskStatus = $row['task_status'];
 
