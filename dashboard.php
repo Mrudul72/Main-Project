@@ -135,7 +135,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             No tasks in backlog
                                             </p>
                                             
-                                        </div>.
+                                        </div>
                                     </div>';
                                     }
                                     }

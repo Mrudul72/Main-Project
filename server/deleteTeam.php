@@ -18,4 +18,12 @@ $result5 = mysqli_query($connect, $sql5);
 //delete from team_allocation table
 $sql6 = "DELETE FROM `tbl_team_allocation` WHERE `team_id`= '$teamId'";
 $result6 = mysqli_query($connect, $sql6);
+
+//delete from files table
+$sql7 = "DELETE FROM `tbl_files` WHERE `team_id`= '$teamId'";
+$result7 = mysqli_query($connect, $sql7);
+
+//delete from tbl_tasks table
+$sql8 = "DELETE FROM `tbl_tasks` WHERE `team_id`= '$teamId'";
+$result8 = mysqli_query($connect, $sql8);
 ?>

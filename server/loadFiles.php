@@ -1,8 +1,11 @@
 <?php
 $filesCount = $_POST['filesCount'];
 include('../config/connect.php');
-$sql = "SELECT * FROM tbl_files LIMIT $filesCount";
+session_start();
+$pId = $_SESSION['projectID'];
+$sql = "SELECT * FROM tbl_files WHERE project_id=$pId LIMIT $filesCount";
 $result = mysqli_query($connect, $sql);
+if (mysqli_num_rows($result) > 0) {
 
 while ($row = mysqli_fetch_assoc($result)) {
     $file_id = $row['file_id'];
@@ -45,5 +48,11 @@ while ($row = mysqli_fetch_assoc($result)) {
                       </td>
                       </tr>
                       ';
+}
+}
+else{
+  echo '<p class="task-title">
+  No files uploaded yet
+  </p>';
 }
 ?>
