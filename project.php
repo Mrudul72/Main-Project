@@ -240,7 +240,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     $('#addProjectModal').modal('hide');
                                     window.location.reload();
 
-                                }, 3000);
+                                }, 1000);
 
                             }
                         });

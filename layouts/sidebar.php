@@ -23,7 +23,7 @@ $roleName = mysqli_fetch_assoc($result3);
                 </li>
             </a>
             <a href="./project.php">
-                <li class="nav-items <?= ($activePage == 'project') || ($activePage == 'activity') || ($activePage == 'tasks') || ($activePage == 'files') ? 'active-nav':''; ?>">
+                <li class="nav-items <?= ($activePage == 'project') || ($activePage == 'activity') || ($activePage == 'tasks') || ($activePage == 'files') || ($activePage == 'manageProject') ? 'active-nav':''; ?>">
                     <span class="ico">
                         <object class="svgClass" type="image/svg+xml" data="./assets/icons/project-ico.svg"></object>
                     </span>

@@ -6,203 +6,262 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     die();
 } else {
 ?>
+    <!DOCTYPE html>
+    <html>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <link href="./assets/fullcalendar/lib/main.min.css" rel="stylesheet" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css"
-      rel="stylesheet"
-    />
-    <script src="./assets/fullcalendar/lib/main.min.js"></script>
-    <link rel="stylesheet" href="./stylesheets/css/style.css" />
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./stylesheets/css/bootstrap.min.css" />
-    <link rel="icon" href="./assets/images/logo2.png" type="image/icon type" />
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var calendarEl = document.getElementById("calendar");
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, "0");
-        var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-        var yyyy = today.getFullYear();
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="./stylesheets/css/style.css" />
+        <link rel="stylesheet" href="./stylesheets/css/bootstrap.min.css" />
+        <link rel="icon" href="./assets/images/logo2.png" type="image/icon type" />
 
-        today = yyyy + "-" + mm + "-" + dd;
+        <!-- full calendar -->
+        <link rel="stylesheet" href="./assets/fullcalendar/fullcalendar.min.css" />
+        <script src="./assets/fullcalendar/lib/jquery.min.js"></script>
+        <script src="./assets/fullcalendar/lib/moment.min.js"></script>
+        <script src="./assets/fullcalendar/fullcalendar.min.js"></script>
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          themeSystem: "bootstrap",
-          headerToolbar: {
-            left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
-          },
-          initialDate: today,
-          navLinks: true, // can click day/week names to navigate views
-          selectable: true,
-          selectMirror: true,
-          select: function (arg) {
-            var title = prompt("Event Title:");
-            if (title) {
-              calendar.addEvent({
-                title: title,
-                start: arg.start,
-                end: arg.end,
-                allDay: arg.allDay,
-              });
+        <script>
+            $(document).ready(function() {
+                $('#calendar').empty();
+                var calendar = $('#calendar').fullCalendar({
+                    editable: true,
+                    events: "./server/fetch-event.php",
+                    displayEventTime: false,
+                    eventRender: function(event, element, view) {
+                        if (event.allDay === 'true') {
+                            event.allDay = true;
+                        } else {
+                            event.allDay = false;
+                        }
+                    },
+                    selectable: true,
+                    selectHelper: true,
+                    select: function(start, end, allDay) {
+                        var title = prompt('Event Title:');
+
+                        if (title) {
+                            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+
+                            $.ajax({
+                                url: './server/add-event.php',
+                                data: 'title=' + title + '&start=' + start + '&end=' + end,
+                                type: "POST",
+                                success: function(data) {
+                                    displayMessage("Added Successfully");
+                                }
+                            });
+                            calendar.fullCalendar('renderEvent', {
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay
+                                },
+                                true
+                            );
+                        }
+                        calendar.fullCalendar('unselect');
+                    },
+
+                    editable: true,
+                    eventDrop: function(event, delta) {
+                        var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
+                        var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
+                        $.ajax({
+                            url: './server/edit-event.php',
+                            data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id,
+                            type: "POST",
+                            success: function(response) {
+                                displayMessage("Updated Successfully");
+                            }
+                        });
+                    },
+                    eventClick: function(event) {
+                        var deleteMsg = confirm("Do you really want to delete?");
+                        if (deleteMsg) {
+                            $.ajax({
+                                type: "POST",
+                                url: "./server/delete-event.php",
+                                data: "&id=" + event.id,
+                                success: function(response) {
+                                    if (parseInt(response) > 0) {
+                                        $('#calendar').fullCalendar('removeEvents', event.id);
+                                        displayMessage("Deleted Successfully");
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                });
+            });
+
+            function displayMessage(message) {
+                $(".response").show();
+                $(".response").html("<div class='alert alert-primary' role='alert'>" + message + "</div>");
+
+                setInterval(function() {
+                    $(".success").fadeOut();
+                    $(".response").fadeOut();
+                    location.reload();
+                }, 1000);
             }
-            calendar.unselect();
-          },
-          eventClick: function (arg) {
-            if (confirm("Are you sure you want to delete this event?")) {
-              arg.event.remove();
+        </script>
+
+        <style>
+            #calendar {
+                width: 100%;
+                position: relative;
             }
-          },
-          editable: true,
-          dayMaxEvents: true, // allow "more" link when too many events
-          events: [
-            {
-              title: "All Day Event",
-              start: "2021-11-26",
-            },
-            {
-              title: "Long Event",
-              start: "2020-09-07",
-              end: "2020-09-10",
-            },
-            {
-              groupId: 999,
-              title: "Repeating Event",
-              start: "2020-09-09T16:00:00",
-            },
-            {
-              groupId: 999,
-              title: "Repeating Event",
-              start: "2020-09-16T16:00:00",
-            },
-            {
-              title: "Conference",
-              start: "2021-11-20",
-              end: "2020-09-13",
-            },
-            {
-              title: "Meeting",
-              start: "2020-09-12T10:30:00",
-              end: "2020-09-12T12:30:00",
-            },
-            {
-              title: "Lunch",
-              start: "2020-09-12T12:00:00",
-            },
-            {
-              title: "Meeting",
-              start: "2021-11-25T14:30:00",
-            },
-            {
-              title: "Happy Hour",
-              start: "2020-09-12T17:30:00",
-            },
-            {
-              title: "Dinner",
-              start: "2020-09-12T20:00:00",
-            },
-            {
-              title: "Birthday Party",
-              start: "2020-09-13T07:00:00",
-            },
-            {
-              title: "Click for Google",
-              url: "http://google.com/",
-              start: "2020-09-28",
-            },
-          ],
-        });
 
-        calendar.render();
-      });
-    </script>
-    <style>
-      #calendar {
-        max-width: 100%;
-      }
-    </style>
-  </head>
-  <body class="dashboard-body">
-    <div class="dashboard-container">
-      <!--sidebar goes here-->
-      <?php include_once("./layouts/sidebar.php"); ?>
-      <!--sidebar end-->
+            #calendar ::-webkit-scrollbar {
+                width: 12px;
+            }
 
-      <!--header starts-->
-      <?php include_once("./layouts/header.php"); ?>
-      <!--header ends-->
+            #calendar ::-webkit-scrollbar-track {
+                background-color: #e0eaff;
+                border-radius: 100px;
+                margin: 0.5vw 0;
+            }
 
-      <!--Dashboard contents-->
-      <div class="dashboard-contents">
-        <div class="row">
-          <!--col 1 start-->
-          <div class="col-8">
-            <div
-              class="container bg-white p-3 mx-n2"
-              style="width: 100%; border-radius: 12px"
-            >
-              <div id="calendar"></div>
+            #calendar ::-webkit-scrollbar-thumb {
+                background-color: #011e56;
+                border-radius: 100px;
+            }
+
+            .response {
+                height: 60px;
+                display: none;
+            }
+
+            .success {
+                background: #cdf3cd;
+                padding: 10px 60px;
+                border: #c3e6c3 1px solid;
+                display: inline-block;
+            }
+        </style>
+    </head>
+
+    <body class="dashboard-body">
+
+        <div class="dashboard-container">
+            <!--sidebar goes here-->
+            <?php include_once("./layouts/sidebar.php"); ?>
+            <!--sidebar end-->
+
+            <!--header starts-->
+            <?php include_once("./layouts/header.php"); ?>
+            <!--header ends-->
+
+            <!--Dashboard contents-->
+            <div class="dashboard-contents">
+                <div class="row">
+                    <!--col 1 start-->
+                    <div class="col-7">
+                        <div class="response"></div>
+                        <div class="container bg-white p-3 ml-3" style="width: 95%; border-radius: 12px">
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
+                    <!--col 1 end-->
+
+                    <!--col 2 start-->
+                    <div class="col-5">
+                        <div class="d-flex flex-column">
+                            <div class="dashboard-card">
+                                <h1 class="content-heading">Upcoming Events</h1>
+                                <h3 class="sub-title">Today</h3>
+                                <ul class="activity-container">
+                                    <?php
+                                    //select all event for today
+                                    $today = date("Y-m-d");
+                                    $tomorrow = date("Y-m-d", strtotime("+1 day"));
+                                    $sql = "SELECT * FROM tbl_events WHERE start = '$today'";
+                                    $result = mysqli_query($connect, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $event_id = $row['id'];
+                                            $event_title = $row['title'];
+                                            $event_start = $row['start'];
+                                            $event_end = $row['end'];
+                                            echo '
+                                                <li class="items">
+                                                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                                    <div class="card-text">
+                                                        <p>' . $event_title . '</p>
+                                                         <div class="time-stamp">' . $event_start . '</div>
+                                                    </div>
+                                                </li>
+                                                ';
+                                        }
+                                    } else {
+                                        echo '
+                                                <li class="items">
+                        
+                                                    <div class="card-text">
+                                                        <p>No events</p>
+                          
+                                                    </div>
+                                                </li>
+                                            ';
+                                    }
+
+                                    ?>
+
+
+                                </ul>
+                                <h3 class="sub-title">Tomorrow</h3>
+                                <ul class="activity-container">
+
+                                    <?php
+                                    //select all event for today
+                                    $today = date("Y-m-d");
+                                    $tomorrow = date("Y-m-d", strtotime("+1 day"));
+                                    $sql = "SELECT * FROM tbl_events WHERE start = '$tomorrow'";
+                                    $result = mysqli_query($connect, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $event_id = $row['id'];
+                                            $event_title = $row['title'];
+                                            $event_start = $row['start'];
+                                            $event_end = $row['end'];
+                                            echo '
+                            <li class="items">
+                        <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                        <div class="card-text">
+                          <p>' . $event_title . '</p>
+                          <div class="time-stamp">' . $event_start . '</div>
+                        </div>
+                      </li>
+                            ';
+                                        }
+                                    } else {
+                                        echo '
+                            <li class="items">
+                        
+                        <div class="card-text">
+                          <p>No events</p>
+                          
+                        </div>
+                      </li>
+                            ';
+                                    }
+
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--col 2 end-->
+                </div>
             </div>
-          </div>
-          <!--col 1 end-->
+            <script src="./js/app.js"></script>
+    </body>
 
-          <!--col 2 start-->
-          <div class="col-4">
-            <div class="d-flex flex-column">
-              <div class="dashboard-card">
-                <h1 class="content-heading">Upcoming Events</h1>
-                <h3 class="sub-title">Today</h3>
-                <ul class="activity-container">
-                  <li class="items">
-                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
-                    <div class="card-text">
-                      <p>Darika Samak mark as done Listing on Product Hunt</p>
-                      <div class="time-stamp">8:40pm</div>
-                    </div>
-                  </li>
-                  <li class="items">
-                    <img src="./assets/icons/client-ico.svg" alt="" />
-                    <div class="card-text">
-                      <p>Client Meeting</p>
-                      <div class="time-stamp">8:40pm</div>
-                    </div>
-                  </li>
-                </ul>
-                <h3 class="sub-title">Tomorrow</h3>
-                <ul class="activity-container">
-                  <li class="items">
-                    <img src="./assets/icons/comment-ico.svg" alt="" />
-                    <div class="card-text">
-                      <p>Review Meeting</p>
-                      <div class="time-stamp">8:40pm</div>
-                    </div>
-                  </li>
-                  <li class="items">
-                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
-                    <div class="card-text">
-                      <p>Darika Samak mark as done Listing on Product Hunt</p>
-                      <div class="time-stamp">8:40pm</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!--col 2 end-->
-        </div>
-      </div>
-    </div>
 
-    <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
-    <script src="./js/app.js"></script>
-  </body>
-</html>
+    </html>
 <?php
 }
 ?>

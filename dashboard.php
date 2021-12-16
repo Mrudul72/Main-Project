@@ -41,8 +41,23 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             <div class="col">
                                 <div class="completed-task">
                                     <div class="d-flex flex-column">
-                                        <h1 class="content-heading">Completed Tasks</h1>
-                                        <h2 class="stats">372</h2>
+                                        <h1 class="content-heading">Ongoing projects</h1>
+                                        <?php
+                                        $userid = $_SESSION['userId'];
+                                        //select from tbl_team_allocation table
+                                        $sqlQuery = "SELECT count(project_id) FROM tbl_team_allocation WHERE team_id='$team_id' OR project_manager='$userid '";
+                                        $result2 = mysqli_query($connect, $sqlQuery);
+                                        $count2 = mysqli_num_rows($result2);
+                                        if($count2>0){
+                                            $row2 = mysqli_fetch_assoc($result2);
+                                            $project_count=$row2['count(project_id)'];
+                                            echo '<h2 class="stats">'.$project_count.'</h2>';
+                                        }
+                                        else{
+                                            echo '<h2 class="stats">0</h2>';
+                                        }
+                                        ?>
+                                        
                                     </div>
                                     <img class="chart-img" src="./assets/images/Chart.svg" alt="" />
                                 </div>
@@ -192,37 +207,83 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <h1 class="content-heading">Upcoming Events</h1>
                                 <h3 class="sub-title">Today</h3>
                                 <ul class="activity-container">
-                                    <li class="items">
-                                        <img src="./assets/icons/tick-dark-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <img src="./assets/icons/client-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Client Meeting</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
+                                    <?php
+                                    //select all event for today
+                                    $today = date("Y-m-d");
+                                    $tomorrow = date("Y-m-d", strtotime("+1 day"));
+                                    $sql = "SELECT * FROM tbl_events WHERE start = '$today'";
+                                    $result = mysqli_query($connect, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $event_id = $row['id'];
+                                            $event_title = $row['title'];
+                                            $event_start = $row['start'];
+                                            $event_end = $row['end'];
+                                            echo '
+                                                <li class="items">
+                                                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                                    <div class="card-text">
+                                                        <p>' . $event_title . '</p>
+                                                         <div class="time-stamp">' . $event_start . '</div>
+                                                    </div>
+                                                </li>
+                                                ';
+                                        }
+                                    } else {
+                                        echo '
+                                                <li class="items">
+                        
+                                                    <div class="card-text">
+                                                        <p>No events</p>
+                          
+                                                    </div>
+                                                </li>
+                                            ';
+                                    }
+
+                                    ?>
+
+
                                 </ul>
                                 <h3 class="sub-title">Tomorrow</h3>
                                 <ul class="activity-container">
-                                    <li class="items">
-                                        <img src="./assets/icons/comment-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Review Meeting</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <img src="./assets/icons/tick-dark-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
+                                    <?php
+                                    //select all event for today
+                                    $today = date("Y-m-d");
+                                    $tomorrow = date("Y-m-d", strtotime("+1 day"));
+                                    $sql = "SELECT * FROM tbl_events WHERE start = '$tomorrow'";
+                                    $result = mysqli_query($connect, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $event_id = $row['id'];
+                                            $event_title = $row['title'];
+                                            $event_start = $row['start'];
+                                            $event_end = $row['end'];
+                                            echo '
+                                                <li class="items">
+                                                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                                    <div class="card-text">
+                                                        <p>' . $event_title . '</p>
+                                                         <div class="time-stamp">' . $event_start . '</div>
+                                                    </div>
+                                                </li>
+                                                ';
+                                        }
+                                    } else {
+                                        echo '
+                                                <li class="items">
+                        
+                                                    <div class="card-text">
+                                                        <p>No events</p>
+                          
+                                                    </div>
+                                                </li>
+                                            ';
+                                    }
+
+                                    ?>
+
+
                                 </ul>
                             </div>
                         </div>

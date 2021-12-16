@@ -18,5 +18,10 @@ if (sizeof($teamMemberArr) > 0 && $teamMemberArr[0] != null) {
         $result3 = mysqli_query($connect, $sql3);
     }
 }
+if($result && $result2 && $result3){
+    echo "success";
+}else{
+    echo "error";
+}
 
 

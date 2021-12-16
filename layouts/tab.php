@@ -4,4 +4,6 @@
     <a href="./files.php" id="tab2" class="tablinks <?= ($activePage == 'files') ? 'active-tab':''; ?>">Files</a>
     <div class="divider <?= ($activePage == 'files') || ($activePage == 'activity') ? 'active-divider':''; ?> "></div>
     <a href="./activity.php" id="tab3" class="tablinks <?= ($activePage == 'activity') ? 'active-tab':''; ?>">Activity</a>
+    <div class="divider <?= ($activePage == 'manageProject') || ($activePage == 'activity') ? 'active-divider':''; ?> "></div>
+    <a href="./manageProject.php" id="tab3" class="tablinks <?= ($activePage == 'manageProject') ? 'active-tab':''; ?>">Manage Project</a>
 </div>

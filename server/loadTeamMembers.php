@@ -27,7 +27,6 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <td>' . $userEmail . '</td>
                 <td>' . $mob . '</td>
                 <td>' . $role_name['role_name'] . '</td>
-                <td>' . $teamName['team_title'] . '</td>
                 
                 <td>
                     <button
@@ -44,7 +43,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                           class="dropdown-menu"
                           aria-labelledby="dropdownMenuOffset"
                         >
-                          <a class="dropdown-item" href="./server/removeMember.php?fid=' . $userID . '">Remove</a>
+                          <a class="dropdown-item" href="./server/removeMember.php?uid=' . $userID . '">Remove</a>
                         </div>
                         <!--<img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">-->
                       </td>
