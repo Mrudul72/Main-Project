@@ -25,16 +25,17 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                 $checkEmailResult = mysqli_query($connect, $checkEmail);
                 $checkEmailCount = mysqli_num_rows($checkEmailResult);
                 //referrel code check in tbl_invitation table
-                $checkReferralCode = "SELECT * FROM `tbl_invitation` WHERE `email`='$email' AND `referral_id`='$referral' AND `invite_status`='0'";
+                $checkReferralCode = "SELECT * FROM `tbl_invitation` WHERE `email`='$email' AND `invite_status`='0'";
                 $checkReferralCodeResult = mysqli_query($connect, $checkReferralCode);
                 $row = mysqli_fetch_assoc($checkReferralCodeResult);
                 $team_id = $row['team_id'];
+                $referral_id = $row['referral_id'];
                 $invite_status = $row['invite_status'];
                 $checkReferralCodeCount = mysqli_num_rows($checkReferralCodeResult);
 
                 //No user exists
                 if ($checkEmailCount == 0) {
-                    if ($checkReferralCodeCount > 0) {
+                    if ($checkReferralCodeCount > 0 && $referral_id == $referral) {
                         $password = md5($password);
                         $date = date("Y-m-d");
                         //Insert into database
@@ -49,7 +50,12 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                             header("Location: signup.php");
                             die();
                         }
-                    } else {
+                    }elseif($checkReferralCodeCount > 0 && $referral_id != $referral){
+                        $_SESSION['loginMessage'] = "Referral Code is not valid";
+                        header("Location: signup.php");
+                        die();
+                    }
+                     else {
                         // $name = strtolower($firstname) . " " . strtolower($lastname);
                         $password = md5($password);
                         $date = date("Y-m-d");

@@ -68,8 +68,15 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $task_status = $row['task_status'];
                                             $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
                                             $result2 = mysqli_query($connect, $sql2);
-                                            $val = mysqli_fetch_assoc($result2);
-                                            $team_name = $val['team_title'];
+                                            $resCount = mysqli_num_rows($result2);
+                                            if ($resCount > 0) {
+                                                $val = mysqli_fetch_assoc($result2);
+                                                $team_name = $val['team_title'];
+                                            }
+                                            else{
+                                                $team_name = "Manager";
+                                            }
+                                            
                                             echo '
                                     <div id="' . $task_id . '" class="task-items" draggable="true">
                                         <div class="task-item-details">

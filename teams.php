@@ -112,7 +112,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             <select class="custom-select" name="team-member" id="team-member1" aria-label="Example select with button addon">
                                                 <option disabled selected>Select members</option>
                                                 <?php
-                                                $sql = "SELECT * FROM tbl_user WHERE team_id = 0 AND type_id != 2";
+                                                $sql = "SELECT * FROM tbl_user WHERE team_id = 0 AND type_id != 2 AND type_id != 1";
                                                 $result = mysqli_query($connect, $sql);
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     $member_id = $row['user_id'];
@@ -211,8 +211,8 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     }
                     console.log(teamMemberArr);
                    
-                    if(teamName == '', teamMemberArr[0] == null ){
-                        alert('Please fill all the fields');
+                    if(teamName == '' ){
+                        alert('Team name is required');
                     }
                     else{
                         $.ajax({

@@ -45,12 +45,12 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         <?php
                                         $userid = $_SESSION['userId'];
                                         //select from tbl_team_allocation table
-                                        $sqlQuery = "SELECT count(project_id) FROM tbl_team_allocation WHERE team_id='$team_id' OR project_manager='$userid '";
+                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_team_allocation WHERE team_id='$team_id' OR project_manager='$userid '";
                                         $result2 = mysqli_query($connect, $sqlQuery);
                                         $count2 = mysqli_num_rows($result2);
                                         if($count2>0){
                                             $row2 = mysqli_fetch_assoc($result2);
-                                            $project_count=$row2['count(project_id)'];
+                                            $project_count=$row2['proCount'];
                                             echo '<h2 class="stats">'.$project_count.'</h2>';
                                         }
                                         else{
