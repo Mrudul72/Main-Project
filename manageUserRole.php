@@ -5,7 +5,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
   header("Location: ./index.php");
   die();
 } else {
-  
+
 ?>
   <!DOCTYPE html>
   <html>
@@ -36,29 +36,39 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
       <!--Dashboard contents-->
       <div class="dashboard-contents">
-  
+
         <div class="row">
           <!--col 2 start-->
           <div class="col-12">
             <div class="d-flex flex-column">
+              <?php
+              if (isset($_SESSION['addRoleStatus'])) {
+                echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>' . $_SESSION['addRoleStatus'] . '</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+                unset($_SESSION['addRoleStatus']);
+              }
+
+              ?>
               <div class="files-card">
                 <div class="d-flex justify-content-between">
                   <h1 class="content-heading">User Roles</h1>
-                  <button data-toggle='modal' data-target='#addMemberModal' class="add-task-btn">Add Role +</button>
+                  <button data-toggle='modal' data-target='#addRoleModal' class="add-task-btn">Add Role +</button>
                 </div>
                 <!---table start-->
                 <table class="table files-table">
                   <thead>
                     <tr class="t-head">
-                      <th>Name</th>
-                      <th>Email ID</th>
-                      <th>Mobile No</th>
-                      <th>Role</th>
+                      <th>Role ID</th>
+                      <th>Role Name</th>
                     </tr>
                   </thead>
                   <tbody id="filesContainer">
 
- 
+
 
                   </tbody>
                 </table>
@@ -72,6 +82,50 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         </div>
       </div>
     </div>
+
+    <!-- add role Modal starts-->
+    <div class="modal fade" id="addRoleModal" tabindex="-1" aria-labelledby="addRoleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="addRoleForm" class="modal-form-container" method="post" action="./server/addUserRole.php">
+
+            <div class="modal-header">
+              <h5 class="modal-title" id="addtaskjectModalLabel">Add Role</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alertMsg" style="display:none;">
+                <p class="msg">Please fill all the field !</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <div class="form-group">
+                <label for="roleName">Role title</label>
+                <textarea name="roleName" id="roleName" class="form-control" placeholder="role title" autocomplete="off" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="rolePermission">Role permission</label>
+                <select class="custom-select" name="rolePermission" id="rolePermission" aria-label="Example select with button addon">
+                  <option disabled selected>Choose permission level</option>
+                  <option value="2">Manager level</option>
+                  <option value="3">User level</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+              <button id="addRoleBtn" name="addRoleBtn" type="submit" class="btn btn-primary modal-btn-submit">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--add role  Modal ends-->
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
