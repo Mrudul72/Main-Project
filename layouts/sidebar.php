@@ -43,7 +43,7 @@ $roleName = mysqli_fetch_assoc($result3);
               ><span>Files</span>
             </li> -->
             <a href="./teams.php">
-            <li class="nav-items <?= ($activePage == 'teams') || ($activePage == 'manageteam') ? 'active-nav':''; ?> ">
+            <li class="nav-items <?= ($activePage == 'teams') || ($activePage == 'manageteam') || ($activePage == 'teamMemberDetails') ? 'active-nav':''; ?> ">
                 <span class="ico"><object class="svgClass" type="image/svg+xml"
                         data="./assets/icons/team-ico.svg"></object></span><span>Teams</span>
             </li>

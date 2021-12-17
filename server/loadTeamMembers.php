@@ -27,27 +27,30 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <td>' . $userEmail . '</td>
                 <td>' . $mob . '</td>
                 <td>' . $role_name['role_name'] . '</td>
+                ';
+                if(($_SESSION['currentUserTypeId'] == '2')){
+                  echo '<td>
+                  <button
+                        class="dropdown-toggle action-btn"
+                        id="dropdownMenuOffset"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        data-offset="5,10"
+                  >
+                        Action
+                  </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuOffset"
+                      >
+                        <a class="dropdown-item" href="./server/removeMember.php?uid=' . $userID . '">Remove</a>
+                      </div>
+                      <!--<img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">-->
+                    </td>
+                    </tr>
+                    ';
+                }
                 
-                <td>
-                    <button
-                          class="dropdown-toggle action-btn"
-                          id="dropdownMenuOffset"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                          data-offset="5,10"
-                    >
-                          Action
-                    </button>
-                        <div
-                          class="dropdown-menu"
-                          aria-labelledby="dropdownMenuOffset"
-                        >
-                          <a class="dropdown-item" href="./server/removeMember.php?uid=' . $userID . '">Remove</a>
-                        </div>
-                        <!--<img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">-->
-                      </td>
-                      </tr>
-                      ';
 }
 ?>

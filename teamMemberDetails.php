@@ -47,7 +47,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
               <div class="files-card">
                 <div class="d-flex justify-content-between">
                   <h1 class="content-heading">Team Members</h1>
-                  <button data-toggle='modal' data-target='#addMemberModal' class="add-task-btn">Add Members +</button>
+                  
                 </div>
                 <!---table start-->
                 <table class="table files-table">
@@ -57,7 +57,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                       <th>Email ID</th>
                       <th>Mobile No</th>
                       <th>Role</th>
-                      <th>Team</th>
                     </tr>
                   </thead>
                   <tbody id="filesContainer">
