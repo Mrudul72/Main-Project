@@ -5,6 +5,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
 } else {
+    $managerId = $_SESSION['userId'];
 ?>
 
     <!DOCTYPE html>
@@ -133,7 +134,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             <select class="custom-select" name="pro-team" id="pro-team1" aria-label="Example select with button addon">
                                                 <option disabled selected>Select teams</option>
                                                 <?php
-                                                $sql = "SELECT * FROM tbl_teams";
+                                                $sql = "SELECT * FROM tbl_teams WHERE `manager_id`='$managerId'";
                                                 $result = mysqli_query($connect, $sql);
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     $team_id = $row['team_id'];

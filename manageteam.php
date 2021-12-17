@@ -85,7 +85,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                           <textarea name="teamTitle" id="teamTitle" class="form-control" placeholder="task title" autocomplete="off">' . $teamTitle . '</textarea>
                         </div>
                         <div class="form-group">
-                          <label for="team-stength">Team Stength</label>
+                          <label for="team-stength">Team Strength</label>
                           <input type="text" disabled name="team-stength" id="team-stength" class="form-control" value="' . $memberCount . '" autocomplete="off">
                         </div>
                       </div>

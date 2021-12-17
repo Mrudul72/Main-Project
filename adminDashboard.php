@@ -40,9 +40,24 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         <div class="d-flex">
                             <div class="col">
                                 <div class="completed-task">
-                                    <div class="d-flex flex-column">
-                                        <h1 class="content-heading">Completed Tasks</h1>
-                                        <h2 class="stats">372</h2>
+                                <div class="d-flex flex-column">
+                                        <h1 class="content-heading">Total Project</h1>
+                                        <?php
+                                        $userid = $_SESSION['userId'];
+                                        //select from tbl_team_allocation table
+                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_team_allocation";
+                                        $result2 = mysqli_query($connect, $sqlQuery);
+                                        $count2 = mysqli_num_rows($result2);
+                                        if($count2>0){
+                                            $row2 = mysqli_fetch_assoc($result2);
+                                            $project_count=$row2['proCount'];
+                                            echo '<h2 class="stats">'.$project_count.'</h2>';
+                                        }
+                                        else{
+                                            echo '<h2 class="stats">0</h2>';
+                                        }
+                                        ?>
+                                        
                                     </div>
                                     <img class="chart-img" src="./assets/images/Chart.svg" alt="" />
                                 </div>
@@ -50,111 +65,55 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         </div>
                         <div class="d-flex">
                             <div class="col-6">
-                                <div class="ring-chart-container">
-                                    <h1 class="content-heading">Working Rate</h1>
-                                    <div class="single-chart">
-                                        <svg viewBox="0 0 36 36" class="circular-chart blue">
-                                            <path class="circle-bg" d="M18 2.0845
-                          a 15.9155 15.9155 0 0 1 0 31.831
-                          a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <path class="circle" stroke-dasharray="82, 100" d="M18 2.0845
-                          a 15.9155 15.9155 0 0 1 0 31.831
-                          a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <text x="18" y="20.35" class="percentage">82%</text>
-                                        </svg>
+                            <div class="completed-task mt-3">
+                                <div class="d-flex flex-column">
+                                        <h1 class="content-heading">Total Teams</h1>
+                                        <?php
+                                        $userid = $_SESSION['userId'];
+                                        //select from tbl_team_allocation table
+                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_team_allocation";
+                                        $result2 = mysqli_query($connect, $sqlQuery);
+                                        $count2 = mysqli_num_rows($result2);
+                                        if($count2>0){
+                                            $row2 = mysqli_fetch_assoc($result2);
+                                            $project_count=$row2['proCount'];
+                                            echo '<h2 class="stats">'.$project_count.'</h2>';
+                                        }
+                                        else{
+                                            echo '<h2 class="stats">0</h2>';
+                                        }
+                                        ?>
+                                        
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="ring-chart-container">
-                                    <h1 class="content-heading">Performance</h1>
-                                    <div class="single-chart">
-                                        <svg viewBox="0 0 36 36" class="circular-chart blue">
-                                            <path class="circle-bg" d="M18 2.0845
-                          a 15.9155 15.9155 0 0 1 0 31.831
-                          a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <path class="circle" stroke-dasharray="62, 100" d="M18 2.0845
-                          a 15.9155 15.9155 0 0 1 0 31.831
-                          a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <text x="18" y="20.35" class="percentage">62%</text>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="col">
-                                <div class="today-task-container">
-                                    <div class="
-                      d-flex
-                      justify-content-between
-                      align-items-center
-                      my-2">
-                                        <h1 class="content-heading">Backlog Tasks</h1>
-                                        <!-- <button data-toggle='modal' data-target='#addTasksModal' class="add-task-btn">Add Task +</button> -->
-                                    </div>
-                                    <?php
-                                    $sql = "SELECT distinct tbl_tasks.task_id,tbl_tasks.task_title,tbl_tasks.team_id FROM tbl_tasks JOIN tbl_user ON tbl_tasks.team_id=tbl_user.team_id WHERE tbl_tasks.task_status=1  AND tbl_tasks.team_id=$team_id";
-                                    $result = mysqli_query($connect, $sql);
-                                    if($result){
-                                        $i = 0;
-                                    if (mysqli_num_rows($result) > 0) {
-
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            $i++;
-                                            $task_id = $row['task_id'];
-                                            // echo "<script>alert('$task_id');</script>";
-                                            $task_title = $row['task_title'];
-                                            // $task_description = $row['task_description'];
-                                            $team_id = $row['team_id'];
-                                            // $task_added_by = $row['task_added_by'];
-                                            // $task_status = $row['task_status'];
-                                            $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
-                                            $result2 = mysqli_query($connect, $sql2);
-                                            $val = mysqli_fetch_assoc($result2);
-                                            $team_name = $val['team_title'];
-                                            echo '<div class="today-tasks">
-                                        <div id="checkParent">
-                                            <input class="styled-checkbox" id="' . $task_id . '" type="checkbox"
-                                                value="value2" />
-                                            <label id="styled-checkbox-label' . $i . '" for="styled-checkbox"></label>
-                                        </div>
-                                        <div id="checkSibling" class="task-details">
-                                            <p class="task-title">
-                                            ' . $task_title . '
-                                            </p>
-                                            <p class="task-sub-title">' . $team_name . '</p>
-                                        </div>
-                                    </div>';
+                            <div class="completed-task mt-3">
+                                <div class="d-flex flex-column">
+                                        <h1 class="content-heading">Total projects</h1>
+                                        <?php
+                                        $userid = $_SESSION['userId'];
+                                        //select from tbl_team_allocation table
+                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_team_allocation";
+                                        $result2 = mysqli_query($connect, $sqlQuery);
+                                        $count2 = mysqli_num_rows($result2);
+                                        if($count2>0){
+                                            $row2 = mysqli_fetch_assoc($result2);
+                                            $project_count=$row2['proCount'];
+                                            echo '<h2 class="stats">'.$project_count.'</h2>';
                                         }
-                                    } else {
-                                        echo '<div class="today-tasks">
+                                        else{
+                                            echo '<h2 class="stats">0</h2>';
+                                        }
+                                        ?>
                                         
-                                        <div id="checkSibling" class="task-details">
-                                            <p class="task-title">
-                                            No tasks in backlog
-                                            </p>
-                                            
-                                        </div>.
-                                    </div>';
-                                    }
-                                    }
-                                    else {
-                                        echo '<div class="today-tasks">
-                                        
-                                        <div id="checkSibling" class="task-details">
-                                            <p class="task-title">
-                                            No tasks in backlog
-                                            </p>
-                                            
-                                        </div>.
-                                    </div>';
-                                    }
+                                    </div>
                                     
-                                    ?>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                     <!--col 1 end-->
 
@@ -188,43 +147,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     </li>
                                 </ul>
                             </div>
-                            <div class="dashboard-card">
-                                <h1 class="content-heading">Upcoming Events</h1>
-                                <h3 class="sub-title">Today</h3>
-                                <ul class="activity-container">
-                                    <li class="items">
-                                        <img src="./assets/icons/tick-dark-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <img src="./assets/icons/client-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Client Meeting</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <h3 class="sub-title">Tomorrow</h3>
-                                <ul class="activity-container">
-                                    <li class="items">
-                                        <img src="./assets/icons/comment-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Review Meeting</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <img src="./assets/icons/tick-dark-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            
                         </div>
                     </div>
                     <!--col 2 end-->

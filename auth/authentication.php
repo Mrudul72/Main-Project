@@ -42,6 +42,14 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                         $insertDb = "INSERT INTO `tbl_user`(`username`, `mob`, `email`,`dob`, `password`, `user_created_at`, `type_id`,`team_id`) VALUES ('$uname','$mob','$email','$dob','$password','$date','$role','$team_id')";
                         $insertDbResult = mysqli_query($connect, $insertDb);
                         if ($insertDbResult) {
+                            $userInsertedId = mysqli_insert_id($connect);
+                            //insert to tbl_team_members
+                            $sql = "INSERT INTO `tbl_team_members`(`team_id`, `user_id`) VALUES ('$team_id','$userInsertedId')";
+                            $res = mysqli_query($connect,$sql);
+                            //update invite status
+                            $sql2 = "UPDATE `tbl_invitation` SET `invite_status`='1' WHERE `email`='$email'";
+                            $res2 = mysqli_query($connect,$sql2);
+
                             $_SESSION['loginMessage'] = "Register Success";
                             header("Location: ../index.php");
                             die();
