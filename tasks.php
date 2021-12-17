@@ -9,6 +9,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         $_SESSION['projectID'] = $_GET['id'];
     }
     $tId = $_SESSION['projectID'];
+    $curTeamID = $_SESSION['currentUserTeamId'];
+    $sql3 = "SELECT * FROM `tbl_teams` WHERE `team_id`='$curTeamID'";
+    $result3 = mysqli_query($connect, $sql3);
+    $row3 = mysqli_fetch_assoc($result3);
+    $managerId = $row3['manager_id'];
 
 ?>
     <!DOCTYPE html>
@@ -257,7 +262,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     <option disabled selected value="-1">Select Team</option>
                                     <?php
                                     $userId = $_SESSION['userId'];
-                                    $sql = "SELECT * FROM tbl_teams WHERE manager_id = $userId";
+                                    $sql = "SELECT * FROM tbl_teams WHERE manager_id = $managerId";
                                     $result = mysqli_query($connect, $sql);
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $team = $row['team_id'];
