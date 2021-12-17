@@ -70,14 +70,14 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         <h1 class="content-heading">Total Teams</h1>
                                         <?php
                                         $userid = $_SESSION['userId'];
-                                        //select from tbl_team_allocation table
-                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_team_allocation";
-                                        $result2 = mysqli_query($connect, $sqlQuery);
-                                        $count2 = mysqli_num_rows($result2);
-                                        if($count2>0){
-                                            $row2 = mysqli_fetch_assoc($result2);
-                                            $project_count=$row2['proCount'];
-                                            echo '<h2 class="stats">'.$project_count.'</h2>';
+                                        //select from tbl_team table
+                                        $sqlQuery3 = "SELECT count(DISTINCT team_id) AS teamCount FROM tbl_teams";
+                                        $result3 = mysqli_query($connect, $sqlQuery3);
+                                        $count3 = mysqli_num_rows($result3);
+                                        if($count3>0){
+                                            $row3 = mysqli_fetch_assoc($result3);
+                                            $teamCount=$row3['teamCount'];
+                                            echo '<h2 class="stats">'.$teamCount.'</h2>';
                                         }
                                         else{
                                             echo '<h2 class="stats">0</h2>';
@@ -91,17 +91,17 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             <div class="col-6">
                             <div class="completed-task mt-3">
                                 <div class="d-flex flex-column">
-                                        <h1 class="content-heading">Total projects</h1>
+                                        <h1 class="content-heading">Total users</h1>
                                         <?php
                                         $userid = $_SESSION['userId'];
-                                        //select from tbl_team_allocation table
-                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_team_allocation";
-                                        $result2 = mysqli_query($connect, $sqlQuery);
-                                        $count2 = mysqli_num_rows($result2);
+                                        //select from tbl_user table
+                                        $sqlQuery4 = "SELECT count(DISTINCT user_id) AS userCount FROM tbl_user";
+                                        $result4 = mysqli_query($connect, $sqlQuery4);
+                                        $count4 = mysqli_num_rows($result4);
                                         if($count2>0){
-                                            $row2 = mysqli_fetch_assoc($result2);
-                                            $project_count=$row2['proCount'];
-                                            echo '<h2 class="stats">'.$project_count.'</h2>';
+                                            $row4 = mysqli_fetch_assoc($result4);
+                                            $userCount=$row4['userCount'];
+                                            echo '<h2 class="stats">'.$userCount.'</h2>';
                                         }
                                         else{
                                             echo '<h2 class="stats">0</h2>';
