@@ -23,7 +23,7 @@ $roleName = mysqli_fetch_assoc($result3);
                 </li>
             </a>
             <a href="./manageUsers.php">
-                <li class="nav-items <?= ($activePage == 'manageUsers.php') ? 'active-nav':''; ?>">
+                <li class="nav-items <?= ($activePage == 'manageUsers') ? 'active-nav':''; ?>">
                 <span class="ico"><object class="svgClass" type="image/svg+xml"
                         data="./assets/icons/team-ico.svg"></object></span>
                     <span>Manage Users</span>
@@ -33,7 +33,7 @@ $roleName = mysqli_fetch_assoc($result3);
             <li class="nav-items <?= ($activePage == 'manageUserRole') ? 'active-nav':''; ?>">
                 <span class="ico">
                     <object class="svgClass" type="image/svg+xml" data="./assets/icons/schedule-ico.svg"></object>
-                </span><span>Manage User Roles</span>
+                </span><span>Manage Roles</span>
             </li>
             </a>
             <!-- <li class="nav-items">

@@ -1,1 +1,0 @@
-$query = "SELECT * FROM tbl_project WHERE project_id IN (SELECT distinct project_id FROM tbl_team_allocation aloc JOIN tbl_user u ON aloc.team_id = u.team_id)";

@@ -43,8 +43,8 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             <div class="d-flex flex-column">
               <div class="files-card">
                 <div class="d-flex justify-content-between">
-                  <h1 class="content-heading">Team Members</h1>
-                  <button data-toggle='modal' data-target='#addMemberModal' class="add-task-btn">Add Members +</button>
+                  <h1 class="content-heading">User Roles</h1>
+                  <button data-toggle='modal' data-target='#addMemberModal' class="add-task-btn">Add Role +</button>
                 </div>
                 <!---table start-->
                 <table class="table files-table">
@@ -54,7 +54,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                       <th>Email ID</th>
                       <th>Mobile No</th>
                       <th>Role</th>
-                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody id="filesContainer">
@@ -81,12 +80,12 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     <script>
       $(document).ready(function() {
         let memberCount = 4;
-        $("#filesContainer").load("./server/loadUsers.php", {
+        $("#filesContainer").load("./server/loadRole.php", {
           memberCount: memberCount
         });
         $(".view-more-btn").click(function() {
           memberCount += 4;
-          $("#filesContainer").load("./server/loadUsers.php", {
+          $("#filesContainer").load("./server/loadRole.php", {
             memberCount: memberCount
           });
         });

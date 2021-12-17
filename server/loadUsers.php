@@ -13,6 +13,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $userRoleId = $row['type_id'];
     $userTeam = $row['team_id'];
     $mob = $row['mob'];
+    $userStatus = $row['user_status'] ? 'Active' : 'Inactive';
 
     $userRoleId = "SELECT role_name FROM tbl_user_role WHERE role_id = '$userRoleId'";
     $result2 = mysqli_query($connect, $userRoleId);
@@ -23,6 +24,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <td>' . $userEmail . '</td>
                 <td>' . $mob . '</td>
                 <td>' . $role_name['role_name'] . '</td>
+                <td>' . $userStatus . '</td>
                 
                 <td>
                     <button
@@ -39,7 +41,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                           class="dropdown-menu"
                           aria-labelledby="dropdownMenuOffset"
                         >
-                          <a class="dropdown-item" href="./server/removeMember.php?fid=' . $userID . '">Remove</a>
+                          <a class="dropdown-item" href="./server/disableUser.php?uid=' . $userID . '">Disable</a>
+                          <a class="dropdown-item" href="./server/enableUser.php?uid=' . $userID . '">Enable</a>
                         </div>
                         <!--<img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">-->
                       </td>
