@@ -13,7 +13,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     $sql3 = "SELECT * FROM `tbl_teams` WHERE `team_id`='$curTeamID'";
     $result3 = mysqli_query($connect, $sql3);
     $row3 = mysqli_fetch_assoc($result3);
-    $managerId = $row3['manager_id'];
+    
+    if($_SESSION['currentUserTypeId'] == '2'){
+        $managerId = $_SESSION['userId'];
+    }
+    else{
+        $managerId = $row3['manager_id'];
+    }
 
 ?>
     <!DOCTYPE html>
@@ -351,58 +357,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     show: false
                 });
 
-                //add new task
-
-                // $('#addTaskBtn').on('click', function() {
-                //     var task_title = $('#task-title').val();
-                //     var task_description = $('#task-description').val();
-                //     var team_id = $('#task-team').val();
-                //     var task_added_by = $('#getUserID').val();
-                //     var proID = $('#getProID').val();
-                //     var task_status = 1;
-
-                //     if (task_title != '' && task_description != '' && team_id != '') {
-                //         console.log(task_title);
-                //         $("#addTaskBtn").attr("disabled", "disabled");
-                //         $.ajax({
-                //             url: "./server/addTasks.php",
-                //             method: "POST",
-                //             data: {
-                //                 task_title: task_title,
-                //                 task_description: task_description,
-                //                 team_id: team_id,
-                //                 task_status: task_status,
-                //                 proID : proID,
-                //                 task_added_by : task_added_by
-                //             },
-                //             success: function(data) {
-                //                 $("#addTaskBtn").removeAttr("disabled");
-                //                 $('#addTasksModal').modal('hide');
-                //                 $('#addTasksModal').on('hidden.bs.modal', function() {
-                //                     location.reload();
-                //                 });
-                //             }
-                //         });
-                //     } else {
-                //         alert('Please fill all the field !');
-                //     }
-                // });
-
-                // $('.add-task-item-btn').on('click', function() {
-                //     var btn = document.querySelector("#addTaskBtn");
-                //     var task_title = $('#task-title').val();
-                //     var task_description = $('#task-description').val();
-                //     var team_id = $('#task-team').val();
-                    
-                //         if (team_id != '-1') {
-                //             btn.disabled = false;
-                //             $('#alertMsg').hide();
-                //         } else {
-                //             btn.disabled = true;
-                //         }
-                    
-                    
-                // });
 
                 //task details modal
                 $('.task-items').on('click', function() {

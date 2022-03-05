@@ -35,7 +35,7 @@ $userName = $_SESSION['userName'];
                 <img class="header-ico" src="./assets/icons/settings-ico.svg" alt="settings" />
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset2">
-                <a class="dropdown-item" href="#">Manage Profile</a>
+                <a class="dropdown-item" href="./manageProfile.php">Manage Profile</a>
 
             </div>
         </div>

@@ -3,6 +3,7 @@ $filesCount = $_POST['filesCount'];
 include('../config/connect.php');
 session_start();
 $pId = $_SESSION['projectID'];
+$userType = $_SESSION['currentUserTypeId'];
 $sql = "SELECT * FROM tbl_files WHERE project_id=$pId LIMIT $filesCount";
 $result = mysqli_query($connect, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -20,12 +21,17 @@ while ($row = mysqli_fetch_assoc($result)) {
     $selectTeam = "SELECT `team_title` FROM tbl_teams WHERE `team_id` = '$file_tag'";
     $result3 = mysqli_query($connect, $selectTeam);
     $teamName = mysqli_fetch_assoc($result3);
+    if($userType == '2'){
+      $team_title = "Manager";
+    }else{
+      $team_title = $teamName['team_title'];
+    }
     echo '
            <tr>
                 <td>' . $file_name . '</td>
                 <td>' . $file_size . '</td>
                 <td>' . $uname['username'] . '</td>
-                <td>' . $teamName['team_title'] . '</td>
+                <td>' . $team_title . '</td>
                 <td>' . $file_date . '</td>
                 <td>
                     <button

@@ -176,40 +176,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             // }
 
             $(document).ready(function() {
-                //add new task
-
-                // $('#addTaskBtn').on('click', function() {
-                //     var task_title = $('#task-title').val();
-                //     var task_description = $('#task-description').val();
-                //     var task_team = $('#team_id').val();
-                //     task_added_by = <?php //echo $_SESSION['userId']; ?>;
-                //     var task_status = 1;
-
-                //     if (task_title != '' && task_description != '' && task_team != '') {
-                //         console.log(task_title);
-                //         $("#addTaskBtn").attr("disabled", "disabled");
-                //         $.ajax({
-                //             url: "./server/addTasks.php",
-                //             method: "POST",
-                //             data: {
-                //                 task_title: task_title,
-                //                 task_description: task_description,
-                //                 task_team: task_team,
-                //                 task_added_by: task_added_by,
-                //                 task_status: task_status
-                //             },
-                //             success: function(data) {
-                //                 $("#addTaskBtn").removeAttr("disabled");
-                //                 $('#addTasksModal').modal('hide');
-                //                 $('#addTasksModal').on('hidden.bs.modal', function() {
-                //                     location.reload();
-                //                 });
-                //             }
-                //         });
-                //     } else {
-                //         alert('Please fill all the field !');
-                //     }
-                // });
 
                 //checklist task
                 $(".styled-checkbox").change(function() {
