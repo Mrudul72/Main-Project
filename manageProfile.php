@@ -5,7 +5,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
 } else {
-    
+
 ?>
     <!DOCTYPE html>
     <html>
@@ -36,13 +36,31 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
             <!--Dashboard contents-->
             <div class="dashboard-contents">
-                
+
                 <div class="row">
                     <!--col 2 start-->
                     <div class="col-12">
                         <div class="d-flex flex-column">
                             <div class="files-card">
                                 <h1 class="content-heading">Edit Profile</h1>
+                                <!-- Alert msg -->
+                                <?php
+                                if(isset($_SESSION['profileUpdateMsg'])&& isset($_SESSION['profileUpdateMsgHeading'])){
+                                    echo '
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" id="success" >
+                                                <h4>'. $_SESSION['profileUpdateMsgHeading'] .'</h4>
+                                                <div id="message">'. $_SESSION['profileUpdateMsg'] .'</div>
+                                                <button id="alertClose" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                        </div>
+                                        ';
+                                    unset($_SESSION['profileUpdateMsg']);
+                                    unset($_SESSION['profileUpdateMsgHeading']);
+                                }
+                                                                
+
+                                ?>
                                 <form id="editProfileForm" class="modal-form-container" action="./server/updateProfile.php" method="post" enctype="multipart/form-data">
                                     <?php
                                     // echo "<script>alert('$taskId');</script>";
@@ -59,7 +77,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     $result2 = mysqli_query($connect, $sql2);
                                     $row2 = mysqli_fetch_assoc($result2);
                                     $roleName = $row2['role_name'];
-                                    
+
 
                                     echo '
                   <div class="container-fluid">
@@ -67,8 +85,8 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                       <div class="col-8">
                       <div class="form-group">
                         <div class="pro-pic">
-                            <img src="./assets/uploads/'.$proPic.'" alt="">
-                            <input type="file" name="uploadPic" id="uploadPic" />
+                            <img src="./assets/uploads/' . $proPic . '" alt="">
+                            <input type="file" name="uploadPic" id="uploadPic" style="display:none;"/>
                             <label class="pro-pic-btn" for="uploadPic">Change</label>
                         </div>    
                       </div>
@@ -89,39 +107,38 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                           <input type="text" disabled name="role" id="role" value="' . $roleName  . '" class="form-control" autocomplete="off">
                         </div>
                         ';
-                        if($teamId != 0){
-                            $sql3 = "SELECT * FROM tbl_teams WHERE team_id = '$teamId'";
-                        $result3 = mysqli_query($connect, $sql3);
-                        $row3 = mysqli_fetch_assoc($result3);
-                        $teamName = $row3['team_title'];
-                        echo '
+                                    if ($teamId != 0) {
+                                        $sql3 = "SELECT * FROM tbl_teams WHERE team_id = '$teamId'";
+                                        $result3 = mysqli_query($connect, $sql3);
+                                        $row3 = mysqli_fetch_assoc($result3);
+                                        $teamName = $row3['team_title'];
+                                        echo '
                         <div class="form-group">
                           <label for="team">Team</label>
                           <input type="text" name="team" id="team" value="' . $teamName . '" class="form-control" autocomplete="off">
                         </div>
                         ';
-                        }
-                        else{
-                            $sql3 = "SELECT * FROM tbl_teams WHERE manager_id = '$_SESSION[userId]'";
-                        $result3 = mysqli_query($connect, $sql3);
-                        echo '<div class="form-group">
+                                    } else {
+                                        $sql3 = "SELECT * FROM tbl_teams WHERE manager_id = '$_SESSION[userId]'";
+                                        $result3 = mysqli_query($connect, $sql3);
+                                        echo '<div class="form-group">
                         <label for="team">Team</label>
                         <div>
                         ';
-                        
-                        while($row3 = mysqli_fetch_assoc($result3)){
-                            $teamName = $row3['team_title'];
-                            $team_id = $row3['team_id'];
-                            echo '
+
+                                        while ($row3 = mysqli_fetch_assoc($result3)) {
+                                            $teamName = $row3['team_title'];
+                                            $team_id = $row3['team_id'];
+                                            echo '
                             <span class="team-pill">' . $teamName . '</span>
                             ';
-                        }
-                        echo '
+                                        }
+                                        echo '
                         </div>
                         </div>
                         ';
-                        }
-                        echo '
+                                    }
+                                    echo '
        
                       </div>
 
@@ -155,7 +172,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             <div class="modal fade" id="changePassModal" tabindex="-1" aria-labelledby="changePassModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="addTeamForm" class="modal-form-container" method="post">
+                        <form id="changePassForm" class="modal-form-container" method="post" action="./server/changePassword.php">
                             <input type="hidden" name="assign-count" value="1" id="assign-count">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="changePassModalLabel">Change Password</h5>
@@ -164,14 +181,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 </button>
                             </div>
                             <div class="modal-body">
-
-                                <div class="alert alert-success alert-dismissible fade show" role="alert" id="success" style="display:none;">
-                                    <div id="message"></div>
-                                    <button id="alertClose" type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-
 
                                 <div class="form-group">
                                     <label for="oldPass">Old Password</label>
@@ -186,12 +195,12 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     <input type="password" name="confirmPass" id="confirmPass" class="form-control" autocomplete="off">
                                 </div>
 
-                                
+
 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
-                                <button id="addTeamBtn" type="button" class="btn btn-primary modal-btn-submit">Add</button>
+                                <button id="changePassBtn" name="changePassBtn" type="submit" class="btn btn-primary modal-btn-submit">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -205,17 +214,18 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Disable Account</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            Are you sure you want to delete this project?
+                            Are you sure you want to disable your account?
                         </div>
+                        <form action="./server/disableUser.php"></form>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" id="deleteProBtn" class="btn btn-danger">Delete</button>
+                            <button type="button" id="deleteProBtn" <?php $uid = $_SESSION['userId']; echo'value="'.$uid.'"'; ?> class="btn btn-danger">Disable</button>
                         </div>
                     </div>
                 </div>
@@ -293,8 +303,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                 });
             });
-
-           
         </script>
     </body>
 

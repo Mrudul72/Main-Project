@@ -1486,6 +1486,7 @@
   background-color: bisque;
   border-radius: 50%;
   margin: 0.5vw 0;
+  overflow: hidden;
   padding: 0;
 }
 
