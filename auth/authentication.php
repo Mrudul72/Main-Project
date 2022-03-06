@@ -112,6 +112,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                 $userData = mysqli_fetch_assoc($checkLoginResult);
                 $_SESSION['pmsSession'] = session_id();
                 $_SESSION['userName'] = $userData['username'];
+                $_SESSION['proPic'] = $userData['profile_pic'];
                 $_SESSION['userId'] = $userData['user_id'];
                 $_SESSION['currentUserTeamId'] = $userData['team_id'];
                 $_SESSION['currentUserTypeId'] = $userData['type_id'];

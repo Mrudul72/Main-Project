@@ -29,7 +29,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             <!--sidebar end-->
 
             <!--header starts-->
-            <?php include_once("./layouts/header.php"); ?>
+            <?php include_once("./layouts/adminHeader.php"); ?>
             <!--header ends-->
 
             <!--Dashboard contents-->

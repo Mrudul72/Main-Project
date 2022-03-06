@@ -255,15 +255,16 @@
               cursor: pointer;
             }
           }
-          .errMsg{
-            display: none;
-            color: rgb(253, 78, 78)!important;
-            padding-left: 0.5vw;
-          }
+          
         }
       }
     }
   }
+}
+.errMsg{
+  display: none;
+  color: rgb(253, 78, 78)!important;
+  padding-left: 0.5vw;
 }
 
 @keyframes fadeInRight {

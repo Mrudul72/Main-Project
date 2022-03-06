@@ -302,7 +302,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             var task_title = $('#task-title').val();
             var task_description = $('#task-description').val();
             var task_team = $('#task-team').val();
-            task_added_by = ;
+            
             var task_status = 1;
 
             if (task_title != '' && task_description != '' && task_team != '') {

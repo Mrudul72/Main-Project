@@ -5,7 +5,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
   header("Location: ./index.php");
   die();
 } else {
-  
+
 ?>
   <!DOCTYPE html>
   <html>
@@ -31,12 +31,12 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
       <!--sidebar end-->
 
       <!--header starts-->
-      <?php include_once("./layouts/header.php"); ?>
+      <?php include_once("./layouts/adminHeader.php"); ?>
       <!--header ends-->
 
       <!--Dashboard contents-->
       <div class="dashboard-contents">
-  
+
         <div class="row">
           <!--col 2 start-->
           <div class="col-12">
@@ -59,7 +59,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                   </thead>
                   <tbody id="filesContainer">
 
- 
+
 
                   </tbody>
                 </table>

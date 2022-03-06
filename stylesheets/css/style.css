@@ -361,7 +361,7 @@
   cursor: pointer;
 }
 
-.main .lg-container .right-lg-container .form-container .form-group .errMsg {
+.errMsg {
   display: none;
   color: #fd4e4e !important;
   padding-left: 0.5vw;

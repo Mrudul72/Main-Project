@@ -28,11 +28,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     <div class="dashboard-container">
       <!--sidebar goes here-->
       <?php include_once("./layouts/adminSidebar.php"); ?>
-      <!--sidebar end-->
+            <!--sidebar end-->
 
-      <!--header starts-->
-      <?php include_once("./layouts/header.php"); ?>
-      <!--header ends-->
+            <!--header starts-->
+            <?php include_once("./layouts/adminHeader.php"); ?>
+            <!--header ends-->
 
       <!--Dashboard contents-->
       <div class="dashboard-contents">
