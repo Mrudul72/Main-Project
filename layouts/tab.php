@@ -10,7 +10,7 @@
         $manageProjectDivider = ($activePage == 'manageProject') || ($activePage == 'activity') ? 'active-divider' : '';
         $manageProject = ($activePage == 'manageProject') ? 'active-tab' : '';
         echo '<div class="divider' . $manageProjectDivider . ' "></div>
-        <a href="./manageProject.php" id="tab4" class="tablinks ' . $manageProjectDivider . '">Manage Project</a>';
+        <a href="./manageProject.php" id="tab4" class="tablinks ' . $manageProject . '">Manage Project</a>';
     }
 
     ?>

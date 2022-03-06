@@ -80,85 +80,85 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
 
                                     echo '
-                  <div class="container-fluid">
-                    <div class="row">
-                      <div class="col-8">
-                      <div class="form-group">
-                        <div class="pro-pic">
-                            <img src="./assets/uploads/' . $proPic . '" alt="">
-                            <input type="file" name="uploadPic" id="uploadPic" style="display:none;"/>
-                            <label class="pro-pic-btn" for="uploadPic">Change</label>
-                        </div>    
-                      </div>
-                        <div class="form-group">
-                          <label for="uname">Name</label>
-                          <input type="text" name="uname" id="uname" value="' . $name . '" class="form-control" autocomplete="off">
-                          <small id="errMsgUname" class="errMsg"></small>
-                        </div>
-                        <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="email" name="email" id="email" value="' . $email . '" class="form-control" autocomplete="off">
-                          <small id="errMsgEmail" class="errMsg"></small>
-                        </div>
-                        <div class="form-group">
-                          <label for="mobile">Mobile</label>
-                          <input type="text" name="mobile" id="mob" value="' . $mobile . '" class="form-control" autocomplete="off" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
-                          <small id="errMsgMob" class="errMsg"></small>
-                        </div>
-                        <div class="form-group">
-                          <label for="role">Role</label>
-                          <input type="text" disabled name="role" id="role" value="' . $roleName  . '" class="form-control" autocomplete="off">
-                        </div>
-                        ';
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                            <div class="col-8">
+                                            <div class="form-group">
+                                                <div class="pro-pic">
+                                                    <img src="./assets/uploads/' . $proPic . '" alt="">
+                                                    <input type="file" name="uploadPic" id="uploadPic" style="display:none;" accept="image/*"/>
+                                                    <label class="pro-pic-btn" for="uploadPic">Change</label>
+                                                </div>    
+                                            </div>
+                                                <div class="form-group">
+                                                <label for="uname">Name</label>
+                                                <input type="text" name="uname" id="uname" value="' . $name . '" class="form-control" autocomplete="off">
+                                                <small id="errMsgUname" class="errMsg"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input type="email" name="email" id="email" value="' . $email . '" class="form-control" autocomplete="off">
+                                                <small id="errMsgEmail" class="errMsg"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                <label for="mobile">Mobile</label>
+                                                <input type="text" name="mobile" id="mob" value="' . $mobile . '" class="form-control" autocomplete="off" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                                                <small id="errMsgMob" class="errMsg"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                <label for="role">Role</label>
+                                                <input type="text" disabled name="role" id="role" value="' . $roleName  . '" class="form-control" autocomplete="off">
+                                                </div>
+                                                ';
                                     if ($teamId != 0) {
                                         $sql3 = "SELECT * FROM tbl_teams WHERE team_id = '$teamId'";
                                         $result3 = mysqli_query($connect, $sql3);
                                         $row3 = mysqli_fetch_assoc($result3);
                                         $teamName = $row3['team_title'];
                                         echo '
-                        <div class="form-group">
-                          <label for="team">Team</label>
-                          <input type="text" name="team" id="team" value="' . $teamName . '" class="form-control" autocomplete="off">
-                        </div>
-                        ';
+                                            <div class="form-group">
+                                            <label for="team">Team</label>
+                                            <input type="text" name="team" id="team" value="' . $teamName . '" class="form-control" autocomplete="off">
+                                            </div>
+                                            ';
                                     } else {
                                         $sql3 = "SELECT * FROM tbl_teams WHERE manager_id = '$_SESSION[userId]'";
                                         $result3 = mysqli_query($connect, $sql3);
                                         echo '<div class="form-group">
-                        <label for="team">Team</label>
-                        <div>
-                        ';
+                                            <label for="team">Team</label>
+                                            <div>
+                                            ';
 
                                         while ($row3 = mysqli_fetch_assoc($result3)) {
                                             $teamName = $row3['team_title'];
                                             $team_id = $row3['team_id'];
                                             echo '
-                            <span class="team-pill">' . $teamName . '</span>
-                            ';
+                                                <span class="team-pill">' . $teamName . '</span>
+                                                ';
                                         }
                                         echo '
-                        </div>
-                        </div>
-                        ';
+                                            </div>
+                                            </div>
+                                            ';
                                     }
                                     echo '
        
-                      </div>
+                                            </div>
 
-                      <div class="col-4 ml-auto">
-                      <div class="form-group">
-                        <label for="changePass">Change password</label>
-                        <button id="changePass" name="changePass" value="" type="button" class="secondary-modal-btn">Change</button>
-                      </div>
-                      
-                        <div class="form-group">
-                          <label for="task-actions">Actions</label>
-                          <button id="deleteProject" name="deleteProject" type="button" class="secondary-modal-btn">Delete</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  ';
+                                            <div class="col-4 ml-auto">
+                                            <div class="form-group">
+                                                <label for="changePass">Change password</label>
+                                                <button id="changePass" name="changePass" value="" type="button" class="secondary-modal-btn">Change</button>
+                                            </div>
+                                            
+                                                <div class="form-group">
+                                                <label for="task-actions">Actions</label>
+                                                <button id="deleteProject" name="deleteProject" type="button" class="secondary-modal-btn">Delete</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        ';
                                     ?>
                                     <div class="m-2">
                                         <button name="updateProfileBtn" type="submit" class="btn btn-primary saveBtn">Save</button>

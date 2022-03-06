@@ -15,13 +15,14 @@ while ($row = mysqli_fetch_assoc($result)) {
     $file_uploaded_by = $row['uploaded_by_id'];
     $file_tag = $row['team_id'];
     $file_date = $row['uploaded_date'];
+    $team_id = $row['team_id'];
     $selectUname = "SELECT `username` FROM tbl_user WHERE `user_id` = '$file_uploaded_by'";
     $result2 = mysqli_query($connect, $selectUname);
     $uname = mysqli_fetch_assoc($result2);
     $selectTeam = "SELECT `team_title` FROM tbl_teams WHERE `team_id` = '$file_tag'";
     $result3 = mysqli_query($connect, $selectTeam);
     $teamName = mysqli_fetch_assoc($result3);
-    if($userType == '2'){
+    if($userType == '2' || $team_id == 0){
       $team_title = "Manager";
     }else{
       $team_title = $teamName['team_title'];
