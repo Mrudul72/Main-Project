@@ -108,6 +108,39 @@
     background-color: $secondary-hover-color;
   }
 }
+
+.commentBox{
+  padding: 1vw 0;
+  border-top: solid 1px gainsboro;
+  display: flex;
+  justify-content: space-between;
+
+}
+.comment-section{
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1vw;
+  h6{
+    font-size: 1vw;
+    font-weight: 700;
+    color: $text-dark;
+    padding: 0 1vw;
+  }
+  p{
+    padding: 0 1vw;
+    font-size: 1vw;
+    margin: 0;
+  }
+  .time-stamp{
+    font-size: 0.8vw;
+    color: $text-light;
+    margin: 0;
+    display: flex;
+    width: 15vw;
+    justify-content: space-between;
+  }
+}
+
 @media only screen and (min-width: 1200px) {
 
 }

@@ -1,6 +1,7 @@
 <?php
 include('./config/connect.php');
 session_start();
+$projectId = $_SESSION['projectID'];
 if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
@@ -47,84 +48,157 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <h1 class="content-heading">Activity</h1>
                                 <h3 class="sub-title">Today</h3>
                                 <ul class="activity-container">
+                                <?php 
+                                // $sql = "SELECT date_format(activity_date,'%d/%m/%Y') as date FROM `tbl_activity` Date(activity_date) = C;";
+                                $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = CURRENT_DATE and project_id = '$projectId'";
+                                $result = mysqli_query($connect, $sql);
+                                $resultCheck = mysqli_num_rows($result);
+                                if($resultCheck > 0){
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        $date = $row['date'];
+                                        $time = $row['time'];
+                                        $activity_desc = $row['activity_desc'];
+                                        $activity_type = $row['activity_type'];
+                                        if($activity_type == "task"){
+                                            $img = "tick-dark-ico.svg";
+                                        }else if($activity_type == "attachment"){
+                                            $img = "paper-clip.svg";
+                                        }else if($activity_type == "comment"){
+                                            $img = "comment-ico.svg";
+                                        }
+
+                                        echo '
+                                        
+                                        
                                     <li class="items">
-                                        <img class="activity-ico" src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                        <img class="activity-ico" src="./assets/icons/'.$img.'" alt="" />
                                         <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
+                                            <p>'.$activity_desc.'</p>
                                         </div>
-                                        <div class="time-stamp">11:20pm</div>
+                                        <div class="time-stamp">'.$time.'</div>
                                     </li>
+                                
+                                        
+                                        ';
+                                    }
+                                }else{
+                                    echo '
+                                    <ul class="activity-container">
                                     <li class="items">
-                                        <img class="activity-ico" src="./assets/icons/comment-ico.svg" alt="" />
+                                        
                                         <div class="card-text">
-                                            <p>
-                                                Lorem ipsum dolor, sit amet consectetur adipisicing
-                                                elit. Fugit praesentium impedit quisquam fugiat veniam
-                                                nesciunt vel autem nemo deserunt modi quia commodi sint
-                                                aliquid minus ipsa unde, dicta nulla soluta.
-                                            </p>
+                                            <p>No activity today</p>
                                         </div>
-                                        <div class="time-stamp">5:30pm</div>
                                     </li>
-                                    <li class="items">
-                                        <img class="activity-ico" src="./assets/icons/upload-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>
-                                                Lorem ipsum dolor sit, amet consectetur adipisicing
-                                                elit. Enim nobis dolor repellat iste aliquid iusto,
-                                                atque culpa cupiditate laboriosam, magni reiciendis.
-                                                Sit, sed explicabo quidem reprehenderit amet facilis
-                                                eligendi possimus.
-                                            </p>
-                                            <div class="attachment-container">
-                                                <img class="uploads-thumbnail" src="./assets/uploads/img1.png" alt="" />
-                                                <img class="uploads-thumbnail" src="./assets/uploads/img2.png" alt="" />
-                                            </div>
-                                        </div>
-                                        <div class="time-stamp">4:00pm</div>
-                                    </li>
+                                </ul>
+                                    ';
+                                }
+
+                                
+                                ?>
                                 </ul>
                                 <h3 class="sub-title">Yesterday</h3>
                                 <ul class="activity-container">
+                                <?php 
+                                // $sql = "SELECT date_format(activity_date,'%d/%m/%Y') as date FROM `tbl_activity` Date(activity_date) = C;";
+                                $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) and project_id = '$projectId'";
+                                $result = mysqli_query($connect, $sql);
+                                $resultCheck = mysqli_num_rows($result);
+                                if($resultCheck > 0){
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        $date = $row['date'];
+                                        $time = $row['time'];
+                                        $activity_desc = $row['activity_desc'];
+                                        $activity_type = $row['activity_type'];
+                                        
+                                        if($activity_type == "task"){
+                                            $img = "tick-dark-ico.svg";
+                                        }else if($activity_type == "attachment"){
+                                            $img = "paper-clip.svg";
+                                        }else if($activity_type == "comment"){
+                                            $img = "comment-ico.svg";
+                                        }
+
+                                        echo '
+                                        
+                                        
                                     <li class="items">
-                                        <img class="activity-ico" src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                        <img class="activity-ico" src="./assets/icons/'.$img.'" alt="" />
                                         <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
+                                            <p>'.$activity_desc.'</p>
                                         </div>
-                                        <div class="time-stamp">12:40pm</div>
+                                        <div class="time-stamp">'.$time.'</div>
                                     </li>
+                                
+                                        
+                                        ';
+                                    }
+                                }else{
+                                    echo '
+                                    <ul class="activity-container">
                                     <li class="items">
-                                        <img class="activity-ico" src="./assets/icons/comment-ico.svg" alt="" />
+                                        
                                         <div class="card-text">
-                                            <p>
-                                                Lorem ipsum dolor, sit amet consectetur adipisicing
-                                                elit. Fugit praesentium impedit quisquam fugiat veniam
-                                                nesciunt vel autem nemo deserunt modi quia commodi sint
-                                                aliquid minus ipsa unde, dicta nulla soluta.
-                                            </p>
-                                            <div class="attachment-container">
-                                                <img class="uploads-thumbnail" src="./assets/uploads/img3.png" alt="" />
-                                                <img class="uploads-thumbnail" src="./assets/uploads/img4.png" alt="" />
-                                                <img class="uploads-thumbnail" src="./assets/uploads/img5.png" alt="" />
-                                            </div>
+                                            <p>No activity yesterday</p>
                                         </div>
-                                        <div class="time-stamp">1:50pm</div>
                                     </li>
-                                    <li class="items">
-                                        <img class="activity-ico" src="./assets/icons/upload-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>
-                                                Lorem ipsum dolor sit, amet consectetur adipisicing
-                                                elit. Enim nobis dolor repellat iste aliquid iusto,
-                                                atque culpa cupiditate laboriosam, magni reiciendis.
-                                                Sit, sed explicabo quidem reprehenderit amet facilis
-                                                eligendi possimus.
-                                            </p>
-                                        </div>
-                                        <div class="time-stamp">9:40pm</div>
-                                    </li>
+                                
+                                    ';
+                                }
+                                ?>
+                            
                                 </ul>
-                                <h3 class="view-more-btn">View More >></h3>
+
+                                <?php
+                                //date older than yesterday
+                                $query = "SELECT DATE(activity_date) AS date FROM `tbl_activity` WHERE DATE(activity_date) < DATE_SUB(CURDATE(), INTERVAL 1 DAY) and project_id = '$projectId' GROUP BY DATE(activity_date)";
+                                $res = mysqli_query($connect, $query);
+                                $resCheck = mysqli_num_rows($res);
+                                if($resCheck > 0){
+                                    while($row = mysqli_fetch_assoc($res)){
+                                        $date = $row['date'];
+                                        echo '
+                                        <h3 class="sub-title">'.$date.'</h3>
+                                        <ul class="activity-container">
+                                        ';
+                                        $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = '$date' and project_id = '$projectId'";
+                                        $result = mysqli_query($connect, $sql);
+                                        $resultCheck = mysqli_num_rows($result);
+                                        if($resultCheck > 0){
+                                            while($row = mysqli_fetch_assoc($result)){
+                                                $date = $row['date'];
+                                                $time = $row['time'];
+                                                $activity_desc = $row['activity_desc'];
+                                                $activity_type = $row['activity_type'];
+                                                
+                                                if($activity_type == "task"){
+                                                    $img = "tick-dark-ico.svg";
+                                                }else if($activity_type == "attachment"){
+                                                    $img = "paper-clip.svg";
+                                                }else if($activity_type == "comment"){
+                                                    $img = "comment-ico.svg";
+                                                }
+
+                                                echo '
+                                                
+                                                
+                                            <li class="items">
+                                                <img class="activity-ico" src="./assets/icons/'.$img.'" alt="" />
+                                                <div class="card-text">
+                                                    <p>'.$activity_desc.'</p>
+                                                </div>
+                                                <div class="time-stamp">'.$time.'</div>
+                                            </li>
+                                        
+                                                
+                                                ';
+                                            }
+                                        }
+                                        echo '</ul>';
+                                    }
+                                }
+                                ?>
+                                <!-- <h3 class="view-more-btn">View More >></h3> -->
                             </div>
                         </div>
                     </div>

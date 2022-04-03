@@ -1,6 +1,7 @@
 <?php
 include('./config/connect.php');
 session_start();
+$user_id = $_SESSION['userId'];
 if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
@@ -126,8 +127,22 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             // $task_status = $row['task_status'];
                                             $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
                                             $result2 = mysqli_query($connect, $sql2);
-                                            $val = mysqli_fetch_assoc($result2);
-                                            $team_name = $val['team_title'];
+
+                                            $sql5 = "SELECT * FROM tbl_teams WHERE team_id in (SELECT team_id FROM tbl_team_allocation WHERE project_manager = $user_id)";
+                                            $res5 = mysqli_query($connect, $sql5);
+
+                                            if(mysqli_num_rows($result2)>0){
+                                                $row2 = mysqli_fetch_assoc($result2);
+                                                $team_name = $row2['team_title'];
+                                            }
+                                            else if($_SESSION['currentUserTypeId'] == 2){
+                                                $row5 = mysqli_fetch_assoc($res5);
+                                                $team_name = $row5['team_title'];
+                                            }
+                                            else{
+                                                $team_name = "Manager";
+                                            }
+                                            
                                             echo '<div class="today-tasks">
                                         <div id="checkParent">
                                             <input class="styled-checkbox" id="' . $task_id . '" type="checkbox"
@@ -179,29 +194,40 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             <div class="dashboard-card">
                                 <h1 class="content-heading">Activity</h1>
                                 <h3 class="sub-title">Today</h3>
-                                <ul class="activity-container">
-                                    <li class="items">
-                                        <img src="./assets/icons/tick-dark-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <img src="./assets/icons/comment-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <img src="./assets/icons/upload-ico.svg" alt="" />
-                                        <div class="card-text">
-                                            <p>Darika Samak mark as done Listing on Product Hunt</p>
-                                            <div class="time-stamp">8:40pm</div>
-                                        </div>
-                                    </li>
-                                </ul>
+
+                                <?php 
+                                // $sql = "SELECT date_format(activity_date,'%d/%m/%Y') as date FROM `tbl_activity` Date(activity_date) = C;";
+                                $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = CURRENT_DATE and project_id in (SELECT project_id FROM tbl_team_allocation WHERE team_id = $team_id or project_manager = $user_id) limit 3";
+                                $result = mysqli_query($connect, $sql);
+                                $resultCheck = mysqli_num_rows($result);
+                                if($resultCheck > 0){
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        $date = $row['date'];
+                                        $time = $row['time'];
+                                        $activity_desc = $row['activity_desc'];
+                                        $activity_type = $row['activity_type'];
+                                        $img = ($activity_type == "task") ? "tick-dark-ico.svg" : "upload-ico.svg";
+
+                                        echo '
+                                        
+                                        <ul class="activity-container">
+                                            <li class="items">
+                                                <img src="./assets/icons/'.$img.'" alt="" />
+                                                <div class="card-text">
+                                                    <p>'.$activity_desc.'</p>
+                                                    <div class="time-stamp">'.$time.'</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        
+                                        ';
+                                    }
+                                }
+
+                                
+                                ?>
+                                
+                                <a href="./project.php" class="view-more">View More >></a>
                             </div>
                             <div class="dashboard-card">
                                 <h1 class="content-heading">Upcoming Events</h1>
@@ -211,7 +237,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     //select all event for today
                                     $today = date("Y-m-d");
                                     $tomorrow = date("Y-m-d", strtotime("+1 day"));
-                                    $sql = "SELECT * FROM tbl_events WHERE start = '$today'";
+                                    $sql = "SELECT * FROM tbl_events WHERE start = '$today' limit 3";
                                     $result = mysqli_query($connect, $sql);
                                     if (mysqli_num_rows($result) > 0) {
                                         while ($row = mysqli_fetch_assoc($result)) {
@@ -221,7 +247,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $event_end = $row['end'];
                                             echo '
                                                 <li class="items">
-                                                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                                    <img src="./assets/icons/schedule-round-ico.svg" alt="" />
                                                     <div class="card-text">
                                                         <p>' . $event_title . '</p>
                                                          <div class="time-stamp">' . $event_start . '</div>
@@ -251,7 +277,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     //select all event for today
                                     $today = date("Y-m-d");
                                     $tomorrow = date("Y-m-d", strtotime("+1 day"));
-                                    $sql = "SELECT * FROM tbl_events WHERE start = '$tomorrow'";
+                                    $sql = "SELECT * FROM tbl_events WHERE start = '$tomorrow' limit 3";
                                     $result = mysqli_query($connect, $sql);
                                     if (mysqli_num_rows($result) > 0) {
                                         while ($row = mysqli_fetch_assoc($result)) {
@@ -261,7 +287,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $event_end = $row['end'];
                                             echo '
                                                 <li class="items">
-                                                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                                    <img src="./assets/icons/schedule-round-ico.svg" alt="" />
                                                     <div class="card-text">
                                                         <p>' . $event_title . '</p>
                                                          <div class="time-stamp">' . $event_start . '</div>
@@ -285,6 +311,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
 
                                 </ul>
+                                <a href="./schedule.php" class="view-more">View More >></a>
                             </div>
                         </div>
                     </div>

@@ -302,7 +302,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body scrollable-modal">
                             <!-- content display from taskDetails -->
 
                         </div>

@@ -13,6 +13,10 @@ $taskTeam = $row['team_id'];
 $createdBy = $row['task_added_by'];
 $taskStatus = $row['task_status'];
 
+
+
+
+
 echo '
 
 <div class="container-fluid">
@@ -29,18 +33,73 @@ echo '
                     placeholder="A breif description about task"
                     class="form-control">' . $taskDescription . '</textarea>
             </div>
+            <div  class="form-group">
+                <label for="comments">Comments</label>
+                <div class="border mb-3"></div>
+                ';
+                include './loadComments.php';
+                echo'
+                <div id="comment-container">
+                </div>
+
+                <form>
+                    <textarea name="comment" id="comment" class="form-control" placeholder="Add comment"></textarea>
+                    <input type="hidden" id="taskId" name="taskId" value="' . $taskId . '">
+                    <input type="hidden" id="taskTitle" name="taskTitle" value="' . $taskTitle . '">
+                    <small id="errMsgComment" class="errMsg"></small>
+                    <input id="addCommentBtn" type="button" name="addComment" class="btn btn-primary modal-btn-submit my-3" value="Add comment">
+                </form>
+                
+            </div>
+            <div class="form-group">
+                <label for="checklist">Checklist</label>
+                <div class="commentBox">
+                    <input type="text" name="checklistinput" id="checklistinput" class="form-control" placeholder="Enter your comments" autocomplete="off">
+                    <button id="addChecklistBtn" type="submit" class="btn btn-primary modal-btn-submit">></button>
+                </div>
+                <ul class="checklist-container">
+                    
+                    <li class="today-tasks">
+                        <div id="checkParent">
+                        <input
+                            class="styled-checkbox"
+                            type="checkbox"
+                            value="value2"
+                        />
+                        <label
+                            
+                            for="styled-checkbox"
+                        ></label>
+                        </div>
+                        <div id="checkSibling" class="task-details">
+                        <p class="task-title">Title</p>
+                        </div>
+                    </li>
+                    </ul>
+                
+            </div>
+            
         </div>
 
         <div class="col-4 ml-auto">
             <div class="form-group">
                 <label for="task-title">Add to card</label>
-                <div class="dropdown">
-  <button type="button" class="secondary-modal-btn dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">Attachment</button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <input type="file" class="dropdown-item" name="attachment" id="inputGroupFile04" size="200KB" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-  </div>
-</div>
+                <div class="mt-1">
+                    <label for="attachmentUpload" class="secondary-modal-btn text-center">Attachment</label>
+                    <input type="file" class="dropdown-item" name="attachment" id="attachmentUpload" style="display:none; margin:0;">
+                </div>
+                <div class="mb-3 mt-2">
+                    <button id="checklist" name="checklist" value="' . $taskId . '" type="button" class="secondary-modal-btn">Checklist</button>
+                </div>';
+                // <div class="my-3">
+                //     <button id="datesBtn" name="datesBtn" value="' . $taskId . '" type="button" class="secondary-modal-btn">Dates</button>
+                // </div>
+                // <div class="my-3">
+                //     <button id="labels" name="labels" value="' . $taskId . '" type="button" class="secondary-modal-btn">labels</button>
+                // </div>
+                echo'
             </div>
+
             <div class="form-group">
                 <label for="task-actions">Actions</label>
                 <button id="deleteTask" name="deleteTask" value="' . $taskId . '" type="button" class="secondary-modal-btn">Delete</button>
@@ -56,11 +115,7 @@ echo '
 
 <script>
     //delete task
-    $.ajax({
-        url: './tasks_copy.php',
-        type: 'GET',
-        success: function(data) {}
-    });
+    
     $('#deleteTask').on('click', function() {
 
         var task_id = $('#deleteTask').val();
@@ -84,4 +139,35 @@ echo '
 
     });
     //delete task ends
+
+    //add comment
+    $('#addCommentBtn').on('click', function() {
+        var task_id = $('#taskId').val();
+        var taskTitle = $('#taskTitle').val();
+        var comment = $('#comment').val();
+        var err = document.querySelector('#errMsgComment');
+        err.classList.remove("showMsg");
+        if(comment != ''){
+            $.ajax({
+                url: "./server/addComment.php",
+                method: "POST",
+                data: {
+                    taskId: task_id,
+                    comment: comment,
+                    taskTitle: taskTitle
+                },
+                success: function(data) {
+                    // window.location.reload();
+                    //alert(data);
+                    $('#comment-container').append(data);
+                    $('#comment').val('');
+                }
+            });
+        }else{
+            
+            err.classList.add("showMsg");
+            err.innerHTML = 'Please enter comment';
+        }
+
+    });
 </script>

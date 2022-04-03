@@ -16,7 +16,6 @@ const mobile = document.querySelector('#mob');
 const dateOfBirth = document.querySelector('#dob');
 const signUpForm = document.querySelector('#msform');
 
-
 txtEmail.addEventListener("blur", () => {
   if (txtEmail.value.length < 1) {
     errMsgEmail.classList.add("showMsg");
@@ -145,6 +144,51 @@ const mobileValidate = (mobile) => {
   const re = /^[6-9]\d{9}$/;
   return re.test(mobile);
 };
+
+
+$("#email").blur(function() {
+
+  let email	=	$("#email").val();
+
+  // if email field is null then return
+  if(email == "") {
+    return;
+  }
+
+
+  // send ajax request if email is not empty
+  $.ajax({
+      url: './checkEmail.php',
+      type: 'post',
+      data: {
+        'email':email,
+        'email_check':1,
+    },
+
+    success:function(response) {	
+
+      // clear span before error message
+      $("#email_error").remove();
+
+      // adding span after email textbox with error message
+      // $("#email").after("<span id='email_error' class='text-danger'>"+response+"</span>");
+      if(response != "ok"){
+        errMsgEmail.classList.add("showMsg");
+        errMsgEmail.innerHTML = response;
+      }
+      else{
+        errMsgEmail.classList.remove("showMsg");
+      }
+    },
+
+    error:function(e) {
+      $("#result").html("Something went wrong");
+    }
+
+  });
+});
+
+
 
 // const dateValidate = (date) => {
 //   const re = /^([0-9]{2})-([0-9]{2})-([0-9]{4})$/;

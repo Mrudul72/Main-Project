@@ -188,7 +188,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $event_end = $row['end'];
                                             echo '
                                                 <li class="items">
-                                                    <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                                                    <img src="./assets/icons/schedule-round-ico.svg" alt="" />
                                                     <div class="card-text">
                                                         <p>' . $event_title . '</p>
                                                          <div class="time-stamp">' . $event_start . '</div>
@@ -229,7 +229,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             $event_end = $row['end'];
                                             echo '
                             <li class="items">
-                        <img src="./assets/icons/tick-dark-ico.svg" alt="" />
+                        <img src="./assets/icons/schedule-round-ico.svg" alt="" />
                         <div class="card-text">
                           <p>' . $event_title . '</p>
                           <div class="time-stamp">' . $event_start . '</div>

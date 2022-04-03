@@ -49,6 +49,12 @@ $roleName = mysqli_fetch_assoc($result3);
                         data="./assets/icons/team-ico.svg"></object></span><span>Teams</span>
             </li>
             </a>
+            <a href="./chats.php">
+            <li class="nav-items <?= ($activePage == 'chats')  ? 'active-nav':''; ?> ">
+                <span class="ico"><object class="svgClass" type="image/svg+xml"
+                        data="./assets/icons/chat-ico.svg"></object></span><span>Chats</span>
+            </li>
+            </a>
             <!-- <li class="nav-items">
               <span class="ico"
                 ><img src="./assets/icons/chat-ico.svg" alt="" /></span
@@ -57,11 +63,14 @@ $roleName = mysqli_fetch_assoc($result3);
         </ul>
     </nav>
     <div class="s-profile-container">
+        <a href="./manageProfile.php">
     <?php echo '<img class="pro-pic-ico" src="./assets/uploads/' . $proPic . '" alt="" />';?>
-        <div class="pro-details-container">
+    </a>
+        <a href="./manageProfile.php" class="pro-details-container">
             <p class="pro-name"><?php echo ucwords($userName); ?></p>
             <p class="pro-role"><?php echo ucwords($roleName['role_name']);?></p>
-        </div>
+        </a>
+
         <a href="./auth/logoutController.php"><img class="log-out-btn" src="./assets/icons/power-off-ico.svg" alt="" /></a>
     </div>
 </div>

@@ -103,6 +103,51 @@ const txtPassword = document.querySelector("#password");
 const loginForm = document.querySelector("#loginForm");
 
 
+$("#email").blur(function() {
+
+let email	=	$("#email").val();
+
+// if email field is null then return
+if(email == "") {
+  return;
+}
+
+
+// send ajax request if email is not empty
+$.ajax({
+    url: './auth/checkEmailLogin.php',
+    type: 'post',
+    data: {
+      'email':email,
+      'email_check':1,
+  },
+
+  success:function(response) {	
+
+    // clear span before error message
+    errMsgEmail.innerHTML = "";
+
+    // adding span after email textbox with error message
+    // $("#email").after("<span id='email_error' class='text-danger'>"+response+"</span>");
+    if(response != "ok"){
+      errMsgEmail.classList.add("showMsg");
+      errMsgEmail.innerHTML = response;
+    }
+    else{
+      errMsgEmail.classList.remove("showMsg");
+    }
+    
+  },
+
+  error:function(e) {
+    console.log(e);
+  }
+
+});
+});
+
+
+
 txtEmail.addEventListener("blur", () => {
   if (txtEmail.value.length < 1) {
     errMsgEmail.classList.add("showMsg");
@@ -153,6 +198,9 @@ const emailValidate = (email) => {
 const whiteSpaceValidate = (str) => {
   return str.trim() === "";
 };
+
+
+
 
     </script>
 </body>
