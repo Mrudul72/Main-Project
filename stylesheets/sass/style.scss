@@ -92,3 +92,14 @@ select {
     border-radius: 100px;
   }
 }
+
+
+.secondary-outline-btn{
+  color: $primary-color !important;
+  border-color: $primary-color !important;
+  &:hover{
+    color: $primary-color !important;
+    border-color: $secondary-color !important;
+    background-color: $secondary-color !important;
+  }
+}

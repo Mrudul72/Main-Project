@@ -24,6 +24,10 @@
     align-items: center;
     padding-bottom: 1vw;
     border-bottom: 1px solid $text-light;
+    margin: 0;
+    .add-task-btn{
+      margin: 0 !important;
+    }
 }
 
 .chat-card-body{
