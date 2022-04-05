@@ -12,6 +12,7 @@ if (isset($updateProfileBtn)) {
             $file = '../assets/uploads/' . $fileToUpload;
             $sql2 = "UPDATE `tbl_user` SET `profile_pic`='$fileToUpload', `username`='$uname',`mob`='$mobile',`email`='$email'  WHERE `user_id`='$uid'";
             $result2 = mysqli_query($connect, $sql2);
+            $_SESSION['proPic'] = $fileToUpload;
             header('location:../manageProfile.php');
             $_SESSION['profileUpdateMsg'] = 'Profile Updated Successfully';
             $_SESSION['profileUpdateMsgHeading'] = 'Success';

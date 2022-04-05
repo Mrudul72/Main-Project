@@ -1696,6 +1696,27 @@
           justify-content: space-between;
 }
 
+.checklist-container .checklist-items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1vw 1.5vw;
+  background-color: #e0eaff;
+  margin: 1vw 0;
+  border-radius: 12px;
+}
+
+.checklist-container .checklist-items .checklist-item-title {
+  font-size: 1.2vw;
+  font-weight: 600;
+  margin: 0;
+  color: #011e56;
+}
+
+#completed .checklist-item-title {
+  text-decoration: line-through !important;
+}
+
 * {
   font-family: "Poppins", sans-serif;
   -webkit-box-sizing: border-box;

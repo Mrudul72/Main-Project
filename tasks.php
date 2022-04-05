@@ -40,11 +40,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     <body class="dashboard-body" style="overflow-y: hidden;">
         <div class="dashboard-container">
             <!--sidebar goes here-->
-            <?php include_once("./layouts/sidebar.php"); ?>
+            <?php include("./layouts/sidebar.php"); ?>
             <!--sidebar end-->
 
             <!--header starts-->
-            <?php include_once("./layouts/header.php"); ?>
+            <?php include("./layouts/header.php"); ?>
             <!--header ends-->
 
             <!--Dashboard contents-->
@@ -281,7 +281,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+                            <button id="modalCloseBtn" type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
                             <button id="addTaskBtn" type="submit" class="btn btn-primary modal-btn-submit">Add</button>
                         </div>
                     </form>
@@ -352,6 +352,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         <script>
             $(document).ready(function() {
                 var task_id;
+
+                $("modalCloseBtn").click(function() {
+                    // $("#taskDetailsModal").modal("hide");
+                    window.location.reload();
+                });
 
                 $('#confirmationModal').modal({
                     show: false

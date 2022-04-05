@@ -26,18 +26,18 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
   <body class="dashboard-body">
     <div class="dashboard-container">
         <!--sidebar goes here-->
-        <?php include_once("./layouts/sidebar.php"); ?>
+        <?php include("./layouts/sidebar.php"); ?>
         <!--sidebar end-->
 
         <!--header starts-->
-        <?php include_once("./layouts/header.php"); ?>
+        <?php include("./layouts/header.php"); ?>
         <!--header ends-->
 
         <!--Dashboard contents-->
         <div class="dashboard-contents">
             <div class="row">
                 <!--tab start-->
-                <?php include_once("./layouts/tab.php"); ?>
+                <?php include("./layouts/tab.php"); ?>
                 <!--tab end-->
                 
             </div>

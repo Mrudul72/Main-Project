@@ -109,11 +109,11 @@ ini_set('display_errors', 0);
 <body class="dashboard-body">
   <div class="dashboard-container">
     <!--sidebar goes here-->
-    <?php include_once("./layouts/sidebar.php"); ?>
+    <?php include("./layouts/sidebar.php"); ?>
     <!--sidebar end-->
 
     <!--header starts-->
-    <?php include_once("./layouts/header.php"); ?>
+    <?php include("./layouts/header.php"); ?>
     <!--header ends-->
 
     <!--Dashboard contents-->

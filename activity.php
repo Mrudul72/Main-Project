@@ -50,7 +50,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <ul class="activity-container">
                                 <?php 
                                 // $sql = "SELECT date_format(activity_date,'%d/%m/%Y') as date FROM `tbl_activity` Date(activity_date) = C;";
-                                $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = CURRENT_DATE and project_id = '$projectId'";
+                                $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = CURRENT_DATE and project_id = '$projectId' ORDER BY activity_date DESC";
                                 $result = mysqli_query($connect, $sql);
                                 $resultCheck = mysqli_num_rows($result);
                                 if($resultCheck > 0){
@@ -60,11 +60,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         $activity_desc = $row['activity_desc'];
                                         $activity_type = $row['activity_type'];
                                         if($activity_type == "task"){
-                                            $img = "tick-dark-ico.svg";
+                                            $img = "task-ico.svg";
                                         }else if($activity_type == "attachment"){
                                             $img = "paper-clip.svg";
                                         }else if($activity_type == "comment"){
                                             $img = "comment-ico.svg";
+                                        }else if($activity_type == "checklist"){
+                                            $img = "checklist-ico.svg";
                                         }
 
                                         echo '
@@ -101,7 +103,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <ul class="activity-container">
                                 <?php 
                                 // $sql = "SELECT date_format(activity_date,'%d/%m/%Y') as date FROM `tbl_activity` Date(activity_date) = C;";
-                                $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) and project_id = '$projectId'";
+                                $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) and project_id = '$projectId' ORDER BY activity_date DESC";
                                 $result = mysqli_query($connect, $sql);
                                 $resultCheck = mysqli_num_rows($result);
                                 if($resultCheck > 0){
@@ -112,11 +114,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         $activity_type = $row['activity_type'];
                                         
                                         if($activity_type == "task"){
-                                            $img = "tick-dark-ico.svg";
+                                            $img = "task-ico.svg";
                                         }else if($activity_type == "attachment"){
                                             $img = "paper-clip.svg";
                                         }else if($activity_type == "comment"){
                                             $img = "comment-ico.svg";
+                                        }else if($activity_type == "checklist"){
+                                            $img = "checklist-ico.svg";
                                         }
 
                                         echo '
@@ -151,7 +155,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                                 <?php
                                 //date older than yesterday
-                                $query = "SELECT DATE(activity_date) AS date FROM `tbl_activity` WHERE DATE(activity_date) < DATE_SUB(CURDATE(), INTERVAL 1 DAY) and project_id = '$projectId' GROUP BY DATE(activity_date)";
+                                $query = "SELECT DATE(activity_date) AS date FROM `tbl_activity` WHERE DATE(activity_date) < DATE_SUB(CURDATE(), INTERVAL 1 DAY) and project_id = '$projectId' GROUP BY DATE(activity_date) ORDER BY DATE(activity_date) DESC";
                                 $res = mysqli_query($connect, $query);
                                 $resCheck = mysqli_num_rows($res);
                                 if($resCheck > 0){
@@ -161,7 +165,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         <h3 class="sub-title">'.$date.'</h3>
                                         <ul class="activity-container">
                                         ';
-                                        $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = '$date' and project_id = '$projectId'";
+                                        $sql = "SELECT DATE(activity_date) AS date, TIME_FORMAT(activity_date, '%h:%i %p') AS time, activity_desc, activity_type FROM `tbl_activity` WHERE DATE(activity_date) = '$date' and project_id = '$projectId' ORDER BY activity_date DESC";
                                         $result = mysqli_query($connect, $sql);
                                         $resultCheck = mysqli_num_rows($result);
                                         if($resultCheck > 0){
@@ -172,11 +176,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                                 $activity_type = $row['activity_type'];
                                                 
                                                 if($activity_type == "task"){
-                                                    $img = "tick-dark-ico.svg";
+                                                    $img = "task-ico.svg";
                                                 }else if($activity_type == "attachment"){
                                                     $img = "paper-clip.svg";
                                                 }else if($activity_type == "comment"){
                                                     $img = "comment-ico.svg";
+                                                }else if($activity_type == "checklist"){
+                                                    $img = "checklist-ico.svg";
                                                 }
 
                                                 echo '

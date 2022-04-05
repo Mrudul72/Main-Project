@@ -1,35 +1,21 @@
 .checklist-container{
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 1.8vw 1.8vw;
-    .today-tasks{
+
+    .checklist-items{
         display:flex;
         padding: 1vw 1.5vw;
         background-color: $secondary-color;
-        margin: 2vw 0;
+        margin: 1vw 0;
         border-radius: 12px;
-        .task-details{
-            width: 85%;
-            display: flex;
-            flex-direction: column;
-            margin: 0 0.5vw;
-
-            .task-title{
-                font-size: 1.2vw;
-                font-weight: 600;
-                margin: 0;
-                color: $text-dark;
-            }
-            .task-sub-title{
-                font-size: 1vw;
-                font-weight: 600;
-                color: $primary-color;
-                background-color: #fff;
-                width: 10vw;
-                text-align: center;
-                border-radius: 12px;
-                margin: 0.5vw 0;
-            }
+        .checklist-item-title{
+            font-size: 1.2vw;
+            font-weight: 600;
+            margin: 0;
+            color: $text-dark;
         }
+    }
+}
+#completed{
+    .checklist-item-title{
+        text-decoration: line-through !important;
     }
 }
