@@ -19,7 +19,7 @@ echo '
                 <input type="file" name="attachmentUpload" id="attachmentUpload" style="display:none; margin:0;">
             </div>
         </div>
-        <div class="chat-card-body">
+        <div class="chat-card-body" id="cardBody">
 
 ';
 
@@ -57,7 +57,7 @@ if (mysqli_num_rows($result) > 0) {
                                 <p class="small text-muted">' . $date_time . '</p>
                             </div>
                         </div>
-                        <div id="newMsg"></div>
+                        
                         ';
         }
     }
@@ -157,7 +157,8 @@ echo '
                 },
                 success: function(data) {
                     $("#chatInput").val("");
-                    $(".chat-card-body").append(data);
+                    $("#cardBody").append(data);
+                    $("#chatList").load("./server/chatList.php");
                 }
             });
         } else {

@@ -47,7 +47,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             </div>
 
                             <div class="messages-box mt-2" id="chatList">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -56,10 +56,67 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     <!--col 2 start-->
                     <!-- Chat Box-->
                     <div class="col-7 px-0" id="chatScreen">
-                        
+
 
                     </div>
                     <!--col 2 end-->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal" tabindex="-1" id="newChatModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header d-flex flex-column">
+                        <div class="d-flex justify-content-between w-100">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-between w-100 mt-3">
+                            <div class="chat-search-box">
+                                <input type="text" placeholder="Search" />
+                                <div class="search-box-icon">
+                                    <img class="header-ico" src="./assets/icons/search-ico.svg" alt="search" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-body chat-card-body" id="allChat">
+                        <?php
+                        include './config/connect.php';
+                        //get all users except current user
+                        $sqlNew = "SELECT user_id,username,profile_pic FROM tbl_user WHERE user_id != $user_id AND type_id != 1";
+                        $resultNew = mysqli_query($connect, $sqlNew);
+                        if (mysqli_num_rows($resultNew) > 0) {
+                            while ($row = mysqli_fetch_assoc($resultNew)) {
+                                $user_id = $row['user_id'];
+                                $username = $row['username'];
+                                $profile_pic = $row['profile_pic'];
+                                echo '
+
+                                <a class="rounded-card" id="' . $user_id . '">
+                                    <div class="media"><img src="./assets/uploads/' . $profile_pic . '" alt="user" width="50" height="50" class="rounded-circle">
+                                        <div class="media-body ml-4">
+                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <h6 class="mb-0" id="uname">' . $username . '</h6>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                                ';
+                            }
+                        }
+
+                        ?>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -73,12 +130,12 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         <script src="./js/app.js"></script>
 
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $("#chatList").load("./server/chatList.php");
 
-               
 
-                $("#chatList").on("click", "a", function(){
+
+                $("#chatList").on("click", "a", function() {
                     $(this).addClass("rounded-card-active");
                     $("#chatList a").not(this).removeClass("rounded-card-active");
                     var chatId = $(this).attr("id");
@@ -87,10 +144,27 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     $.post("./server/chatScreen.php", {
                         chatId: chatId,
                         uname: uname
-                    }, function(data){
+                    }, function(data) {
                         $("#chatScreen").html(data);
                     });
-                    
+
+                });
+
+                $("#allChat").on("click", "a", function() {
+                    $(this).addClass("rounded-card-active");
+                    $("#allChat a").not(this).removeClass("rounded-card-active");
+                    var chatId = $(this).attr("id");
+                    var currentItem = $(this);
+                    var uname = currentItem.find("#uname").text();
+                    $.post("./server/chatScreen.php", {
+                        chatId: chatId,
+                        uname: uname
+                    }, function(data) {
+                        $("#newChatModal").modal("hide");
+                        $("#chatScreen").html(data);
+                        $("#chatList").load("./server/chatList.php");
+                    });
+
                 });
             });
         </script>

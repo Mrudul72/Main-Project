@@ -5,6 +5,7 @@ session_start();
 $user_id = $_SESSION['userId'];
 $team_id = $_SESSION['currentUserTeamId'];
 $sql = "SELECT chat_id,sender_id,sender_name,receiver_id,receiver_name,date_time,chat_text FROM `tbl_chats` WHERE sender_id='$user_id' OR receiver_id='$user_id' GROUP BY if(sender_id='$user_id', receiver_id,sender_id) ORDER BY date_time DESC";
+// echo $sql;
 $result = mysqli_query($connect, $sql);
 
 
@@ -49,67 +50,4 @@ $result = mysqli_query($connect, $sql);
     }
     ?>
     
-    <a class="rounded-card" id="chatId2">
-        <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-4">
-                <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
-                </div>
-                <p class="mb-0 msg-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-            </div>
-        </div>
-    </a>
-    <a class="rounded-card" id="chatId3">
-        <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-4">
-                <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
-                </div>
-                <p class="mb-0 msg-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-            </div>
-        </div>
-    </a>
-    <a class="rounded-card" id="chatId3">
-        <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-4">
-                <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
-                </div>
-                <p class="mb-0 msg-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-            </div>
-        </div>
-    </a>
-    <a class="rounded-card" id="chatId4">
-        <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-4">
-                <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
-                </div>
-                <p class="mb-0 msg-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-            </div>
-        </div>
-    </a>
-    <a class="rounded-card" id="chatId6">
-        <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-4">
-                <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
-                </div>
-                <p class="mb-0 msg-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-            </div>
-        </div>
-    </a>
-    <a class="rounded-card" id="chatId7">
-        <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-            <div class="media-body ml-4">
-                <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
-                </div>
-                <p class="mb-0 msg-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-            </div>
-        </div>
-    </a>
-
-
-
 </div>
