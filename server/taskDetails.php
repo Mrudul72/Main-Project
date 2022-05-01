@@ -14,7 +14,7 @@ $createdBy = $row['task_added_by'];
 $taskStatus = $row['task_status'];
 
 
-
+$newCheckListVisibility = ($_SESSION['currentUserTypeId'] == '2') ? 'display:block;' : 'display:none;';
 
 
 echo '
@@ -23,19 +23,18 @@ echo '
     <div class="row">
         <div class="col-8">
             <div class="form-group">
-                <label for="task-title">Task title</label>
+                <label for="task-title" class="font-weight-bold">Task title</label>
                 <textarea name="task-detail-title" id="task-detail-title" class="form-control" placeholder="task title"
                     autocomplete="off">' . $taskTitle . '</textarea>
             </div>
             <div class=" form-group">
-                <label for="task-description" class="col-form-label">Task description:</label>
+                <label for="task-description" class="col-form-label font-weight-bold">Task description:</label>
                 <textarea rows="8" id="task-detail-description" row="auto" name="task-detail-description"
                     placeholder="A breif description about task"
                     class="form-control">' . $taskDescription . '</textarea>
             </div>
             <div  class="form-group">
-                <label for="comments">Comments</label>
-                <div class="border mb-3"></div>
+                <label for="comments" class="font-weight-bold">Comments</label>
                 ';
 include './loadComments.php';
 echo '
@@ -52,21 +51,25 @@ echo '
                 
             </div>
             <div class="form-group" id="checklistContainer">
-                <label for="checklist">Checklist</label>
-                <div class="commentBox">
+                <label for="checklist" class="font-weight-bold">Checklist</label>
+                <div class="commentBox" style="' . $newCheckListVisibility . '">
                     <input type="text" name="checklistinput" id="checklistinput" class="form-control" placeholder="Type here.." autocomplete="off">
                     <button id="addChecklistBtn" type="button" class="btn btn-primary modal-btn-submit">></button>
                 </div>
                 <small id="errMsgChecklist" class="errMsg"></small>
+                <div id="progressBarContainer">
+                    <label for="checklistProgress" id="progressLabel">0%</label>
+                    <progress id="checklistProgress" value="" max="100" class="progressBar"></progress>
+                </div>
                 <ul id="notCompleted" class="checklist-container">
-                    <h6 class="checklist-title">Not completed</h6>
+                    <h6 class="checklist-title border-bottom pb-2">Not completed</h6>
                     ';
 include './loadChecklist.php';
 loadChecklist(1, "");
 echo '
                 </ul>
                 <ul id="completed" class="checklist-container">
-                    <h6 class="checklist-title">Completed</h6>
+                    <h6 class="checklist-title border-bottom pb-2">Completed</h6>
                         ';
 
 loadChecklist(0, "checked");
@@ -111,13 +114,14 @@ echo '
 
 <script>
 
+    $(document).ready(function() {
+        //update progress bar
+        updateProgressBar();
+    });
 
-    
     $("#checklistShow").click(function() {
         $("#checklistContainer").toggle();
     });
-
-
     //delete task
 
     $('#deleteTask').on('click', function() {
@@ -270,5 +274,27 @@ echo '
                 }
             });
         }
+
+
+        //update progress bar
+        updateProgressBar();
+
     });
+
+    //update progress bar
+    function updateProgressBar() {
+        var selected = [];
+        $('#checklistContainer input:checked').each(function() {
+            selected.push($(this).attr('value'));
+        });
+        var completed = selected.length;
+        console.log(completed);
+        var total = $('#checklistContainer input[type="checkbox"]').length;
+        console.log(total);
+        var notCompleted = total - completed;
+        console.log(notCompleted);
+        var progress = (completed / total) * 100;
+        $('#checklistProgress').val(progress);
+        $('#progressLabel').text(progress + '%');
+    }
 </script>

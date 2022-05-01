@@ -1442,7 +1442,6 @@
 
 .commentBox {
   padding: 1vw 0;
-  border-top: solid 1px gainsboro;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1791,6 +1790,41 @@
 
 #completed .checklist-item-title {
   text-decoration: line-through !important;
+}
+
+progress {
+  border-radius: 7px;
+  width: 90%;
+  height: 1vw;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #e0eaff;
+  border-radius: 7px;
+}
+
+progress::-webkit-progress-value {
+  background-color: #022f96;
+  border-radius: 10px;
+  -webkit-transition: 0.5s ease all;
+  transition: 0.5s ease all;
+}
+
+progress::-moz-progress-bar {
+  /* style rules */
+}
+
+#progressBarContainer {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 * {

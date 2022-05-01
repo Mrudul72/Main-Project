@@ -19,3 +19,30 @@
         text-decoration: line-through !important;
     }
 }
+
+progress {
+    border-radius: 7px; 
+    width: 90%;
+    height: 1vw;
+
+  }
+  progress::-webkit-progress-bar {
+    background-color: $secondary-color;
+    border-radius: 7px;
+  }
+  progress::-webkit-progress-value {
+    background-color: $primary-color;
+    border-radius: 10px;
+    transition: 0.5s ease all;
+  }
+  progress::-moz-progress-bar {
+    /* style rules */
+  }
+
+
+  #progressBarContainer{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
