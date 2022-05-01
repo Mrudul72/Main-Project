@@ -58,7 +58,7 @@ echo '
                 </div>
                 <small id="errMsgChecklist" class="errMsg"></small>
                 <div id="progressBarContainer">
-                    <label for="checklistProgress" id="progressLabel">0%</label>
+                    <label for="checklistProgress" class="m-0" id="progressLabel" >0%</label>
                     <progress id="checklistProgress" value="" max="100" class="progressBar"></progress>
                 </div>
                 <ul id="notCompleted" class="checklist-container">
@@ -277,7 +277,19 @@ echo '
 
 
         //update progress bar
-        updateProgressBar();
+        var p = updateProgressBar();
+        //update checklist progress in task
+        $.ajax({
+            url: "./server/updateChecklistProgress.php",
+            method: "POST",
+            data: {
+                task_id: task_id,
+                progress: p
+            },
+            success: function(data) {
+                // alert(data);
+            }
+        });
 
     });
 
@@ -288,13 +300,12 @@ echo '
             selected.push($(this).attr('value'));
         });
         var completed = selected.length;
-        console.log(completed);
         var total = $('#checklistContainer input[type="checkbox"]').length;
-        console.log(total);
         var notCompleted = total - completed;
-        console.log(notCompleted);
         var progress = (completed / total) * 100;
-        $('#checklistProgress').val(progress);
-        $('#progressLabel').text(progress + '%');
+        var pro = Math.round(progress);
+        $('#checklistProgress').val(pro);
+        $('#progressLabel').text(pro + '%');
+        return pro;
     }
 </script>

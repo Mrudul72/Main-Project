@@ -23,11 +23,11 @@
 progress {
     border-radius: 7px; 
     width: 90%;
-    height: 1vw;
+    height: 0.7vw;
 
   }
   progress::-webkit-progress-bar {
-    background-color: $secondary-color;
+    background-color: $secondary-hover-color;
     border-radius: 7px;
   }
   progress::-webkit-progress-value {
@@ -42,7 +42,12 @@ progress {
 
   #progressBarContainer{
       width: 100%;
+      height: 3vw;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .progressLabel{
+          color: $text-dark;
+          font-size: 1vw;
+      }
   }

@@ -13,11 +13,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
     $sql3 = "SELECT * FROM `tbl_teams` WHERE `team_id`='$curTeamID'";
     $result3 = mysqli_query($connect, $sql3);
     $row3 = mysqli_fetch_assoc($result3);
-    
-    if($_SESSION['currentUserTypeId'] == '2'){
+
+    if ($_SESSION['currentUserTypeId'] == '2') {
         $managerId = $_SESSION['userId'];
-    }
-    else{
+    } else {
         $managerId = $row3['manager_id'];
     }
 
@@ -63,10 +62,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <div class="task-items-container" id="1">
                                     <div class="task-container-header">
                                         <h1 class="content-heading">Backlog</h1>
-                                        <button data-toggle='modal' data-target='#addTasksModal' style="<?= ($_SESSION['currentUserTypeId'] == '2') ? 'display:block;':'display:none;'; ?>" class="add-task-item-btn">Add Task +</button>
+                                        <button data-toggle='modal' data-target='#addTasksModal' style="<?= ($_SESSION['currentUserTypeId'] == '2') ? 'display:block;' : 'display:none;'; ?>" class="add-task-item-btn">Add Task +</button>
                                     </div>
                                     <div id="tasks-placeholder" class="pt-4">
-                                    <?php getTaskCard($tId,1,$connect); ?>
+                                        <?php getTaskCard($tId, 1, $connect); ?>
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +73,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <div class="task-items-container" id="2">
                                     <div class="task-container-header">
                                         <h1 class="content-heading">Development</h1>
-                                       
+
                                     </div>
                                     <div class="pt-4">
-                                    <?php getTaskCard($tId,2,$connect); ?>
+                                        <?php getTaskCard($tId, 2, $connect); ?>
                                     </div>
                                     <!-- <div class="task-items" draggable="true">
                                         <div class="task-item-details">
@@ -98,11 +97,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <div class="task-items-container" id="3">
                                     <div class="task-container-header">
                                         <h1 class="content-heading">Testing</h1>
-                                        
+
                                     </div>
                                     <div class="pt-4">
                                         <input type='hidden' value='' id='txt_id'>
-                                        <?php getTaskCard($tId,3,$connect); ?>
+                                        <?php getTaskCard($tId, 3, $connect); ?>
                                     </div>
                                 </div>
                             </div>
@@ -110,11 +109,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <div class="task-items-container" id="4">
                                     <div class="task-container-header">
                                         <h1 class="content-heading">Done</h1>
-                                       
+
                                     </div>
 
                                     <div class="pt-4">
-                                    <?php getTaskCard($tId,4,$connect); ?>
+                                        <?php getTaskCard($tId, 4, $connect); ?>
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +197,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+                            <button type="button" id="taskdetailsModalCloseBtn" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
                             <button id="updateTaskBtn" type="submit" class="btn btn-primary modal-btn-submit">Save</button>
                         </div>
                     </form>
@@ -245,7 +244,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 var task_id;
 
                 $("modalCloseBtn").click(function() {
-                    // $("#taskDetailsModal").modal("hide");
                     window.location.reload();
                 });
 
@@ -253,6 +251,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     show: false
                 });
 
+                $('#taskDetailsModal').on('hidden.bs.modal', function (e) {
+                    window.location.reload();
+                });
+                
 
                 //task details modal
                 $('.task-items').on('click', function() {
@@ -357,31 +359,38 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
 
 <?php
-function getTaskCard($tId,$status, $connect){
+function getTaskCard($tId, $status, $connect)
+{
     $sql = "SELECT * FROM tbl_tasks WHERE task_status=$status AND project_id=$tId";
-$result = mysqli_query($connect, $sql);
-while ($row = mysqli_fetch_assoc($result)) {
-    $task_id = $row['task_id'];
-    $task_title = $row['task_title'];
-    $task_description = $row['task_description'];
-    $team_id = $row['team_id'];
-    $task_added_by = $row['task_added_by'];
-    $task_status = $row['task_status'];
-    $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
-    $result2 = mysqli_query($connect, $sql2);
-    $val = mysqli_fetch_assoc($result2);
-    $team_name = $val['team_title'];
-    echo '
+    $result = mysqli_query($connect, $sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $task_id = $row['task_id'];
+        $task_title = $row['task_title'];
+        $task_description = $row['task_description'];
+        $team_id = $row['team_id'];
+        $task_added_by = $row['task_added_by'];
+        $task_status = $row['task_status'];
+        $sql2 = "SELECT * FROM tbl_teams WHERE team_id = $team_id";
+        $result2 = mysqli_query($connect, $sql2);
+        $val = mysqli_fetch_assoc($result2);
+        $team_name = $val['team_title'];
+        $progress = $row['progress'];
+        echo '
 <div id="' . $task_id . '" class="task-items" draggable="true">
 <div class="task-item-details">
     <p class="task-item-title">
         ' . $task_title . '
     </p>
     <p class="task-item-sub-title">' . $team_name . '</p>
+    <div id="progressBarContainer">
+        <progress value="' . $progress . '" max="100" class="progressBar"></progress>
+        <label class="progressLabel ml-2" >' . $progress . '%</label>
+    </div>
 </div>
+
 </div>
 ';
-}
+    }
 }
 
 ?>
