@@ -14,7 +14,7 @@ $createdBy = $row['task_added_by'];
 $taskStatus = $row['task_status'];
 
 
-$newCheckListVisibility = ($_SESSION['currentUserTypeId'] == '2') ? 'display:block;' : 'display:none;';
+$newCheckListVisibility = ($_SESSION['currentUserTypeId'] == '2') ? '' : 'display:none;';
 
 
 echo '
@@ -87,9 +87,7 @@ echo '
                     <label for="attachmentUpload" class="secondary-modal-btn text-center">Attachment</label>
                     <input type="file" class="dropdown-item" name="attachment" id="attachmentUpload" style="display:none; margin:0;">
                 </div>
-                <div class="mb-3 mt-2">
-                    <button id="checklistShow" name="checklistShow" value="' . $taskId . '" type="button" class="secondary-modal-btn">Checklist</button>
-                </div>';
+                ';
 // <div class="my-3">
 //     <button id="datesBtn" name="datesBtn" value="' . $taskId . '" type="button" class="secondary-modal-btn">Dates</button>
 // </div>
@@ -99,10 +97,14 @@ echo '
 echo '
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="' . $newCheckListVisibility . '">
                 <label for="task-actions">Actions</label>
                 <button id="deleteTask" name="deleteTask" value="' . $taskId . '" type="button" class="secondary-modal-btn">Delete</button>
+                <div class="mb-3 mt-2">
+                    <button id="checklistDelete" name="checklistDelete" value="' . $taskId . '" type="button" class="secondary-modal-btn">Delete Checklist</button>
+                </div>
             </div>
+            
         </div>
 
     </div>
@@ -113,15 +115,39 @@ echo '
 
 
 <script>
-
     $(document).ready(function() {
+        var task_id = $('#taskId').val();
         //update progress bar
-        updateProgressBar();
+        updateProgressBar(task_id);
     });
 
-    $("#checklistShow").click(function() {
-        $("#checklistContainer").toggle();
+    //delete checklist
+
+    $('#checklistDelete').on('click', function() {
+
+        var task_id = $('#checklistDelete').val();
+        // alert(task_id);
+        $('#checklistDeleteConfirmationModal').modal('show');
+
+        var task_status = 0;
+        $("#checklistDeleteBtn").on('click', function() {
+            $.ajax({
+                url: "./server/deleteChecklist.php",
+                method: "POST",
+                data: {
+                    task_id: task_id,
+                    task_status: task_status
+                },
+                success: function(data) {
+                    window.location.reload();
+                }
+            });
+        });
+
     });
+    //delete checklist ends
+
+
     //delete task
 
     $('#deleteTask').on('click', function() {
@@ -203,6 +229,9 @@ echo '
                     if ($("#notCompleted").children().length > 1) {
                         $("#noItem").remove();
                     }
+
+                    //update progress bar
+                    updateProgressBar(task_id);
                 }
             });
         } else {
@@ -277,24 +306,13 @@ echo '
 
 
         //update progress bar
-        var p = updateProgressBar();
-        //update checklist progress in task
-        $.ajax({
-            url: "./server/updateChecklistProgress.php",
-            method: "POST",
-            data: {
-                task_id: task_id,
-                progress: p
-            },
-            success: function(data) {
-                // alert(data);
-            }
-        });
+        updateProgressBar(task_id);
+
 
     });
 
     //update progress bar
-    function updateProgressBar() {
+    function updateProgressBar(task_id) {
         var selected = [];
         $('#checklistContainer input:checked').each(function() {
             selected.push($(this).attr('value'));
@@ -306,6 +324,19 @@ echo '
         var pro = Math.round(progress);
         $('#checklistProgress').val(pro);
         $('#progressLabel').text(pro + '%');
-        return pro;
+
+
+        //update checklist progress in task
+        $.ajax({
+            url: "./server/updateChecklistProgress.php",
+            method: "POST",
+            data: {
+                task_id: task_id,
+                progress: pro
+            },
+            success: function(data) {
+                // alert(data);
+            }
+        });
     }
 </script>

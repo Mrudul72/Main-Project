@@ -206,7 +206,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         </div>
         <!--task details  Modal ends-->
 
-        <!--Confirmation Modal start-->
+        <!--task delete Confirmation Modal start-->
 
         <div class="modal fade" id="confirmationModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -227,7 +227,31 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 </div>
             </div>
         </div>
-        <!--Confirmation Modal ends-->
+        <!--task delete Confirmation Modal ends-->
+
+        <!--checklist delete Confirmation Modal start-->
+
+        <div class="modal fade" id="checklistDeleteConfirmationModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="checklistDeleteConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the checklist?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="checklistDeleteBtn" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--checklist delete Confirmation Modal ends-->
+        
 
 
 
@@ -375,6 +399,7 @@ function getTaskCard($tId, $status, $connect)
         $val = mysqli_fetch_assoc($result2);
         $team_name = $val['team_title'];
         $progress = $row['progress'];
+        $displayStatus = ($progress == -1) ? "display:none;" : "";    
         echo '
 <div id="' . $task_id . '" class="task-items" draggable="true">
 <div class="task-item-details">
@@ -382,7 +407,7 @@ function getTaskCard($tId, $status, $connect)
         ' . $task_title . '
     </p>
     <p class="task-item-sub-title">' . $team_name . '</p>
-    <div id="progressBarContainer">
+    <div id="progressBarContainer" style="'.$displayStatus.'">
         <progress value="' . $progress . '" max="100" class="progressBar"></progress>
         <label class="progressLabel ml-2" >' . $progress . '%</label>
     </div>
