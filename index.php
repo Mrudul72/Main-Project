@@ -4,7 +4,10 @@ include('./config/connect.php');
 if (isset($_SESSION["pmsSession"]) == session_id()) {
     header("Location: ./dashboard.php");
     die();
-} else {
+} else if(isset($_SESSION["pmsSessionAdmin"]) == session_id()) {
+    header("Location: ./adminDashboard.php");
+    die();
+}else {
 ?>
 <!DOCTYPE html>
 <html>

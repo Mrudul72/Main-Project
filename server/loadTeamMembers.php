@@ -45,6 +45,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                         aria-labelledby="dropdownMenuOffset"
                       >
                         <a class="dropdown-item" href="./server/removeMember.php?uid=' . $userID . '">Remove</a>
+                        <a class="dropdown-item" href="./userDetails.php?uid=' . $userID . '">More Info</a>
                       </div>
                       <!--<img class="dwnld-ico" src="./assets/icons/download-ico.svg" alt="download-ico">-->
                     </td>

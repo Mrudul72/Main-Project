@@ -1,7 +1,7 @@
 <?php
 include('./config/connect.php');
 session_start();
-if (isset($_SESSION["pmsSession"]) != session_id()) {
+if (isset($_SESSION["pmsSessionAdmin"]) != session_id()) {
   header("Location: ./index.php");
   die();
 } else {

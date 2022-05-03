@@ -38,12 +38,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             <!--Dashboard contents-->
             <div class="dashboard-contents">
 
-
+                <h1 class="content-heading ml-3">Ongoing projects</h1>
                 <div class="project-container">
+
                     <?php
                     //select items from tbl_project if type_id is Manager in tbl_user
                     if ($_SESSION['currentUserTypeId'] == '2') {
-                        $query = "SELECT * FROM tbl_project WHERE project_id IN (SELECT distinct project_id FROM tbl_team_allocation aloc JOIN tbl_user u ON aloc.project_manager = u.user_id WHERE u.user_id = '" . $_SESSION['userId'] . "')";
+                        $query = "SELECT * FROM tbl_project WHERE project_id IN (SELECT distinct project_id FROM tbl_team_allocation aloc JOIN tbl_user u ON aloc.project_manager = u.user_id WHERE u.user_id = '" . $_SESSION['userId'] . "') AND project_status = 1";
                         $result = mysqli_query($connect, $query);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
@@ -57,7 +58,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         }
                     } else {
                         //not manager
-                        $query = "SELECT * FROM tbl_project WHERE project_id IN (SELECT distinct project_id FROM tbl_team_allocation aloc JOIN tbl_user u ON aloc.team_id = u.team_id WHERE u.team_id = '" . $_SESSION['currentUserTeamId'] . "')";
+                        $query = "SELECT * FROM tbl_project WHERE project_id IN (SELECT distinct project_id FROM tbl_team_allocation aloc JOIN tbl_user u ON aloc.team_id = u.team_id WHERE u.team_id = '" . $_SESSION['currentUserTeamId'] . "') AND project_status = 1";
                         $result = mysqli_query($connect, $query);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
@@ -74,6 +75,51 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 <hr>
                                 <p class="mb-0">For any technical assistance contact system administrator.</p>
                             </div>
+                            ';
+                        }
+                    }
+
+
+                    ?>
+
+                </div>
+
+
+                <!-- Closed projects -->
+                <h1 class="content-heading ml-3 mt-5">Closed projects</h1>
+                <div class="project-container">
+
+                    <?php
+                    //select items from tbl_project if type_id is Manager in tbl_user
+                    if ($_SESSION['currentUserTypeId'] == '2') {
+                        $query = "SELECT * FROM tbl_project WHERE project_id IN (SELECT distinct project_id FROM tbl_team_allocation aloc JOIN tbl_user u ON aloc.project_manager = u.user_id WHERE u.user_id = '" . $_SESSION['userId'] . "') AND project_status = 0";
+                        $result = mysqli_query($connect, $query);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $proId = $row['project_id'];
+                                $proName = $row['project_name'];
+                                echo "<a href='./tasks.php?id=$proId' class='projects pro' id='$proId'>$proName</a>";
+                            }
+                        }
+                        else{
+                            echo '
+                            <h3 class="view-more-btn ml-3">No closed project</h3>
+                            ';
+                        }
+                    } else {
+                        //not manager
+                        $query = "SELECT * FROM tbl_project WHERE project_id IN (SELECT distinct project_id FROM tbl_team_allocation aloc JOIN tbl_user u ON aloc.team_id = u.team_id WHERE u.team_id = '" . $_SESSION['currentUserTeamId'] . "') AND project_status = 0";
+                        $result = mysqli_query($connect, $query);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $proId = $row['project_id'];
+                                $proName = $row['project_name'];
+
+                                echo "<a href='./tasks.php?id=$proId' class='projects pro' id='$proId'>$proName</a>";
+                            }
+                        } else {
+                            echo '
+                            <h3 class="view-more-btn ml-3">No closed project</h3>
                             ';
                         }
                     }
@@ -165,28 +211,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 </div>
                 <!-- Modal ends-->
 
-                <!--Confirmation Modal start-->
-
-                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Task</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to delete this project?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" id="projectDeleteBtn" class="btn btn-danger">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--Confirmation Modal ends-->
             </div>
         </div>
 
@@ -235,7 +259,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 $('#createProForm').find('input:text').val('');
                                 $('#success').show();
                                 $('#message').html('Project created successfully !');
-                                
+
                                 setTimeout(function() {
                                     $('#success').hide();
                                     $('#addProjectModal').modal('hide');
@@ -251,6 +275,28 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 });
 
 
+                //add more teams while adding new project 
+                //duplicate div in modal box
+
+                const addBtn = document.getElementById("addBtn");
+                let i = 1;
+                let j = 1;
+                let original = document.getElementById("duplicater");
+                addBtn.addEventListener("click", function() {
+                    let clone = original.cloneNode(true); // "deep" clone
+                    clone.id = "duplicater" + ++i;
+                    clone.querySelector("#pro-team1").id = "pro-team" + ++j;
+                    // or clone.id = ""; if the divs don't need an ID
+                    original.parentNode.appendChild(clone);
+                    clone.querySelector("#addBtn").style.display = "none";
+                    clone.querySelector("#delBtn").style.display = "block";
+                    clone.querySelector("#delBtn").addEventListener("click", function() {
+                        i--;
+                        j--;
+                        original.parentNode.removeChild(clone);
+                    });
+                    document.querySelector("#assign-count").value = j;
+                });
             });
         </script>
 

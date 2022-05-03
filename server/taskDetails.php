@@ -14,6 +14,7 @@ $createdBy = $row['task_added_by'];
 $taskStatus = $row['task_status'];
 
 
+
 $newCheckListVisibility = ($_SESSION['currentUserTypeId'] == '2') ? '' : 'display:none;';
 
 

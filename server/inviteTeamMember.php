@@ -8,9 +8,9 @@ $tId = $_SESSION['teamID'];
 if(isset($inviteBtn))
 {
     $to_email = $emailID;
-    $referral = md5('$tId');
+    $referral = strtoupper(random_strings(12));
     $subject = "Referel ID";
-    $body = "Your referal id : ".$referral;
+    $body = "Sign up using the provided referral id. Your referal id : ".$referral;
     $headers = "From: easeitinfo@gmail.com";
 
     //check if email already exisit in tbl_invitation
@@ -37,8 +37,21 @@ if(isset($inviteBtn))
             die();
     }
     
-
-    
 }
+
+
+function random_strings($length_of_string)
+{
+ 
+    // String of all alphanumeric character
+    $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+ 
+    // Shuffle the $str_result and returns substring
+    // of specified length
+    return substr(str_shuffle($str_result),
+                       0, $length_of_string);
+}
+
+?>
         
 

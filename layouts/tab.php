@@ -12,6 +12,12 @@
         echo '<div class="divider' . $manageProjectDivider . ' "></div>
         <a href="./manageProject.php" id="tab4" class="tablinks ' . $manageProject . '">Manage Project</a>';
     }
+    else{
+        $projectDetailsDivider = ($activePage == 'projectDetails') || ($activePage == 'activity') ? 'active-divider' : '';
+        $projectDetails = ($activePage == 'projectDetails') ? 'active-tab' : '';
+        echo '<div class="divider' . $projectDetailsDivider . ' "></div>
+        <a href="./projectDetails.php" id="tab4" class="tablinks ' . $projectDetails . '">Project Details</a>';
+    }
 
     ?>
 </div>

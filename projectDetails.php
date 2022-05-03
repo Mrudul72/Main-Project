@@ -48,6 +48,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         <a href="./manageProject.php" id="tab3" class="tablinks <?= ($activePage == 'manageProject') ? 'active-tab' : ''; ?>">Manage Project</a>
                     </div> -->
                     <?php include("./layouts/tab.php"); ?>
+                    
                     <!--tab end-->
 
                 </div>
@@ -56,7 +57,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     <div class="col-12">
                         <div class="d-flex flex-column">
                             <div class="files-card">
-                                <h1 class="content-heading">Project Details</h1>
+                                
                                 <form method="post" action="./server/updateProjectDetails.php">
                                     <?php
                                     // echo "<script>alert('$taskId');</script>";
@@ -68,54 +69,100 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     $project_description = $row['project_description'];
                                     $project_start_date = $row['project_start_date'];
                                     $project_end_date = $row['project_end_date'];
-                                    $project_status = $row['project_status'];
-                                    $project_priority = $row['project_priority'];
+                                    $project_status = ($row['project_status']==1) ? 'Active' : 'Inactive';
+                                    if($row['project_priority'] == 1){
+                                        $project_priority = "Top Level";
+                                    }else if($row['project_priority'] == 2){
+                                        $project_priority = "Medium Level";
+                                    }else if($row['project_priority'] == 3){
+                                        $project_priority = "Low Level";
+                                    }
+
+                                    //select manager_id from tbl_team_allocation where project_id = $tId
+                                    $sql2 = "SELECT project_manager FROM tbl_team_allocation WHERE project_id = $tId";
+                                    $result2 = mysqli_query($connect, $sql2);
+                                    $row2 = mysqli_fetch_assoc($result2);
+                                    $manager_id = $row2['project_manager'];
+                                    //select manager_name from tbl_user where user_id = $manager_id
+                                    $sql3 = "SELECT username,email FROM tbl_user WHERE user_id = $manager_id";
+                                    $result3 = mysqli_query($connect, $sql3);
+                                    $row3 = mysqli_fetch_assoc($result3);
+                                    $manager_name = $row3['username'];
+                                    $manager_email = $row3['email'];
 
 
                                     echo '
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col-8">
-                        <div class="form-group">
-                          <label for="projectTitle">Project title</label>
-                          <textarea name="projectTitle" id="projectTitle" class="form-control" placeholder="task title" autocomplete="off">' . $project_name . '</textarea>
+                      <div class="col-7">
+                      <h1 class="content-heading">Project Details</h1>
+                       <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project title</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $project_name . ' </div>
                         </div>
-                        <div class="form-group">
-                          <label for="projectTitle">Project Description</label>
-                          <textarea name="projectDescription" id="projectDescription" class="form-control" placeholder="task title" autocomplete="off">' . $project_description . '</textarea>
+                        <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project description</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $project_description . ' </div>
                         </div>
-                        <div class="form-group">
-                                        <label for="projectStartDate">Start date</label>
-                                        <input type="date" name="projectStartDate" value="' . $project_start_date . '" id="projectStartDate" class="form-control" placeholder="Project name" required autocomplete="off" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="projectEndDate">End date</label>
-                                        <input type="date" name="projectEndDate" value="' . $project_end_date . '" id="projectEndDate" class="form-control" placeholder="Project name" required autocomplete="off" />
-                                    </div>
-                                    
+                        <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project start date</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $project_start_date . ' </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project end date</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $project_end_date . ' </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project status</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $project_status . ' </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project priority</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $project_priority . ' </div>
+                        </div>
                       </div>
 
-                      <div class="col-4 ml-auto">
-                      <div class="form-group">
-                        <label for="task-actions">Add team</label>
-                        <button id="addTeam" name="addTeam" value="' . $tId . '" type="button" class="secondary-modal-btn">Add</button>
-                      </div>
-                      
-                        <div class="form-group">
-                          <label for="task-actions">Actions</label>
-                          <button id="deleteProject" name="deleteProject" value="' . $tId . '" type="button" class="secondary-modal-btn">Delete</button>
+                      <div class="col-5">
+                      <h1 class="content-heading">Team Details</h1>
+                      <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project manager</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $manager_name . ' </div>
                         </div>
-                        <div class="form-group">
-                          <button id="closeProject" name="closeProject" value="' . $tId . '" type="button" class="secondary-modal-btn">Close Project</button>
+                        <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Project manager email</div>
+                            <div class="col-1">:</div>
+                            <div class="col">' . $manager_email . ' </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4 font-weight-bold">Teams</div>
+                            <div class="col-1">:</div>
+                            <div class="col">';
+                            //select team_id from tbl_team_allocation where project_id = $tId
+                            $sql4 = "SELECT team_id FROM tbl_team_allocation WHERE project_id = $tId";
+                            $result4 = mysqli_query($connect, $sql4);
+                            while($row4 = mysqli_fetch_assoc($result4)){
+                                $team_id = $row4['team_id'];
+                                //select team_name from tbl_team where team_id = $team_id
+                                $sql5 = "SELECT team_title FROM tbl_teams WHERE team_id = $team_id";
+                                $result5 = mysqli_query($connect, $sql5);
+                                $row5 = mysqli_fetch_assoc($result5);
+                                $team_name = $row5['team_title'];
+                                echo $team_name . '<br>';
+                            }echo'
+                            </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   ';
                                     ?>
-                                    <div class="m-2">
-                                        <button id="updateProjectBtn" type="submit" class="btn btn-primary saveBtn">Save</button>
-                                    </div>
                                 </form>
                             </div>
                         </div>

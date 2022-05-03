@@ -113,9 +113,64 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                   </div>
                 </form>
               </div>
-              <div class="files-card mt-4 mb-2">
+              <div class="files-card mt-4 mb-2 p-0">
                 <div class="row">
-                  <!--col 2 start-->
+                  <div class="col-12">
+                    <div class="d-flex flex-column">
+                      <div class="files-card">
+                        <div class="d-flex justify-content-between">
+                          <h1 class="content-heading">Team Members Invitation</h1>
+                          <!-- <button data-toggle='modal' data-target='#addMemberModal' class="add-task-btn">Add Members +</button> -->
+                        </div>
+                        <!---table start-->
+                        <table class="table files-table">
+                          <thead>
+                            <tr class="t-head">
+                              <th>Email ID</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <form method="post" action="./server/revokeInvitation.php">
+
+                              <?php
+                              $sql = "SELECT `invitation_id`,`email`,`referral_id`,`invite_status` FROM `tbl_invitation` WHERE `team_id`= '$tId'";
+                              $result = mysqli_query($connect, $sql);
+                              if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  $inviteID = $row['invitation_id'];
+                                  $invitationId = $row['invitation_id'];
+                                  $email = $row['email'];
+                                  $referralId = $row['referral_id'];
+                                  $status = ($row['invite_status'] == 1) ? 'Accepted' : 'Pending';
+                                  $btnStatus = ($row['invite_status'] == 1) ? 'disabled' : '';
+                                  echo '
+                                <tr>
+                                  <td>' . $email . '</td>
+                                  <td>' . $status . '</td>
+                                  <input type="hidden" name="toEmailID" value="'.$email.'">
+                                  <td><button id="revokeInvite" name="revokeInvite" '.$btnStatus.' type="submit" value="' . $tId . '" class="btn btn-primary saveBtn">Revoke Invititation</button></td>
+                                </tr>
+                                ';
+                                }
+                              } else {
+                                echo '<tr><td colspan="3">No Invitation</td></tr>';
+                              }
+                              ?>
+                            </form>
+                          </tbody>
+                        </table>
+
+                        <!---table end-->
+                      </div>
+                    </div>
+                  </div>
+                  <!--col 2 end-->
+                </div>
+              </div>
+              <div class="files-card mt-4 mb-2 p-0">
+                <div class="row">
                   <div class="col-12">
                     <div class="d-flex flex-column">
                       <div class="files-card">
@@ -145,7 +200,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                       </div>
                     </div>
                   </div>
-                  <!--col 2 end-->
                 </div>
               </div>
             </div>
@@ -231,7 +285,14 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     while ($row = mysqli_fetch_assoc($result)) {
                       $member_id = $row['user_id'];
                       $memberName = $row['username'];
-                      echo '<option value="' . $member_id . '">' . $memberName . '</option>';
+                      $memberTypeId = $row['type_id'];
+                      //selecting the type of user tbl_user_role
+                      $selectUserRole = "SELECT role_name FROM tbl_user_role WHERE role_id = $memberTypeId";
+                      $selectUserRoleResult = mysqli_query($connect, $selectUserRole);
+                      $userRole = mysqli_fetch_assoc($selectUserRoleResult);
+                      $userType = $userRole['role_name'];
+
+                      echo '<option value="' . $member_id . '">' . $memberName . ' ( '.$userType.' )</option>';
                     }
                     ?>
                   </select>

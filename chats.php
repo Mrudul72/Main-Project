@@ -89,14 +89,22 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     <div class="modal-body chat-card-body" id="allChat">
                         <?php
                         include './config/connect.php';
+
                         //get all users except current user
-                        $sqlNew = "SELECT user_id,username,profile_pic FROM tbl_user WHERE user_id != $user_id AND type_id != 1";
+                        $sqlNew = "SELECT `type_id`,`user_id`,`username`,`profile_pic` FROM `tbl_user` WHERE `user_id` != $user_id AND `type_id` != 1";
                         $resultNew = mysqli_query($connect, $sqlNew);
                         if (mysqli_num_rows($resultNew) > 0) {
                             while ($row = mysqli_fetch_assoc($resultNew)) {
                                 $user_id = $row['user_id'];
                                 $username = $row['username'];
                                 $profile_pic = $row['profile_pic'];
+                                //select user role from tbl_user_role
+                                $userTypeId = $row['type_id'];
+                                $sql = "SELECT * FROM tbl_user_role WHERE role_id = '$userTypeId'";
+                                $result = mysqli_query($connect, $sql);
+                                $rowN = mysqli_fetch_assoc($result);
+                                $user_role = $rowN['role_name'];
+                                
                                 echo '
 
                                 <a class="rounded-card" id="' . $user_id . '">
@@ -105,7 +113,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0" id="uname">' . $username . '</h6>
                                             </div>
-                                            
+                                            <p class="mb-0 msg-preview">' . $user_role . '</p>
                                         </div>
                                     </div>
                                 </a>
@@ -116,7 +124,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                         ?>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

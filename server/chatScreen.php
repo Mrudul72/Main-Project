@@ -5,7 +5,7 @@ session_start();
 extract($_POST);
 $user_id = $_SESSION['userId'];
 $team_id = $_SESSION['currentUserTeamId'];
-$sql = "SELECT chat_id,sender_id,sender_name,receiver_id,receiver_name,date_time,chat_text FROM `tbl_chats` WHERE (sender_id='$chatId' OR receiver_id='$chatId') AND (sender_id='$user_id' OR receiver_id='$user_id') ORDER BY date_time";
+$sql = "SELECT DATE(date_time) AS date, TIME_FORMAT(date_time, '%h:%i %p') AS time,chat_id,sender_id,sender_name,receiver_id,receiver_name,chat_text FROM `tbl_chats` WHERE (sender_id='$chatId' OR receiver_id='$chatId') AND (sender_id='$user_id' OR receiver_id='$user_id') ORDER BY date_time";
 $result = mysqli_query($connect, $sql);
 echo '
 <div class="chats-card-1" style="padding-bottom:0vw !important ;">
@@ -31,7 +31,8 @@ if (mysqli_num_rows($result) > 0) {
         $sender_name = $row['sender_name'];
         $receiver_id = $row['receiver_id'];
         $receiver_name = $row['receiver_name'];
-        $date_time = $row['date_time'];
+        $date = $row['date'];
+        $time = $row['time'];
         $chat_text = $row['chat_text'];
 
         if ($user_id != $sender_id) {
@@ -42,7 +43,7 @@ if (mysqli_num_rows($result) > 0) {
                                 <div class="sender-msg">
                                     ' . $chat_text . '
                                 </div>
-                                <p class="small text-muted">' . $date_time . '</p>
+                                <p class="small text-muted">' . $date . ', '.$time.'</p>
                             </div>
                         </div>
                         
@@ -54,7 +55,7 @@ if (mysqli_num_rows($result) > 0) {
                                 <div class="reciever-msg">
                                 ' . $chat_text . '
                                 </div>
-                                <p class="small text-muted">' . $date_time . '</p>
+                                <p class="small text-muted">' . $date . ', '.$time.'</p>
                             </div>
                         </div>
                         

@@ -25,7 +25,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                 $checkEmailResult = mysqli_query($connect, $checkEmail);
                 $checkEmailCount = mysqli_num_rows($checkEmailResult);
                 //referrel code check in tbl_invitation table
-                $checkReferralCode = "SELECT * FROM `tbl_invitation` WHERE `email`='$email' AND `invite_status`='0'";
+                $checkReferralCode = "SELECT * FROM `tbl_invitation` WHERE `email`='$email' AND `referral_id` = '$referral'  AND `invite_status`='0'";
                 $checkReferralCodeResult = mysqli_query($connect, $checkReferralCode);
                 $row = mysqli_fetch_assoc($checkReferralCodeResult);
                 $team_id = $row['team_id'];
@@ -110,16 +110,18 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
             //No user exists
             if ($checkLoginCount == 1) {
                 $userData = mysqli_fetch_assoc($checkLoginResult);
-                $_SESSION['pmsSession'] = session_id();
+                
                 $_SESSION['userName'] = $userData['username'];
                 $_SESSION['proPic'] = $userData['profile_pic'];
                 $_SESSION['userId'] = $userData['user_id'];
                 $_SESSION['currentUserTeamId'] = $userData['team_id'];
                 $_SESSION['currentUserTypeId'] = $userData['type_id'];
                 if ($userData['type_id'] == 1) {
+                    $_SESSION['pmsSessionAdmin'] = session_id();
                     header("Location: ../adminDashboard.php");
                     die();
                 } else {
+                    $_SESSION['pmsSession'] = session_id();
                     header("Location: ../dashboard.php");
                     die();
                 }

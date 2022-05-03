@@ -1,8 +1,8 @@
 <?php
-
 function loadChecklist($stat,$checkedStat){
     include '../config/connect.php';
     $taskId = $_SESSION['curTaskId'];
+    $checkBoxVisibility = ($_SESSION['currentUserTypeId'] == '2') ? 'display:none;' : '';
     $sql = "SELECT checklist_id,checklist_title FROM tbl_checklist WHERE task_id = '$taskId' AND status = '$stat'";
     $result = mysqli_query($connect, $sql);
     if(mysqli_num_rows($result)>0){
@@ -15,7 +15,7 @@ function loadChecklist($stat,$checkedStat){
             <li id="checklist-item'.$i.'" class="checklist-items">
                 <div id="checkParent">
                     <input class="styled-checkbox" type="checkbox" '.$checkedStat.' value="'.$checklistId.'"/>
-                    <label for="styled-checkbox"></label>
+                    <label for="styled-checkbox" style="'.$checkBoxVisibility.'"></label>
                 </div>
                 <div id="checkSibling" class="checklist-item-title">'.$checklistTitle.'</div>
             </li>
