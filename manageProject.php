@@ -69,6 +69,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     $project_start_date = $row['project_start_date'];
                                     $project_end_date = $row['project_end_date'];
                                     $project_status = $row['project_status'];
+                                    $projectStatText = ($project_status == '1') ? 'Close Project' : 'Reopen Project';
                                     $project_priority = $row['project_priority'];
 
 
@@ -106,7 +107,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                           <button id="deleteProject" name="deleteProject" value="' . $tId . '" type="button" class="secondary-modal-btn">Delete</button>
                         </div>
                         <div class="form-group">
-                          <button id="closeProject" name="closeProject" value="' . $tId . '" type="button" class="secondary-modal-btn">Close Project</button>
+                          <button id="closeProject" name="closeProject" value="' . $tId . '" data-status="' . $project_status . '" type="button" class="secondary-modal-btn">'.$projectStatText.'</button>
                         </div>
                       </div>
                     </div>
@@ -250,14 +251,15 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 });
                 //delete project ends 
 
-
+                
                 //close project
                 $('#closeProject').on('click', function() {
                     var pro_id = $('#closeProject').val();
-                    //alert(pro_id);
+                    var pro_status = $('#closeProject').attr('data-status');
+                    var proStatText = (pro_status == 1) ? 'close' : 're-open';
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Press confirm to close the project",
+                        text: "Press confirm to "+ proStatText +" the project",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -267,18 +269,28 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         if (result.isConfirmed) {
 
                             $.ajax({
-                                url: "./server/closeProject.php",
+                                url: "./server/changeProjectStatus.php",
                                 method: "POST",
                                 data: {
                                     pro_id: pro_id,
+                                    pro_status: pro_status
                                 },
                                 success: function(data) {
                                     //alert(data);
-                                    Swal.fire(
+                                    if(pro_status == 1){
+                                        Swal.fire(
                                         'Project Closed!',
                                         'Your project has been closed.',
                                         'success'
                                     )
+                                    }else{
+                                        Swal.fire(
+                                        'Project Re-opened!',
+                                        'Your project has been re-opened.',
+                                        'success'
+                                    )
+                                    }
+                                    
                                     window.location.href = "./project.php";
                                 }
                             });

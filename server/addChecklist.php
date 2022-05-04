@@ -7,6 +7,7 @@ $taskId = $_POST['taskId'];
 $userId = $_SESSION['userId'];
 $userName = $_SESSION['userName'];
 $checklistinput = $_POST['checklistinput'];
+$checkBoxVisibility = ($_SESSION['currentUserTypeId'] == '2') ? 'display:none;' : '';
 $sql = "INSERT INTO tbl_checklist (checklist_title, task_id, user_id, project_id, status) VALUES ('$checklistinput', '$taskId', '$userId', '$projectId', '1')";
 $result = mysqli_query($connect, $sql);
 $checklistId = mysqli_insert_id($connect);
@@ -21,7 +22,7 @@ if($result){
     <li class="checklist-items">
         <div id="checkParent">
             <input class="styled-checkbox" type="checkbox" value="'.$checklistId.'"/>
-            <label for="styled-checkbox"></label>
+            <label style="'.$checkBoxVisibility.'" for="styled-checkbox"></label>
         </div>
         <div id="checkSibling" class="checklist-item-title">'.$checklistTitle.'</div>
     </li>

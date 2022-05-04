@@ -2,6 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   .projects {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 30%;
     height: 15vw;
     background-image: url("../../assets/images/bg2.png");
@@ -17,9 +20,10 @@
     color: #fff;
     &:hover {
       filter: brightness(0.7);
+      text-decoration: none;
     }
     &:active {
-      filter: brightness(1);
+      backdrop-filter: brightness(100);
     }
     &:nth-child(odd) {
       background-image: url("../../assets/images/bg1.png");
@@ -72,4 +76,8 @@
 }
 .showDiv {
   display: block;
+}
+
+.project-details{
+  font-size: 0.9vw;
 }

@@ -1162,6 +1162,16 @@
 }
 
 .project-container .projects {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 30%;
   height: 15vw;
   background-image: url("../../assets/images/bg2.png");
@@ -1180,11 +1190,12 @@
 .project-container .projects:hover {
   -webkit-filter: brightness(0.7);
           filter: brightness(0.7);
+  text-decoration: none;
 }
 
 .project-container .projects:active {
-  -webkit-filter: brightness(1);
-          filter: brightness(1);
+  -webkit-backdrop-filter: brightness(100);
+          backdrop-filter: brightness(100);
 }
 
 .project-container .projects:nth-child(odd) {
@@ -1243,6 +1254,10 @@
 
 .showDiv {
   display: block;
+}
+
+.project-details {
+  font-size: 0.9vw;
 }
 
 .files-card {

@@ -72,7 +72,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             <div class="col-4">
                                 <div class="task-items-container" id="2">
                                     <div class="task-container-header">
-                                        <h1 class="content-heading">Development</h1>
+                                        <h1 class="content-heading">In Progress</h1>
 
                                     </div>
                                     <div class="pt-4">

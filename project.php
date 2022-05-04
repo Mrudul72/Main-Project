@@ -49,8 +49,35 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $proId = $row['project_id'];
+                                $proEndDate = $row['project_end_date'];
+                                if($row['project_priority']==1){
+                                    $priority = "High Priority";
+                                }
+                                else if($row['project_priority']==2){
+                                    $priority = "Medium Priority";
+                                }
+                                else if($row['project_priority']==3){
+                                    $priority = "Low Priority";
+                                }
+                                //select count of tasks from tbl_tasks where project_id is equal to project_id
+                                $query2 = "SELECT count(*) as total FROM tbl_tasks WHERE project_id = '$proId'";
+                                $result2 = mysqli_query($connect, $query2);
+                                $row2 = mysqli_fetch_assoc($result2);
+                                $total = $row2['total'];
+                                //select count of tasks from tbl_tasks where project_id is equal to project_id and task_status is equal to 4
+                                $query3 = "SELECT count(*) as completed FROM tbl_tasks WHERE project_id = '$proId' AND task_status = 4";
+                                $result3 = mysqli_query($connect, $query3);
+                                $row3 = mysqli_fetch_assoc($result3);
+                                $completed = $row3['completed'];
+                                $stat = $completed . '/' . $total . ' tasks completed';
                                 $proName = $row['project_name'];
-                                echo "<a href='./tasks.php?id=$proId' class='projects pro' id='$proId'>$proName</a>";
+                                echo "<a href='./tasks.php?id=$proId' class='projects pro' id='$proId'>$proName
+                                <div>
+                                    <div class='project-details text-white font-weight-normal'>$stat </div>
+                                    <div class='project-details text-white font-weight-normal'>Due date : $proEndDate </div>
+                                    <div class='project-details text-white font-weight-normal'>Priority : $priority </div>
+                                </div>
+                                </a>";
                             }
                             echo "<div class='projects' id = 'createPro' data-toggle='modal'></div>";
                         } else {

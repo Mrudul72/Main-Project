@@ -13,7 +13,7 @@ echo '
             <h1 class="content-heading" id="chatUserName">' . $uname . '</h1>
             <div>
                 <label for="imageUpload" class="add-task-btn"><img src="./assets/icons/image-ico.svg" alt=""></label>
-                <input type="file" name="imageUpload" id="imageUpload" accept="image/*" style="display:none; margin:0;">
+                <input type="file" name="file" id="imageUpload" accept="image/*" style="display:none; margin:0;">
 
                 <label for="attachmentUpload" class="add-task-btn"><img src="./assets/icons/paper-clip.svg" alt=""></label>
                 <input type="file" name="attachmentUpload" id="attachmentUpload" style="display:none; margin:0;">
@@ -26,6 +26,8 @@ echo '
 
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
+        $chat_image = $row['chat_image'];
+        $chat_attachment = $row['chat_attachment'];
         $chat_id = $row['chat_id'];
         $sender_id = $row['sender_id'];
         $sender_name = $row['sender_name'];
@@ -43,7 +45,7 @@ if (mysqli_num_rows($result) > 0) {
                                 <div class="sender-msg">
                                     ' . $chat_text . '
                                 </div>
-                                <p class="small text-muted">' . $date . ', '.$time.'</p>
+                                <p class="small text-muted">' . $date . ', ' . $time . '</p>
                             </div>
                         </div>
                         
@@ -55,7 +57,7 @@ if (mysqli_num_rows($result) > 0) {
                                 <div class="reciever-msg">
                                 ' . $chat_text . '
                                 </div>
-                                <p class="small text-muted">' . $date . ', '.$time.'</p>
+                                <p class="small text-muted">' . $date . ', ' . $time . '</p>
                             </div>
                         </div>
                         
@@ -95,7 +97,7 @@ echo '
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary secondary-outline-btn" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary saveBtn" id="sendAtachment">Send</button>
+                <button type="button" class="btn btn-primary saveBtn" id="sendImage">Send</button>
             </div>
         </div>
     </div>
@@ -105,7 +107,6 @@ echo '
 
 
 <script>
-
     $("#imageUpload").change(function() {
         var file_data;
         if ($("#imageUpload").val() != "") {
@@ -119,20 +120,32 @@ echo '
 
             $("#fileShareModal").modal("show");
             //send files
-            $("#sendAtachment").click(function() {
-                $("#fileShareModal").modal("hide");
-                $("#imageUpload").val("");
-                $("#uploadPreview").attr("src", "");
-                var file_data = $("#imageUpload").val();
+            $("#sendImage").click(function() {
+                var chatUserName = $("#chatUserName").text();
+                var chatUserId = $("#chatUserId").val();
+                var fd = new FormData();
+                var files = $('#imageUpload')[0].files;
+                fd.append('file', files[0]);
                 $.ajax({
-                    url: "./assets/php/uploadFile.php",
-                    type: "POST",
-                    data: form_data,
-                    processData: false,
+                    url: "./server/uploadChatImage.php",
+                    type: 'post',
+                    data: fd,
                     contentType: false,
-                    cache: false,
+                    processData: false,
                     success: function(data) {
-                        $("#chatInput").val("");
+                        $.ajax({
+                            url: "./server/uploadChatImage.php",
+                            type: "POST",
+                            data: {
+                                chatUserId: chatUserId,
+                                chatUserName: chatUserName
+                            },
+
+                            success: function(response) {
+                                $("#chatInput").val("");
+                                $("#cardBody").append(response);
+                            }
+                        });
                     }
                 });
             });
