@@ -5,7 +5,7 @@ session_start();
 extract($_POST);
 $user_id = $_SESSION['userId'];
 $team_id = $_SESSION['currentUserTeamId'];
-$sql = "SELECT DATE(date_time) AS date, TIME_FORMAT(date_time, '%h:%i %p') AS time,chat_id,sender_id,sender_name,receiver_id,receiver_name,chat_text FROM `tbl_chats` WHERE (sender_id='$chatId' OR receiver_id='$chatId') AND (sender_id='$user_id' OR receiver_id='$user_id') ORDER BY date_time";
+$sql = "SELECT chat_image,chat_attachment,DATE_FORMAT(date_time,'%d %M  %Y') AS date, TIME_FORMAT(date_time, '%h:%i %p') AS time,chat_id,sender_id,sender_name,receiver_id,receiver_name,chat_text FROM `tbl_chats` WHERE (sender_id='$chatId' OR receiver_id='$chatId') AND (sender_id='$user_id' OR receiver_id='$user_id') ORDER BY date_time";
 $result = mysqli_query($connect, $sql);
 echo '
 <div class="chats-card-1" style="padding-bottom:0vw !important ;">
@@ -16,7 +16,7 @@ echo '
                 <input type="file" name="file" id="imageUpload" accept="image/*" style="display:none; margin:0;">
 
                 <label for="attachmentUpload" class="add-task-btn"><img src="./assets/icons/paper-clip.svg" alt=""></label>
-                <input type="file" name="attachmentUpload" id="attachmentUpload" style="display:none; margin:0;">
+                <input type="file" name="file" id="attachmentUpload" accept=".pdf , .docx , .pptx , .doc , .ppt , .xlsx , .xls , .txt , .csv" style="display:none; margin:0;">
             </div>
         </div>
         <div class="chat-card-body" id="cardBody">
@@ -38,30 +38,84 @@ if (mysqli_num_rows($result) > 0) {
         $chat_text = $row['chat_text'];
 
         if ($user_id != $sender_id) {
-            echo '
+            if ($chat_text == NULL) {
+                if ($chat_image != NULL && $chat_attachment == NULL) {
+                    echo '
+                    <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="sender-msg">
+                                <img class="img-fluid img-thumbnail" src="./assets/chatImages/' . $chat_image . '" height="270" width="400" alt="">
+                                <a href="./assets/chatImages/' . $chat_image . '" download>' . $chat_image . '</a>
+                            </div>
+                            <p class="small text-muted">' . $date . ' ' . $time . '</p>
+                        </div>
+                    </div>
+                    ';
+                } else if ($chat_image == NULL && $chat_attachment != NULL) {
+                    echo '
+                    <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                        <div class="media-body ml-3">
+                            <div class="sender-msg">
+                                <a href="' . $chat_attachment . '" download><img src="./assets/icons/paper-clip.svg" alt=""></a>
+                            </div>
+                            <p class="small text-muted">' . $date . ' ' . $time . '</p>
+                        </div>
+                    </div>
+                    ';
+                }
+            } else {
+                echo '
 
-                        <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-                            <div class="media-body ml-3">
-                                <div class="sender-msg">
-                                    ' . $chat_text . '
-                                </div>
-                                <p class="small text-muted">' . $date . ', ' . $time . '</p>
-                            </div>
+                <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                    <div class="media-body ml-3">
+                        <div class="sender-msg">
+                            ' . $chat_text . '
                         </div>
-                        
-                        ';
+                        <p class="small text-muted">' . $date . ', ' . $time . '</p>
+                    </div>
+                </div>
+                
+                ';
+            }
         } else {
-            echo '
-                        <div class="media w-50 ml-auto mb-3">
-                            <div class="media-body">
-                                <div class="reciever-msg">
-                                ' . $chat_text . '
-                                </div>
-                                <p class="small text-muted">' . $date . ', ' . $time . '</p>
+            if ($chat_text == NULL) {
+                if ($chat_image != NULL && $chat_attachment == NULL) {
+                    echo '
+                    <div class="media w-50 ml-auto mb-3">
+                        <div class="media-body">
+                            <div class="reciever-msg">
+                                <img class="img-fluid img-thumbnail" src="./assets/chatImages/' . $chat_image . '" height="270" width="400" alt="">
+                                <a href="./assets/chatImages/' . $chat_image . '" download>' . $chat_image . '</a>
                             </div>
+                            <p class="small text-muted">' . $date . ', ' . $time . '</p>
                         </div>
-                        
-                        ';
+                    </div>
+                    ';
+                } else if ($chat_image == NULL && $chat_attachment != NULL) {
+                    echo '
+                    <div class="media w-50 ml-auto mb-3">
+                        <div class="media-body">
+                            <div class="reciever-msg">
+                                <a href="./assets/chatAttachments/' . $chat_attachment . '" download>' . $chat_attachment . '</a>
+                            </div>
+                            <p class="small text-muted">' . $date . ', ' . $time . '</p>
+                        </div>
+                    </div>
+                    ';
+                }
+            } else {
+                echo '
+                <div class="media w-50 ml-auto mb-3">
+                    <div class="media-body">
+                        <div class="reciever-msg">
+                        ' . $chat_text . '
+                        </div>
+                        <p class="small text-muted">' . $date . ', ' . $time . '</p>
+                    </div>
+                </div>
+                
+                ';
+            }
         }
     }
 }
@@ -82,7 +136,7 @@ echo '
 
 ?>
 
-
+<!-- modal for chat image -->
 <div class="modal" tabindex="-1" id="fileShareModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -92,7 +146,7 @@ echo '
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body d-flex justify-content-center">
+            <div class="modal-body d-flex justify-content-center flex-column align-items-center">
                 <img id="uploadPreview" class="img-fluid" height="200px" width="200px">
             </div>
             <div class="modal-footer">
@@ -103,10 +157,33 @@ echo '
     </div>
 </div>
 
+<!-- modal for chat attachment -->
+<div class="modal" tabindex="-1" id="fileShareModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Do you want to send this item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center flex-column align-items-center">
+                <img id="uploadPreview2" src="./assets/images/fileUpload.png" class="img-fluid" height="200px" width="200px">
+                <p id="previewText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary secondary-outline-btn" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary saveBtn" id="sendFile">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
 <script>
+    //upload image
     $("#imageUpload").change(function() {
         var file_data;
         if ($("#imageUpload").val() != "") {
@@ -121,6 +198,7 @@ echo '
             $("#fileShareModal").modal("show");
             //send files
             $("#sendImage").click(function() {
+                $("#fileShareModal").modal("hide");
                 var chatUserName = $("#chatUserName").text();
                 var chatUserId = $("#chatUserId").val();
                 var fd = new FormData();
@@ -144,6 +222,51 @@ echo '
                             success: function(response) {
                                 $("#chatInput").val("");
                                 $("#cardBody").append(response);
+                            }
+                        });
+                    }
+                });
+            });
+        } else {
+            alert("empty");
+        }
+    });
+
+    //upload attachment
+    $("#attachmentUpload").change(function() {
+        var file_data;
+        if ($("#attachmentUpload").val() != "") {
+            file_data = $("#attachmentUpload").val().replace(/.*(\/|\\)/, '');
+            $("#previewText").html(file_data);
+
+            $("#fileShareModal2").modal("show");
+            //send files
+            $("#sendFile").click(function() {
+                var chatUserName = $("#chatUserName").text();
+                var chatUserId = $("#chatUserId").val();
+                var fd = new FormData();
+                var files = $('#attachmentUpload')[0].files;
+                fd.append('file', files[0]);
+                $.ajax({
+                    url: "./server/uploadChatAttachment.php",
+                    type: 'post',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $.ajax({
+                            url: "./server/uploadChatAttachment.php",
+                            type: "POST",
+                            data: {
+                                chatUserId: chatUserId,
+                                chatUserName: chatUserName
+                            },
+
+                            success: function(response) {
+                                alert(response);
+                                $("#chatInput").val("");
+                                $("#cardBody").append(response);
+                                $("#fileShareModal2").modal("hide");
                             }
                         });
                     }

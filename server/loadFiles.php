@@ -29,7 +29,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
     echo '
            <tr>
-                <td>' . $file_name . '</td>
+                <td><a href="./assets/uploads/' . $file_name . '" download>' . $file_name . '</a></td>
                 <td>' . $file_size . '</td>
                 <td>' . $uname['username'] . '</td>
                 <td>' . $team_title . '</td>
