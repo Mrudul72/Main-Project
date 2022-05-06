@@ -160,6 +160,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                     id="referral"
                     class="form-control"
                     placeholder="RXL23"
+                    autocomplete="off" 
                   />
                 </div>
 

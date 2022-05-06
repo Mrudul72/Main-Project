@@ -50,13 +50,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $proId = $row['project_id'];
                                 $proEndDate = $row['project_end_date'];
-                                if($row['project_priority']==1){
+                                if ($row['project_priority'] == 1) {
                                     $priority = "High Priority";
-                                }
-                                else if($row['project_priority']==2){
+                                } else if ($row['project_priority'] == 2) {
                                     $priority = "Medium Priority";
-                                }
-                                else if($row['project_priority']==3){
+                                } else if ($row['project_priority'] == 3) {
                                     $priority = "Low Priority";
                                 }
                                 //select count of tasks from tbl_tasks where project_id is equal to project_id
@@ -127,8 +125,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 $proName = $row['project_name'];
                                 echo "<a href='./tasks.php?id=$proId' class='projects pro' id='$proId'>$proName</a>";
                             }
-                        }
-                        else{
+                        } else {
                             echo '
                             <h3 class="view-more-btn ml-3">No closed project</h3>
                             ';
@@ -186,11 +183,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     </div>
                                     <div class="form-group">
                                         <label for="pro-start-date">Start date</label>
-                                        <input type="date" name="pro-start-date" id="pro-start-date" class="form-control" placeholder="Project name" required autocomplete="off" />
+                                        <input type="date" name="pro-start-date" id="pro-start-date" class="form-control" min="<?php echo date('Y-m-d') ?>" placeholder="Project name" required autocomplete="off" />
                                     </div>
                                     <div class="form-group">
                                         <label for="pro-end-date">End date</label>
-                                        <input type="date" name="pro-end-date" id="pro-end-date" class="form-control" placeholder="Project name" required autocomplete="off" />
+                                        <input type="date" name="pro-end-date" id="pro-end-date" class="form-control" min="<?php echo date('Y-m-d') ?>" placeholder="Project name" required autocomplete="off" />
                                     </div>
                                     <div class="form-group">
                                         <label for="pro-priority">Project priority</label>
@@ -252,6 +249,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             $(document).ready(function() {
                 $('#createPro').click(function() {
                     $('#addProjectModal').modal('show');
+
+                    document.getElementById("pro-start-date").onchange = function() {
+                        var input = document.getElementById("pro-end-date");
+                        input.setAttribute("min", this.value);
+                    }
                 });
                 $('#createProBtn').on('click', function() {
                     var proName = $('#pro-name').val();
