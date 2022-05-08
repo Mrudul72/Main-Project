@@ -158,3 +158,22 @@
     }
   }
 }
+.reciever-msg-img{
+  width: 28vw !important;
+  padding: 1vw 1vw;
+  background-color: $primary-color;
+  color: #fff;
+  margin: 0.5vw 0;
+  border-radius: 12px;
+  font-size: 1vw;
+}
+
+.sender-msg-img{
+  width: 28vw !important;
+  padding: 1vw 1vw;
+  background-color: $secondary-color;
+  color: $text-dark;
+  margin: 0.5vw 0;
+  border-radius: 12px;
+  font-size: 1vw;
+}

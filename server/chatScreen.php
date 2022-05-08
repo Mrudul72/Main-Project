@@ -43,7 +43,7 @@ if (mysqli_num_rows($result) > 0) {
                     echo '
                     <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-3">
-                            <div class="sender-msg">
+                            <div class="sender-msg-img">
                                 <img class="img-fluid img-thumbnail" src="./assets/chatImages/' . $chat_image . '" height="270" width="400" alt="">
                                 <a href="./assets/chatImages/' . $chat_image . '" download>' . $chat_image . '</a>
                             </div>
@@ -81,9 +81,9 @@ if (mysqli_num_rows($result) > 0) {
             if ($chat_text == NULL) {
                 if ($chat_image != NULL && $chat_attachment == NULL) {
                     echo '
-                    <div class="media w-50 ml-auto mb-3">
-                        <div class="media-body">
-                            <div class="reciever-msg">
+                    <div class="media w-55 ml-5 pl-5 mb-3">
+                        <div class="media-body ml-5 pl-4">
+                            <div class="reciever-msg-img">
                                 <img class="img-fluid img-thumbnail" src="./assets/chatImages/' . $chat_image . '" height="270" width="400" alt="">
                                 <a href="./assets/chatImages/' . $chat_image . '" download>' . $chat_image . '</a>
                             </div>

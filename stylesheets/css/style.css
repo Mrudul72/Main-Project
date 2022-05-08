@@ -1793,6 +1793,26 @@
           filter: brightness(0) invert(1);
 }
 
+.reciever-msg-img {
+  width: 28vw !important;
+  padding: 1vw 1vw;
+  background-color: #022f96;
+  color: #fff;
+  margin: 0.5vw 0;
+  border-radius: 12px;
+  font-size: 1vw;
+}
+
+.sender-msg-img {
+  width: 28vw !important;
+  padding: 1vw 1vw;
+  background-color: #e0eaff;
+  color: #011e56;
+  margin: 0.5vw 0;
+  border-radius: 12px;
+  font-size: 1vw;
+}
+
 .checklist-container .checklist-items {
   display: -webkit-box;
   display: -ms-flexbox;
