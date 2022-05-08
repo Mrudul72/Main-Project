@@ -51,6 +51,8 @@ window.addEventListener("load", () => {
 //     });
 // }
 
+
+
 const addBtn1 = document.getElementById("addBtn1");
 let m = 1;
 let n = 1;
@@ -70,7 +72,3 @@ addBtn1.addEventListener("click", function () {
   });
   document.querySelector("#member-count").value = n;
 });
-
-
-
-

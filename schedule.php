@@ -257,6 +257,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     <!--col 2 end-->
                 </div>
             </div>
+            <script src="./js/search.js"></script>
             <script src="./js/app.js"></script>
     </body>
 

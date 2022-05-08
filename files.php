@@ -82,6 +82,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
+    <script src="./js/search.js"></script>
     <script src="./js/app.js"></script>
     <script>
       $(document).ready(function() {
@@ -97,6 +98,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         });
       });
     </script>
+    
   </body>
 </html>
 <?php

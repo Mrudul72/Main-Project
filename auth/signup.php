@@ -210,6 +210,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                     class="form-control"
                     required
                     autocomplete="off"
+                    max ="<?php echo date('Y-m-d') ?>"
                   />
                   <small id="errMsgDob" class="errMsg"></small>
                 </div>

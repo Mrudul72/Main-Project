@@ -951,6 +951,13 @@
           filter: brightness(0) invert(1);
 }
 
+.notification-container {
+  width: 30vw;
+  background-color: #fff;
+  padding: 1.2vw 1vw;
+  border-radius: 10px !important;
+}
+
 .single-chart {
   width: 70%;
   -ms-flex-pack: distribute;
