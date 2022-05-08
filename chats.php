@@ -77,7 +77,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         </div>
                         <div class="d-flex justify-content-between w-100 mt-3">
                             <div class="chat-search-box">
-                                <input type="text" placeholder="Search" />
+                                <input type="text" placeholder="Search" id="userSearch" />
                                 <div class="search-box-icon">
                                     <img class="header-ico" src="./assets/icons/search-ico.svg" alt="search" />
                                 </div>
@@ -85,7 +85,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         </div>
 
                     </div>
-
+                    <div class="modal-body chat-card-body" id="searchContainer" style="display: none;">
+                        <div id="chatSearchResult">
+                            <a class="list-group-item list-group-item-action">No results found</a>
+                        </div>
+                    </div>
                     <div class="modal-body chat-card-body" id="allChat">
                         <?php
                         include './config/connect.php';
@@ -104,7 +108,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 $result = mysqli_query($connect, $sql);
                                 $rowN = mysqli_fetch_assoc($result);
                                 $user_role = $rowN['role_name'];
-                                
+
                                 echo '
 
                                 <a class="rounded-card" id="' . $user_id . '">
@@ -160,6 +164,41 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                 });
 
                 $("#allChat").on("click", "a", function() {
+                    $(this).addClass("rounded-card-active");
+                    $("#allChat a").not(this).removeClass("rounded-card-active");
+                    var chatId = $(this).attr("id");
+                    var currentItem = $(this);
+                    var uname = currentItem.find("#uname").text();
+                    $.post("./server/chatScreen.php", {
+                        chatId: chatId,
+                        uname: uname
+                    }, function(data) {
+                        $("#newChatModal").modal("hide");
+                        $("#chatScreen").html(data);
+                        $("#chatList").load("./server/chatList.php");
+                    });
+
+                });
+
+                //search user
+                $("#userSearch").keyup(function() {
+                    var search = $(this).val();
+                    if (search != "") {
+                        $.post("./server/chatSearchUser.php", {
+                            search: search
+                        }, function(data) {
+                            $("#searchContainer").show();
+                            $("#allChat").hide();
+                            $("#chatSearchResult").html(data);
+                        });
+                    } else {
+                        $("#searchContainer").hide();
+                        $("#allChat").show();
+                        $("#chatSearchResult").html("");
+                    }
+                });
+
+                $("#chatSearchResult").on("click", "a", function() {
                     $(this).addClass("rounded-card-active");
                     $("#allChat a").not(this).removeClass("rounded-card-active");
                     var chatId = $(this).attr("id");
