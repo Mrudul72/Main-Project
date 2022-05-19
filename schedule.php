@@ -38,30 +38,36 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     selectable: true,
                     selectHelper: true,
                     select: function(start, end, allDay) {
-                        var title = prompt('Event Title:');
 
-                        if (title) {
-                            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                        if (start.isBefore(moment())) {
+                            $('#calendar').fullCalendar('unselect');
+                            return false;
+                        } else {
+                            var title = prompt('Event Title:');
+                            if (title) {
+                                var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                                var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
 
-                            $.ajax({
-                                url: './server/add-event.php',
-                                data: 'title=' + title + '&start=' + start + '&end=' + end,
-                                type: "POST",
-                                success: function(data) {
-                                    displayMessage("Added Successfully");
-                                }
-                            });
-                            calendar.fullCalendar('renderEvent', {
-                                    title: title,
-                                    start: start,
-                                    end: end,
-                                    allDay: allDay
-                                },
-                                true
-                            );
+                                $.ajax({
+                                    url: './server/add-event.php',
+                                    data: 'title=' + title + '&start=' + start + '&end=' + end,
+                                    type: "POST",
+                                    success: function(data) {
+                                        displayMessage("Added Successfully");
+                                    }
+                                });
+                                calendar.fullCalendar('renderEvent', {
+                                        title: title,
+                                        start: start,
+                                        end: end,
+                                        allDay: allDay
+                                    },
+                                    true
+                                );
+                            }
+                            calendar.fullCalendar('unselect');
                         }
-                        calendar.fullCalendar('unselect');
+
                     },
 
                     editable: true,

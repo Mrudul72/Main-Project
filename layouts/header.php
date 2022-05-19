@@ -53,7 +53,7 @@ $userName = $_SESSION['userName'];
                             <a href="./schedule.php">
                             <li class="d-flex align-items-start justify-content-between my-3" style="margin-top:1vw; dropdown-item">
                                 <img src="./assets/icons/schedule-round-ico.svg" alt="" />
-                                <div class="card-text" style="width:90%;">
+                                <div class="card-text" ml-3 style="width:90%;">
                                     <p>' . $event_title . '</p>
                                 </div>
                             </li>
