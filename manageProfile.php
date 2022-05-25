@@ -118,7 +118,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         echo '
                                             <div class="form-group">
                                             <label for="team">Team</label>
-                                            <input type="text" name="team" id="team" value="' . $teamName . '" class="form-control" autocomplete="off">
+                                            <input type="text" disabled name="team" id="team" value="' . $teamName . '" class="form-control" autocomplete="off">
                                             </div>
                                             ';
                                     } else {
