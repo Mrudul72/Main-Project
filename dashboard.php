@@ -64,19 +64,29 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 </div>
                             </div>
                         </div>
+                        <?php
+                        $user_id = $_SESSION['userId'];
+                        $currentUserTeamId = $_SESSION['currentUserTeamId'];
+                        $taskProgressSql = "SELECT AVG(`progress`) AS progress FROM `tbl_tasks` WHERE `project_id` IN (SELECT `project_id` from `tbl_team_allocation` WHERE `project_manager`=$user_id OR `team_id` = $currentUserTeamId) AND `progress` != -1";
+                        $taskProgressRes = mysqli_query($connect, $taskProgressSql);
+                        if(mysqli_num_rows($taskProgressRes)>0){
+                            $rowNew = mysqli_fetch_assoc($taskProgressRes);
+                            $progress = round($rowNew['progress']);
+                        }
+                        ?>
                         <div class="d-flex">
                             <div class="col-6">
                                 <div class="ring-chart-container">
-                                    <h1 class="content-heading">Working Rate</h1>
+                                    <h1 class="content-heading">Task Checklist Progress</h1>
                                     <div class="single-chart">
                                         <svg viewBox="0 0 36 36" class="circular-chart blue">
                                             <path class="circle-bg" d="M18 2.0845
                           a 15.9155 15.9155 0 0 1 0 31.831
                           a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <path class="circle" stroke-dasharray="82, 100" d="M18 2.0845
+                                            <path class="circle" stroke-dasharray="<?php echo $progress;?>, 100" d="M18 2.0845
                           a 15.9155 15.9155 0 0 1 0 31.831
                           a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <text x="18" y="20.35" class="percentage">82%</text>
+                                            <text x="18" y="20.35" class="percentage"><?php echo $progress;?>%</text>
                                         </svg>
                                     </div>
                                 </div>
