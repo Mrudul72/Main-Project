@@ -1,6 +1,6 @@
 <?php
-include('./config/connect.php');
 session_start();
+include('./config/connect.php');
 if (isset($_SESSION["pmsSession"]) != session_id()) {
     header("Location: ./index.php");
     die();
@@ -107,7 +107,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                           <button id="deleteProject" name="deleteProject" value="' . $tId . '" type="button" class="secondary-modal-btn">Delete</button>
                         </div>
                         <div class="form-group">
-                          <button id="closeProject" name="closeProject" value="' . $tId . '" data-status="' . $project_status . '" type="button" class="secondary-modal-btn">'.$projectStatText.'</button>
+                          <button id="closeProject" name="closeProject" value="' . $tId . '" data-status="' . $project_status . '" type="button" class="secondary-modal-btn">' . $projectStatText . '</button>
+                        </div>
+                        <div class="form-group">
+                          <button id="projectReport" name="projectReport" value="' . $tId . '" data-status="' . $project_status . '" type="button" class="secondary-modal-btn">Report</button>
                         </div>
                       </div>
                     </div>
@@ -124,6 +127,28 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     <!--col 2 end-->
                 </div>
             </div>
+
+            <!--Report modal-->
+            <form method="POST" action="./server/downloadReport.php" class="modal fade bd-example-modal-lg" id="reportContainerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Report</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="reportContainer">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" value="<?php echo $tId;?>" class="btn btn-primary" name="dwnldReport">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--Report modal end-->
 
             <!-- Modal starts-->
             <div class="modal fade" id="addTeamModal" tabindex="-1" aria-labelledby="addTeamModalLabel" aria-hidden="true">
@@ -215,6 +240,12 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         <script src="./js/app.js"></script>
         <script>
             $(document).ready(function() {
+
+                $("#projectReport").on('click', function() {
+                    $("#reportContainerModal").modal('show');
+                    $("#reportContainer").load("./server/projectReport.php");
+                });
+
                 $('#deleteProject').on('click', function() {
                     var pro_id = $('#deleteProject').val();
                     // alert(task_id);
@@ -232,27 +263,29 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         if (result.isConfirmed) {
 
                             $.ajax({
-                            url: "./server/deleteProject.php",
-                            method: "POST",
-                            data: {
-                                pro_id: pro_id,
-                            },
-                            success: function(data) {
-                                Swal.fire(
+                                url: "./server/deleteProject.php",
+                                method: "POST",
+                                data: {
+                                    pro_id: pro_id,
+                                },
+                                success: function(data) {
+                                    Swal.fire(
                                         'Project Deleted!',
                                         'The project has been deleted.',
                                         'success'
                                     )
-                                    window.setTimeout(function(){window.location.href = "./project.php";}, 2000);
-                            }
-                        });
+                                    window.setTimeout(function() {
+                                        window.location.href = "./project.php";
+                                    }, 2000);
+                                }
+                            });
 
                         }
                     })
                 });
                 //delete project ends 
 
-                
+
                 //close project
                 $('#closeProject').on('click', function() {
                     var pro_id = $('#closeProject').val();
@@ -260,7 +293,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     var proStatText = (pro_status == 1) ? 'close' : 're-open';
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Press confirm to "+ proStatText +" the project",
+                        text: "Press confirm to " + proStatText + " the project",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -278,20 +311,20 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                 },
                                 success: function(data) {
                                     //alert(data);
-                                    if(pro_status == 1){
+                                    if (pro_status == 1) {
                                         Swal.fire(
-                                        'Project Closed!',
-                                        'Your project has been closed.',
-                                        'success'
-                                    )
-                                    }else{
+                                            'Project Closed!',
+                                            'Your project has been closed.',
+                                            'success'
+                                        )
+                                    } else {
                                         Swal.fire(
-                                        'Project Re-opened!',
-                                        'Your project has been re-opened.',
-                                        'success'
-                                    )
+                                            'Project Re-opened!',
+                                            'Your project has been re-opened.',
+                                            'success'
+                                        )
                                     }
-                                    
+
                                     window.location.href = "./project.php";
                                 }
                             });
@@ -372,3 +405,4 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 <?php
 }
 ?>
+

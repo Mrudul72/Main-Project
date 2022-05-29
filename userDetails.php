@@ -171,12 +171,46 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                                     
                                                 </div>
                                             </div>
-                                                
+                                            <div class="completed-task bg-secondary-blue mt-3" style="flex-direction:column;">
+                                            <h1 class="content-heading">Ongoing Project Details</h1>
+            
+                                            ';
+                                            // $sql = "SELECT date_format(activity_date,'%d/%m/%Y') as date FROM `tbl_activity` Date(activity_date) = C;";
+                                            $sqlPro = "SELECT DISTINCT tbl_project.project_id AS proId , tbl_project.project_name AS proName FROM tbl_project JOIN tbl_team_allocation on tbl_project.project_id = tbl_team_allocation.project_id  WHERE tbl_project.project_status=1 AND tbl_team_allocation.team_id='$teamId'";
+                                            $resultPro = mysqli_query($connect, $sqlPro);
+                                            $resultCheckPro = mysqli_num_rows($resultPro);
+                                            if($resultCheckPro > 0){
+                                                while($rowPro = mysqli_fetch_assoc($resultPro)){
+                                                    $proId = $rowPro['proId'];
+                                                    $proName = $rowPro['proName'];
+
+            
+                                                    echo '
+                                                    
+                                                    <ul class="activity-container">
+                                                        <li class="items">
+                                                            
+                                                            <div class="card-text">
+                                                            <a href="./tasks.php?id='.$proId.'" class="view-more">'.$proName.'</a>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    
+                                                    ';
+                                                }
+                                            }
+            
+                                            
+                                            echo '
+                                            
+                                            
+                                        </div>
                                             </div>
                                             </div>
                                         </div>
                                         ';
-                                    ?>
+?>
                                     
                                 </form>
                             </div>

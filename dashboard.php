@@ -46,7 +46,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         <?php
                                         $userid = $_SESSION['userId'];
                                         //select from tbl_team_allocation table
-                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_team_allocation WHERE team_id='$team_id' OR project_manager='$userid '";
+                                        $sqlQuery = "SELECT count(DISTINCT project_id) AS proCount FROM tbl_project WHERE project_status='1' AND  project_id IN(SELECT project_id FROM tbl_team_allocation WHERE  team_id='$team_id' OR project_manager='$userid')";
                                         $result2 = mysqli_query($connect, $sqlQuery);
                                         $count2 = mysqli_num_rows($result2);
                                         if($count2>0){
@@ -73,6 +73,23 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             $rowNew = mysqli_fetch_assoc($taskProgressRes);
                             $progress = round($rowNew['progress']);
                         }
+
+                        //performance
+                        $totalTaskSql = "SELECT COUNT(`task_status`) FROM `tbl_tasks` WHERE `project_id` IN (SELECT `project_id` from `tbl_team_allocation` WHERE `project_manager`=$user_id OR `team_id` = $currentUserTeamId)";
+                        $totalTaskRes = mysqli_query($connect, $totalTaskSql);
+                        if(mysqli_num_rows($totalTaskRes)>0){
+                            $rowNew = mysqli_fetch_assoc($totalTaskRes);
+                            $totalTask = $rowNew['COUNT(`task_status`)'];
+                        }
+                        //task count uth task_status 4
+                        $completedTaskSql = "SELECT COUNT(`task_status`) FROM `tbl_tasks` WHERE `project_id` IN (SELECT `project_id` from `tbl_team_allocation` WHERE `project_manager`=$user_id OR `team_id` = $currentUserTeamId) AND `task_status` = 4";
+                        $completedTaskRes = mysqli_query($connect, $completedTaskSql);
+                        if(mysqli_num_rows($completedTaskRes)>0){
+                            $rowNew = mysqli_fetch_assoc($completedTaskRes);
+                            $completedTask = $rowNew['COUNT(`task_status`)'];
+                        }
+                        $peformance = round(($completedTask/$totalTask)*100);
+                        
                         ?>
                         <div class="d-flex">
                             <div class="col-6">
@@ -93,16 +110,16 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                             </div>
                             <div class="col-6">
                                 <div class="ring-chart-container">
-                                    <h1 class="content-heading">Performance</h1>
+                                    <h1 class="content-heading">Overall Progress</h1>
                                     <div class="single-chart">
                                         <svg viewBox="0 0 36 36" class="circular-chart blue">
                                             <path class="circle-bg" d="M18 2.0845
                           a 15.9155 15.9155 0 0 1 0 31.831
                           a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <path class="circle" stroke-dasharray="62, 100" d="M18 2.0845
+                                            <path class="circle" stroke-dasharray="<?php echo $peformance;?>, 100" d="M18 2.0845
                           a 15.9155 15.9155 0 0 1 0 31.831
                           a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                            <text x="18" y="20.35" class="percentage">62%</text>
+                                            <text x="18" y="20.35" class="percentage"><?php echo $peformance;?>%</text>
                                         </svg>
                                     </div>
                                 </div>
