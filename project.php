@@ -211,7 +211,13 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     </div>
                                     <div class="form-group">
                                         <label for="pro-end-date">End date</label>
-                                        <input type="date" name="pro-end-date" id="pro-end-date" class="form-control" min="<?php echo date('Y-m-d') ?>" placeholder="Project name" required autocomplete="off" />
+                                        <?php
+                                        $today = date('Y-m-d');
+                                        $date = date_create($today);
+                                        date_add($date, date_interval_create_from_date_string("7 days"));
+                                        $newDate = date_format($date, "Y-m-d");
+                                        ?>
+                                        <input type="date" name="pro-end-date" id="pro-end-date" class="form-control" min="<?php echo $newDate; ?>" placeholder="Project name" required autocomplete="off" />
                                     </div>
                                     <div class="form-group">
                                         <label for="pro-priority">Project priority</label>
@@ -262,7 +268,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             </div>
         </div>
 
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
         </script>
@@ -277,7 +283,17 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 
                     document.getElementById("pro-start-date").onchange = function() {
                         var input = document.getElementById("pro-end-date");
-                        input.setAttribute("min", this.value);
+                        var result = new Date(this.value);
+                        result.setDate(result.getDate() + 7);
+                        const yyyy = result.getFullYear();
+                        let mm = result.getMonth() + 1; // Months start at 0!
+                        let dd = result.getDate();
+                        if (dd < 10) dd = '0' + dd;
+                        if (mm < 10) mm = '0' + mm;
+
+                        let endDate =  yyyy+ '-' + mm + '-' + dd;
+                        alert(endDate);
+                        input.setAttribute("min", endDate);
                     }
                 });
                 $('#createProBtn').on('click', function() {
