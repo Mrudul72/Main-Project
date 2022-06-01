@@ -70,7 +70,7 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                                 <small id="errMsgPassword" class="errMsg"></small>
                         </div>
                         <div class="form-group">
-                            <a class="forgot-pass" href="">Forgot Password ?</a>
+                            <a class="forgot-pass" href="./forgotPassword.php">Forgot Password ?</a>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn-primary" name="LoginSubmit">Sign in</button>
