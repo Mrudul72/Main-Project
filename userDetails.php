@@ -76,17 +76,17 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                             </div>
                                                 <div class="form-group">
                                                 <label for="uname">Name</label>
-                                                <input type="text" name="uname" id="uname" value="' . $name . '" class="form-control" autocomplete="off">
+                                                <input type="text" disabled name="uname" id="uname" value="' . $name . '" class="form-control" autocomplete="off">
                                                 <small id="errMsgUname" class="errMsg"></small>
                                                 </div>
                                                 <div class="form-group">
                                                 <label for="email">Email</label>
-                                                <input type="email" name="email" id="email" value="' . $email . '" class="form-control" autocomplete="off">
+                                                <input type="email" disabled name="email" id="email" value="' . $email . '" class="form-control" autocomplete="off">
                                                 <small id="errMsgEmail" class="errMsg"></small>
                                                 </div>
                                                 <div class="form-group">
                                                 <label for="mobile">Mobile</label>
-                                                <input type="text" name="mobile" id="mob" value="' . $mobile . '" class="form-control" autocomplete="off" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
+                                                <input type="text" disabled name="mobile" id="mob" value="' . $mobile . '" class="form-control" autocomplete="off" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10">
                                                 <small id="errMsgMob" class="errMsg"></small>
                                                 </div>
                                                 <div class="form-group">
@@ -102,7 +102,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                         echo '
                                             <div class="form-group">
                                             <label for="team">Team</label>
-                                            <input type="text" name="team" id="team" value="' . $teamName . '" class="form-control" autocomplete="off">
+                                            <input type="text" disabled name="team" id="team" value="' . $teamName . '" class="form-control" autocomplete="off">
                                             </div>
                                             ';
                                     } else {

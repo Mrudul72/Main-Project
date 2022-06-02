@@ -44,7 +44,7 @@ if (isset($_SESSION["pmsSessionAdmin"]) != session_id()) {
               <div class="files-card">
                 <div class="d-flex justify-content-between">
                   <h1 class="content-heading">Team Members</h1>
-                  <button data-toggle='modal' data-target='#addMemberModal' class="add-task-btn">Add Members +</button>
+                  <!-- <button data-toggle='modal' data-target='#addMemberModal' class="add-task-btn">Add Members +</button> -->
                 </div>
                 <!---table start-->
                 <table class="table files-table">

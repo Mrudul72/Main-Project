@@ -266,5 +266,5 @@ echo '
     ob_end_clean();
     // send the captured HTML from the output buffer to the mPDF class for processing
     $mpdf->WriteHTML($html);
-    $mpdf->Output();
+    $mpdf->Output('projectReport.pdf','D');
 }

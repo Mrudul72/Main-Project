@@ -72,7 +72,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     $projectStatText = ($project_status == '1') ? 'Close Project' : 'Reopen Project';
                                     $project_priority = $row['project_priority'];
 
-
+                                    
                                     echo '
                   <div class="container-fluid">
                     <div class="row">
@@ -87,11 +87,11 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         </div>
                         <div class="form-group">
                                         <label for="projectStartDate">Start date</label>
-                                        <input type="date" name="projectStartDate" value="' . $project_start_date . '" id="projectStartDate" class="form-control" placeholder="Project name" required autocomplete="off" />
+                                        <input type="date" name="projectStartDate" value="' . $project_start_date . '" id="pro-start-date"  class="form-control" placeholder="Project name" required autocomplete="off" />
                                     </div>
                                     <div class="form-group">
                                         <label for="projectEndDate">End date</label>
-                                        <input type="date" name="projectEndDate" value="' . $project_end_date . '" id="projectEndDate" class="form-control" placeholder="Project name" required autocomplete="off" />
+                                        <input type="date" name="projectEndDate" value="' . $project_end_date . '" id="pro-end-date" class="form-control" placeholder="Project name" required autocomplete="off" />
                                     </div>
                                     
                       </div>
@@ -143,7 +143,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" value="<?php echo $tId;?>" class="btn btn-primary" name="dwnldReport">Download</button>
+                            <button type="submit" value="<?php echo $tId; ?>" class="btn btn-primary" name="dwnldReport">Download</button>
                         </div>
                     </div>
                 </div>
@@ -240,6 +240,22 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
         <script src="./js/app.js"></script>
         <script>
             $(document).ready(function() {
+
+                //date validation
+                document.getElementById("pro-start-date").onchange = function() {
+                    var input = document.getElementById("pro-end-date");
+                    var result = new Date(this.value);
+                    result.setDate(result.getDate() + 7);
+                    const yyyy = result.getFullYear();
+                    let mm = result.getMonth() + 1; // Months start at 0!
+                    let dd = result.getDate();
+                    if (dd < 10) dd = '0' + dd;
+                    if (mm < 10) mm = '0' + mm;
+
+                    let endDate = yyyy + '-' + mm + '-' + dd;
+                    alert(endDate);
+                    input.setAttribute("min", endDate);
+                }
 
                 $("#projectReport").on('click', function() {
                     $("#reportContainerModal").modal('show');
@@ -405,4 +421,3 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
 <?php
 }
 ?>
-

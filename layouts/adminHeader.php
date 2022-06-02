@@ -13,8 +13,8 @@ $userName = $_SESSION['userName'];
                             else {
                                 echo ucwords($activePage);
                             }  ?></h1>
-    <div class="header-util">
-        <div class="search-box">
+    <div class="header-util d-flex justify-content-end">
+        <!-- <div class="search-box">
             <input type="text" placeholder="Search" />
             <div class="header-box">
                 <img class="header-ico" src="./assets/icons/search-ico.svg" alt="search" />
@@ -28,7 +28,7 @@ $userName = $_SESSION['userName'];
                 <a class="dropdown-item" href="#">Notification</a>
 
             </div>
-        </div>
+        </div> -->
 
         <div>
             <div class="header-box" id="dropdownMenuOffset2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="5,10">

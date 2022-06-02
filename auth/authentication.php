@@ -45,10 +45,10 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                             $userInsertedId = mysqli_insert_id($connect);
                             //insert to tbl_team_members
                             $sql = "INSERT INTO `tbl_team_members`(`team_id`, `user_id`) VALUES ('$team_id','$userInsertedId')";
-                            $res = mysqli_query($connect,$sql);
+                            $res = mysqli_query($connect, $sql);
                             //update invite status
                             $sql2 = "UPDATE `tbl_invitation` SET `invite_status`='1' WHERE `email`='$email'";
-                            $res2 = mysqli_query($connect,$sql2);
+                            $res2 = mysqli_query($connect, $sql2);
 
                             $_SESSION['loginMessage'] = "Register Success";
                             header("Location: ../index.php");
@@ -58,12 +58,11 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
                             header("Location: signup.php");
                             die();
                         }
-                    }elseif($checkReferralCodeCount > 0 && $referral_id != $referral){
+                    } elseif ($checkReferralCodeCount > 0 && $referral_id != $referral) {
                         $_SESSION['loginMessage'] = "Referral Code is not valid";
                         header("Location: signup.php");
                         die();
-                    }
-                     else {
+                    } else {
                         // $name = strtolower($firstname) . " " . strtolower($lastname);
                         $password = md5($password);
                         $date = date("Y-m-d");
@@ -104,26 +103,31 @@ if (isset($_SESSION["pmsSession"]) == session_id()) {
             extract($_POST);
             $password = md5($password);
             //Check if mobile already exisit
-            $checkLogin = "SELECT * FROM `tbl_user` WHERE `email`='$email' and `password`='$password' and user_status!=0";
+            $checkLogin = "SELECT * FROM `tbl_user` WHERE `email`='$email' and `password`='$password'";
             $checkLoginResult = mysqli_query($connect, $checkLogin);
             $checkLoginCount = mysqli_num_rows($checkLoginResult);
             //No user exists
             if ($checkLoginCount == 1) {
                 $userData = mysqli_fetch_assoc($checkLoginResult);
-                
-                $_SESSION['userName'] = $userData['username'];
-                $_SESSION['proPic'] = $userData['profile_pic'];
-                $_SESSION['userId'] = $userData['user_id'];
-                $_SESSION['currentUserTeamId'] = $userData['team_id'];
-                $_SESSION['currentUserTypeId'] = $userData['type_id'];
-                if ($userData['type_id'] == 1) {
-                    $_SESSION['pmsSessionAdmin'] = session_id();
-                    header("Location: ../adminDashboard.php");
+                if ($userData['user_status'] != 1) {
+                    $_SESSION['loginMessage'] = "Your account has been disabled. Please contact admin";
+                    header("Location: ../index.php");
                     die();
                 } else {
-                    $_SESSION['pmsSession'] = session_id();
-                    header("Location: ../dashboard.php");
-                    die();
+                    $_SESSION['userName'] = $userData['username'];
+                    $_SESSION['proPic'] = $userData['profile_pic'];
+                    $_SESSION['userId'] = $userData['user_id'];
+                    $_SESSION['currentUserTeamId'] = $userData['team_id'];
+                    $_SESSION['currentUserTypeId'] = $userData['type_id'];
+                    if ($userData['type_id'] == 1) {
+                        $_SESSION['pmsSessionAdmin'] = session_id();
+                        header("Location: ../adminDashboard.php");
+                        die();
+                    } else {
+                        $_SESSION['pmsSession'] = session_id();
+                        header("Location: ../dashboard.php");
+                        die();
+                    }
                 }
             } else {
                 $_SESSION['loginMessage'] = "User Login Failed";

@@ -79,6 +79,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                     $roleName = $row2['role_name'];
 
 
+
                                     echo '
                                         <div class="container-fluid">
                                             <div class="row">
@@ -151,10 +152,10 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                                 <button id="changePass" name="changePass" value="" type="button" class="secondary-modal-btn">Change</button>
                                             </div>
                                             
-                                                <div class="form-group">
+                                                <!--<div class="form-group">
                                                 <label for="task-actions">Actions</label>
                                                 <button id="deleteProject" name="deleteProject" type="button" class="secondary-modal-btn">Delete</button>
-                                                </div>
+                                                </div>-->
                                             </div>
                                             </div>
                                         </div>
