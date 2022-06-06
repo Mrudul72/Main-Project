@@ -79,16 +79,16 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         $totalTaskRes = mysqli_query($connect, $totalTaskSql);
                         if(mysqli_num_rows($totalTaskRes)>0){
                             $rowNew = mysqli_fetch_assoc($totalTaskRes);
-                            $totalTask = $rowNew['COUNT(`task_status`)'];
+                            $totalTask = ($rowNew['COUNT(`task_status`)'] == null) ? 0 : $rowNew['COUNT(`task_status`)'];
                         }
                         //task count uth task_status 4
                         $completedTaskSql = "SELECT COUNT(`task_status`) FROM `tbl_tasks` WHERE `project_id` IN (SELECT `project_id` from `tbl_team_allocation` WHERE `project_manager`=$user_id OR `team_id` = $currentUserTeamId) AND `task_status` = 4";
                         $completedTaskRes = mysqli_query($connect, $completedTaskSql);
                         if(mysqli_num_rows($completedTaskRes)>0){
                             $rowNew = mysqli_fetch_assoc($completedTaskRes);
-                            $completedTask = $rowNew['COUNT(`task_status`)'];
+                            $completedTask = ($rowNew['COUNT(`task_status`)'] == null) ? 0 : $rowNew['COUNT(`task_status`)'];
                         }
-                        $peformance = round(($completedTask/$totalTask)*100);
+                        $peformance = ($totalTask == 0) ? 0:round(($completedTask/$totalTask)*100);
                         
                         ?>
                         <div class="d-flex">

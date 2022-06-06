@@ -118,7 +118,7 @@ if (isset($_SESSION["pmsSessionAdmin"]) != session_id()) {
                     <!--col 1 end-->
 
                     <!--col 2 start-->
-                    <div class="col-4">
+                    <!-- <div class="col-4">
                         <div class="d-flex flex-column">
                             <div class="dashboard-card">
                                 <h1 class="content-heading">Activity</h1>
@@ -149,7 +149,7 @@ if (isset($_SESSION["pmsSessionAdmin"]) != session_id()) {
                             </div>
                             
                         </div>
-                    </div>
+                    </div> -->
                     <!--col 2 end-->
                 </div>
             </div>

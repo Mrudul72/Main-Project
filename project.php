@@ -292,7 +292,6 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         if (mm < 10) mm = '0' + mm;
 
                         let endDate =  yyyy+ '-' + mm + '-' + dd;
-                        alert(endDate);
                         input.setAttribute("min", endDate);
                     }
                 });

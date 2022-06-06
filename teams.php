@@ -56,7 +56,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         }
                     } else {
                         //not manager
-                        $query = "SELECT * FROM tbl_teams WHERE team_id = '" .$_SESSION['currentUserTeamId']. "'";
+                        $query = "SELECT * FROM tbl_teams WHERE team_id = '" . $_SESSION['currentUserTeamId'] . "'";
                         $result = mysqli_query($connect, $query);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
@@ -117,7 +117,14 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     $member_id = $row['user_id'];
                                                     $memberName = $row['username'];
-                                                    echo '<option value="' . $member_id . '">' . $memberName . '</option>';
+                                                    $memberTypeId = $row['type_id'];
+                                                    //selecting the type of user tbl_user_role
+                                                    $selectUserRole = "SELECT role_name FROM tbl_user_role WHERE role_id = $memberTypeId";
+                                                    $selectUserRoleResult = mysqli_query($connect, $selectUserRole);
+                                                    $userRole = mysqli_fetch_assoc($selectUserRoleResult);
+                                                    $userType = $userRole['role_name'];
+
+                                                    echo '<option value="' . $member_id . '">' . $memberName . ' ( ' . $userType . ' )</option>';
                                                 }
                                                 ?>
                                             </select>
@@ -157,7 +164,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                     </div>
                 </div>
                 <!-- Modal ends-->
-                
+
 
                 <!--Confirmation Modal start-->
 
@@ -184,7 +191,7 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
             </div>
         </div>
 
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
         </script>
@@ -211,35 +218,34 @@ if (isset($_SESSION["pmsSession"]) != session_id()) {
                         }
                     }
                     console.log(teamMemberArr);
-                   
-                    if(teamName == '' ){
+
+                    if (teamName == '') {
                         alert('Team name is required');
-                    }
-                    else{
+                    } else {
                         $.ajax({
-                        url: './server/addTeam.php',
-                        type: 'POST',
-                        data: {
-                            teamName: teamName,
-                            teamMemberArr: teamMemberArr,
-                            
-                        },
-                        success: function(response) {
-                            if (response == 'success') {
-                                $('#addTeamModal').modal('hide');
-                                location.reload();
-                            } else {
-                                alert(response);
+                            url: './server/addTeam.php',
+                            type: 'POST',
+                            data: {
+                                teamName: teamName,
+                                teamMemberArr: teamMemberArr,
+
+                            },
+                            success: function(response) {
+                                if (response == 'success') {
+                                    $('#addTeamModal').modal('hide');
+                                    location.reload();
+                                } else {
+                                    alert(response);
+                                }
                             }
-                        }
-                    });
+                        });
                     }
-                    
+
 
                 });
 
 
-               
+
 
             });
         </script>

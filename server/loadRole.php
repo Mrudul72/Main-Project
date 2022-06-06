@@ -2,7 +2,7 @@
 $memberCount = $_POST['memberCount'];
 include('../config/connect.php');
 session_start(); 
-$sql = "SELECT * FROM tbl_user_role LIMIT $memberCount";
+$sql = "SELECT * FROM tbl_user_role WHERE role_id != 1 LIMIT $memberCount";
 $result = mysqli_query($connect, $sql);
 
 
