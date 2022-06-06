@@ -122,13 +122,13 @@ if (mysqli_num_rows($result) > 0) {
 
 echo '
         </div>
-            <form action="#" class="bg-white">
+            
                 <div class="chat-input">
                 <input type="hidden" id="chatUserId" value="' . $chatId . '">
                     <input type="text" name="chatInput" id="chatInput" class="form-control" placeholder="Type here..." autocomplete="off">
                     <button id="addChatBtn" name="addChatBtn" type="button" class="btn btn-primary saveBtn">></button>
                 </div>
-            </form>
+            
         </div>
         
         ';
@@ -280,6 +280,15 @@ echo '
 
     //send message
     $("#addChatBtn").click(function() {
+        addChat();
+    });
+    $("#chatInput").keypress(function(event) {
+            if (event.keyCode === 13) {
+                addChat();
+            }
+        });
+
+    function addChat(){
         var chatInput = $("#chatInput").val();
         var chatUserId = $("#chatUserId").val();
         var chatUserName = $("#chatUserName").text();
@@ -301,5 +310,5 @@ echo '
         } else {
             alert("empty");
         }
-    });
+    }
 </script>
